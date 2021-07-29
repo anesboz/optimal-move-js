@@ -1,0 +1,10 @@
+body {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+}
+
+#root {
+  position: relative;
+  overflow: hidden;
+}
