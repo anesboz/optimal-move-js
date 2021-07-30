@@ -18,10 +18,10 @@ const Row = styled.div`
 const Banner = (props) =>{
   return (
     <Fragment >
-      <Header className="center" onClick={props.reset}>
+      <Header className="center w-100" onClick={props.reset}>
         <img src={default_header} className="h-100" />
       </Header>
-      <Row className="row d-flex justify-content-between">
+      <Row className="row d-flex justify-content-between w-100">
         <div className="col-4 h-100">
           <img src={optimalMove} className="h-75" />
         </div>

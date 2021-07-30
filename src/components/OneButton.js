@@ -11,8 +11,7 @@ const Div = styled.div`
   width: 20%;
   height: 100%;
   background-color: #00aa91;
-  opacity: ${(props) => `${props.selected ? 1 : 0.5};
-  `};
+  opacity: ${(props) => `${props.selected ? 1 : 0.5}`};
 `;
 
 const Img = styled.img`

@@ -1,9 +1,9 @@
-import './App.css';
-import Banner from "./components/Banner";
-import Onglets from "./components/Onglets";
-import Table from "./components/Table";
-import { Provider } from 'react-redux' //connect redux with react
-import store from "./store";
+import { Provider } from "react-redux" //connect redux with react
+import store from "./store"
+
+import Banner from "./components/Banner"
+import Onglets from "./components/Onglets"
+import Table from "./components/Table"
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
       <Table />
       <Onglets />
     </Provider>
-  );
+  )
 }
 
-export default App;
+export default App

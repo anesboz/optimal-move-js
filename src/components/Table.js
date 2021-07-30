@@ -5,10 +5,10 @@ import { connect } from "react-redux"
 import data from "../data"
 
 const TableContainer = styled.div`
-  display: block;
   scroll-behavior: smooth;
   overflow-y: scroll;
 `;
+
 function Table(props) {
   let currentOnglet = props.currentOnglet
   let currentPage = props.currentPage
