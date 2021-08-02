@@ -6,6 +6,7 @@ import v1 from "../media/icons/velibE.png"
 import v2 from "../media/icons/velibP.png"
 import v3 from "../media/icons/velibM.png"
 import logo_velib from "../media/icons/logo_velib.png"
+import sideRow from "../media/icons/sideRow.png"
 
 const RowContainer = styled.div`
   display: flex;
@@ -100,6 +101,9 @@ function Row(props) {
           </Fragment>
         </Case>
       ))}
+      <Case key={5} style={{ flex: "1 0 18%" }}>
+        <Img src={sideRow} />
+      </Case>
     </RowContainer>
   )
 }

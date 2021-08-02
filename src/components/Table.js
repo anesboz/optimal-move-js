@@ -4,7 +4,7 @@ import RowVelib from "./RowVelib"
 import styled from "styled-components"
 import { connect } from "react-redux"
 import data from "../data"
-
+import Plus from "./Plus";
 const TableContainer = styled.div`
   scroll-behavior: smooth;
   overflow-y: scroll;
@@ -19,9 +19,6 @@ function Table(props) {
     return null
   }
   let list = data[currentOnglet].list[currentPage]
-  // if (props?.page != {}) {
-  //   list = props.page
-  // }
 
   console.log(props.page)
   return (
@@ -33,6 +30,7 @@ function Table(props) {
           <Row q={q} id={i} key={i} />
         )
       )}
+      <Plus />
     </TableContainer>
   )
 }

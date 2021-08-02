@@ -2,6 +2,7 @@ import React, { Fragment } from "react"
 import { connect } from "react-redux"
 import styled from "styled-components"
 import loading from "../media/icons/loading.gif"
+import sideRow from "../media/icons/sideRow.png"
 
 const RowContainer = styled.div`
   display: flex;
@@ -63,27 +64,28 @@ function Row(props) {
       <Case>
         <Img src={imgUrl} />
       </Case>
-      {[0, 1, 2, 3].map(
-        (i, j) => {
-          if (!page?.times) {
-            return (
-              <Case key={j}>
-                <Img src={loading} />
-              </Case>
-            )
-          }
-          if (! page.times?.[i]) {
-            return null
-          }
+      {[0, 1, 2, 3].map((i, j) => {
+        if (!page?.times) {
           return (
-            <Case value={page?.times?.[i]} key={j}>
-              <div className={isHere.includes(page.times[i]) ? "blink" : ""}>
-                {page.times[i]}
-              </div>
+            <Case key={j}>
+              <Img src={loading} />
             </Case>
-          ) 
+          )
         }
-      )}
+        if (!page.times?.[i]) {
+          return null
+        }
+        return (
+          <Case value={page?.times?.[i]} key={j}>
+            <div className={isHere.includes(page.times[i]) ? "blink" : ""}>
+              {page.times[i]}
+            </div>
+          </Case>
+        )
+      })}
+      <Case key={5} style={{ flex: "1 0 18%" }}>
+        <Img src={sideRow} />
+      </Case>
     </RowContainer>
   )
 }
