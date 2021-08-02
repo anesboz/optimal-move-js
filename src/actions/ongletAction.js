@@ -7,7 +7,6 @@ import {
 } from "./types"
 import data from "../data"
 
-import velibImg from "../media/icons/velibM.png"
 const transportTypes = {
   m: "metros",
   b: "buses",
@@ -79,8 +78,7 @@ function nightTime() {
 
 const vel = {
   api: "https://velib-metropole-opendata.smoove.pro/opendata/Velib_Metropole/station_status.json",
-  proxy: "https://secure-shore-78865.herokuapp.com/",
-  img: velibImg
+  proxy: "https://anes-cors-everywhere.herokuapp.com/",
 }
 
 export const velib = (q,i) => (dispatch) => {

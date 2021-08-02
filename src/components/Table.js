@@ -16,16 +16,21 @@ function Table(props) {
   let currentOnglet = props.currentOnglet
   let currentPage = props.currentPage
   if (currentOnglet == null) {
-    return null;
+    return null
   }
-  let list = data[currentOnglet].list[currentPage];
+  let list = data[currentOnglet].list[currentPage]
+  // if (props?.page != {}) {
+  //   list = props.page
+  // }
+
+  console.log(props.page)
   return (
     <TableContainer className="col-10 mt-5 p-0">
       {list.map((q, i) =>
-        q.includes('velib') ? (
+        q.includes("velib") ? (
           <RowVelib id={i} key={i} />
-        ) : (
-          <Row q={q}id={i} key={i} />
+        ) : !nightTime() && /^n.*/.test(q) ? null : (
+          <Row q={q} id={i} key={i} />
         )
       )}
     </TableContainer>
@@ -35,6 +40,11 @@ const mapStateToProps = (state) => ({
   currentOnglet: state.onglets.currentOnglet,
   currentPage: state.onglets.currentPage,
   page: state.onglets.page,
-});
+})
 
-export default connect(mapStateToProps)(Table);
+function nightTime() {
+  var t = new Date().toLocaleTimeString()
+  return t > "00:15:00" && t < "06:30:00"
+}
+
+export default connect(mapStateToProps)(Table)
