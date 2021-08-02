@@ -11,7 +11,7 @@ const store = createStore(
   compose(
     applyMiddleware(...middleware),
     // NON COMPATIBLE PHONE to delete on production :
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() || null
   )
 )
 
