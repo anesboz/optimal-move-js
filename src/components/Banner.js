@@ -1,6 +1,6 @@
 import default_header from "../media/default_header.png";
 import optimalMove from "../media/optimalMove.png";
-import { reset } from "../actions/ongletAction";
+import { resetAll } from "../actions/ongletAction";
 import styled from "styled-components";
 import { Fragment } from "react";
 import { connect } from "react-redux";
@@ -18,7 +18,7 @@ const Row = styled.div`
 const Banner = (props) =>{
   return (
     <Fragment >
-      <Header className="center w-100" onClick={props.reset}>
+      <Header className="center w-100" onClick={props.resetAll}>
         <img src={default_header} className="h-100" />
       </Header>
       <Row className="row d-flex justify-content-between w-100">
@@ -31,4 +31,4 @@ const Banner = (props) =>{
   );
 }
 
-export default connect(null, {reset})(Banner);
+export default connect(null, {resetAll})(Banner);

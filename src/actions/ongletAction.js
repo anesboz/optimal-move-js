@@ -1,5 +1,13 @@
-import { ATTRIBUTE_ONGLET, RESET, UPLOAD_PAGE } from "./types"
+import {
+  ATTRIBUTE_ONGLET,
+  RESET_ALL,
+  UPLOAD_PAGE,
+  GO_PAGE,
+  RESET_PAGE,
+} from "./types"
 import data from "../data"
+
+import velibImg from "../media/icons/velibM.png"
 const transportTypes = {
   m: "metros",
   b: "buses",
@@ -8,16 +16,10 @@ const transportTypes = {
   n: "noctiliens",
 }
 
-const ratpImgs = {
-  m: "https://www.ratp.fr/sites/default/files/lines-assets/picto/metro/picto_metro_ligne-",
-  b: "https://www.ratp.fr/sites/default/files/lines-assets/picto/busratp/picto_busratp_ligne-",
-  n: "https://www.ratp.fr/sites/default/files/lines-assets/picto/noctilien/picto_noctilien_ligne-n",
-  t: "https://www.ratp.fr/sites/default/files/lines-assets/picto/tram/picto_tram_ligne-t",
-  r: "https://www.ratp.fr/sites/default/files/lines-assets/picto/rer/picto_rer_ligne-",
-}
+
 
 export const attributeOnglet = (i) => (dispatch) => {
-  reset()(dispatch)
+  resetAll()(dispatch)
   dispatch({
     type: ATTRIBUTE_ONGLET,
     payload: i,
@@ -25,25 +27,33 @@ export const attributeOnglet = (i) => (dispatch) => {
   uploadPage(i, 0)(dispatch)
 }
 
-export const reset = () => (dispatch) => {
+export const resetAll = () => (dispatch) => {
   dispatch({
-    type: RESET,
+    type: RESET_ALL,
   })
 }
 
 // export const uploadPage = (page) => {
 export const uploadPage = (currentOnglet, currentPage) => (dispatch) => {
+  dispatch({
+    type: RESET_PAGE,
+  })
   let page = data[currentOnglet].list[currentPage]
   // example q = "m7 Villejuif Leo Lagrange"
   page.map((q, i) => {
+    if (q.includes("velib")) {
+      return velib(q, i)(dispatch)
+    }
     let s = q.split(/\s(.+)/)
     let type = transportTypes[s[0][0]]
     let code = s[0].slice(1)
     let station = s[1].replace(/ /g, "%20")
     let way = "A"
     let query = `https://api-ratp.pierre-grimaud.fr/v4/schedules/${type}/${code}/${station}/${way}`
-    console.log(query)
-    let imgUrl = ratpImgs[s[0][0]] + code + ".svg"
+    // dont display noctiliens during the day
+    if (!nightTime() && type === "noctiliens") {
+      return
+    }
     fetch(query)
       .then((res) => res.json())
       .then((data) => {
@@ -53,11 +63,61 @@ export const uploadPage = (currentOnglet, currentPage) => (dispatch) => {
           payload: {
             row: i,
             data: {
-              imgUrl,
               times,
-            }
-          }
+            },
+          },
         })
       })
   })
 }
+
+function nightTime() {
+  var t = new Date().toLocaleTimeString()
+  return t > "00:15:00" && t < "06:30:00"
+}
+
+
+const vel = {
+  api: "https://velib-metropole-opendata.smoove.pro/opendata/Velib_Metropole/station_status.json",
+  proxy: "https://secure-shore-78865.herokuapp.com/",
+  img: velibImg
+}
+
+export const velib = (q,i) => (dispatch) => {
+  console.log("dans la fonction velib");
+  let s = q.split(/(velib [0-9]+ )/)
+  let codeStation = s[1].replace('velib', '').trim()
+  let nameStation = s[2].trim()
+  fetch(vel.proxy + vel.api)
+    .then((data) => data.json())
+    .then((jsonFile) =>
+      jsonFile.data.stations
+        .filter((e) => e.stationCode === codeStation)
+        .map((station) =>
+          dispatch({
+            type: UPLOAD_PAGE,
+            payload: {
+              row: i,
+              data: {
+                velibStationName: nameStation,
+                times: [
+                  station.num_bikes_available_types[0].mechanical,
+                  station.num_bikes_available_types[1].ebike,
+                  station.numDocksAvailable,
+                ],
+              },
+            },
+          })
+        )
+    )
+}
+
+export const goPageDansOnglet = (i, numOnglet) => (dispatch) => {
+  uploadPage(numOnglet, i)(dispatch)
+  dispatch({
+    type: GO_PAGE,
+    payload: i,
+  })
+}
+
+

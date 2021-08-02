@@ -4,12 +4,14 @@ import store from "./store"
 import Banner from "./components/Banner"
 import Onglets from "./components/Onglets"
 import Table from "./components/Table"
+import Dots from "./components/Dots"
 
 function App() {
   return (
     <Provider store={store}>
       <Banner />
       <Table />
+      <Dots />
       <Onglets />
     </Provider>
   )

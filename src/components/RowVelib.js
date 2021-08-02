@@ -2,6 +2,10 @@ import React, { Fragment } from "react"
 import { connect } from "react-redux"
 import styled from "styled-components"
 import loading from "../media/icons/loading.gif"
+import v1 from "../media/icons/velibE.png"
+import v2 from "../media/icons/velibP.png"
+import v3 from "../media/icons/velibM.png"
+import logo_velib from "../media/icons/logo_velib.png"
 
 const RowContainer = styled.div`
   display: flex;
@@ -11,6 +15,11 @@ const RowContainer = styled.div`
   overflow: scroll;
 `
 
+const velibImg = {
+  0: v1,
+  1: v2,
+  2: v3,
+}
 const isHere = [
   "Train a l'approche",
   "A l'approche",
@@ -18,7 +27,6 @@ const isHere = [
   "A l'arret",
 ]
 const isComing = ["0 mn", "1 mn", "2 mn"]
-
 const problems = [
   "SERVICE TERMINE",
   "Schedules unavailable",
@@ -46,44 +54,52 @@ const Case = styled.div`
 const Img = styled.img`
   height: 68%;
 `
-const ratpImgs = {
-  m: "https://www.ratp.fr/sites/default/files/lines-assets/picto/metro/picto_metro_ligne-",
-  b: "https://www.ratp.fr/sites/default/files/lines-assets/picto/busratp/picto_busratp_ligne-",
-  n: "https://www.ratp.fr/sites/default/files/lines-assets/picto/noctilien/picto_noctilien_ligne-n",
-  t: "https://www.ratp.fr/sites/default/files/lines-assets/picto/tram/picto_tram_ligne-t",
-  r: "https://www.ratp.fr/sites/default/files/lines-assets/picto/rer/picto_rer_ligne-",
-}
+
+const VelibContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+`
+
+const VelibLogo = styled.div`
+  display: flex;
+  flex: 1 0 70%;
+  align-items: center;
+  justify-content: center;
+  max-height: 70%;
+`
+const VelibStationName = styled.div`
+  flex: 1 0;
+  display: flex;
+  font-size: 53%;
+  height: 20%;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+`
 
 function Row(props) {
-  let page = props.page[props.id]
-  let s = props.q.split(/\s(.+)/)
-  let imgUrl = ratpImgs[s[0][0]] + s[0].slice(1) + ".svg"
+  let i = props.id
+  let page = props.page[i]
   return (
     <RowContainer>
       <Case>
-        <Img src={imgUrl} />
+        <VelibContainer>
+          <VelibLogo>
+            <Img src={logo_velib} />
+          </VelibLogo>
+          <VelibStationName>{page?.velibStationName}</VelibStationName>
+        </VelibContainer>
       </Case>
-      {[0, 1, 2, 3].map(
-        (i, j) => {
-          if (!page?.times) {
-            return (
-              <Case key={j}>
-                <Img src={loading} />
-              </Case>
-            )
-          }
-          if (! page.times?.[i]) {
-            return null
-          }
-          return (
-            <Case value={page?.times?.[i]} key={j}>
-              <div className={isHere.includes(page.times[i]) ? "blink" : ""}>
-                {page.times[i]}
-              </div>
-            </Case>
-          ) 
-        }
-      )}
+      {[0, 1, 2].map((t, j) => (
+        <Case value={t} key={j}>
+          <Fragment>
+            <Img src={velibImg[j]} className="mr-2" />
+            {page?.times ? page.times[t] : <Img src={loading} />}
+          </Fragment>
+        </Case>
+      ))}
     </RowContainer>
   )
 }

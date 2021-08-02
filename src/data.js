@@ -3,26 +3,6 @@ const liste = [
     name: "McDo-Stalingrad",
     logo: "https://www.citypng.com/public/uploads/preview/-11600735522qbwj7xtpxu.png",
     list: [
-      ["m5 place italie"],
-      [
-        "b47 Kremlin Bicetre",
-        "b75 Cardinal Lemoine Monge",
-        "b38 Cite - Palais de Justice",
-      ],
-      [
-        "b185 Dauphin - Anatole France",
-        "b47 Kremlin Bicetre",
-        "b131 Kremlin Bicetre",
-        "b186 Convention - Fontainebleau",
-      ],
-      [
-        "n22 Dauphin - Anatole France",
-        "n15 Dauphin - Anatole France",
-        "n13 Chatelet",
-        "n14 Chatelet",
-      ],
-    ],
-    backList: [
       ["(Villejuif-Louis Aragon) m7 Stalingrad"],
       ["m5 jaures", "(Villejuif-Louis Aragon) m7 place italie"],
       [
@@ -58,16 +38,10 @@ const liste = [
     logo: "https://logo-marque.com/wp-content/uploads/2021/02/Auchan-Logo.png",
     list: [
       [
-        "b185 Dauphin - Anatole France",
-        "m7 Villejuif Leo Lagrange",
-        "velib 48002 Vivaldi, 42703 Kremlin",
-      ],
-    ],
-    backList: [
-      [
         "b185 Convention - Fontainebleau",
         "m7 Le Kremlin-Bicetre",
-        "velib 42707 Okabé,  42703  Kremlin",
+        "velib 42707 Okabé",
+        "velib 42703  Kremlin",
       ],
     ],
   },
@@ -78,15 +52,11 @@ const liste = [
       [
         "m7 Villejuif Leo Lagrange",
         "b185 Dauphin - Anatole France",
-        // "velib 48002 Vivaldi",
+        "velib 48002 Vivaldi",
         "n15 Dauphin - Anatole France",
         "n22 Dauphin - Anatole France",
       ],
     ],
-  },
-  {
-    name: "pray",
-    logo: "https://cdn.iconscout.com/icon/premium/png-256-thumb/pray-mat-3578709-2989004.png",
   },
   {
     name: "Agorae",
@@ -188,7 +158,7 @@ const liste = [
       ],
     ],
   },
-];
+]
 
 export default liste;
 /*

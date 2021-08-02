@@ -1,4 +1,10 @@
-import { ATTRIBUTE_ONGLET, RESET, UPLOAD_PAGE } from "../actions/types";
+import {
+  ATTRIBUTE_ONGLET,
+  RESET_ALL,
+  UPLOAD_PAGE,
+  GO_PAGE,
+  RESET_PAGE,
+} from "../actions/types"
 
 const initalState = {
   currentOnglet: null,
@@ -13,20 +19,24 @@ export default (state = initalState, action) => {
       return {
         ...state,
         currentOnglet: action.payload,
-        currentPage: 0
-      };
-    
-      case UPLOAD_PAGE:
-        let clonePage = {...state.page}
-        clonePage[action.payload.row] = action.payload.data
-        return {
-          ...state,
-          page: clonePage,
-        }
-    
-    case RESET:
-      return initalState;
-    
+        currentPage: 0,
+      }
+
+    case UPLOAD_PAGE:
+      let clonePage = { ...state.page }
+      clonePage[action.payload.row] = action.payload.data
+      return {
+        ...state,
+        page: clonePage,
+      }
+    case GO_PAGE:
+      return { ...state, currentPage: action.payload }
+    case RESET_ALL:
+      return initalState
+
+    case RESET_PAGE:
+      return {...state, page : {}}
+
     default:
       return state
   }
