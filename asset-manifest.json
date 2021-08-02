@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/new-optimal-move/static/css/main.20fcf51d.chunk.css",
-    "main.js": "/new-optimal-move/static/js/main.16064b05.chunk.js",
-    "main.js.map": "/new-optimal-move/static/js/main.16064b05.chunk.js.map",
+    "main.js": "/new-optimal-move/static/js/main.80c3aefc.chunk.js",
+    "main.js.map": "/new-optimal-move/static/js/main.80c3aefc.chunk.js.map",
     "runtime-main.js": "/new-optimal-move/static/js/runtime-main.038d910c.js",
     "runtime-main.js.map": "/new-optimal-move/static/js/runtime-main.038d910c.js.map",
-    "static/js/2.2881ff28.chunk.js": "/new-optimal-move/static/js/2.2881ff28.chunk.js",
-    "static/js/2.2881ff28.chunk.js.map": "/new-optimal-move/static/js/2.2881ff28.chunk.js.map",
+    "static/js/2.70cb620f.chunk.js": "/new-optimal-move/static/js/2.70cb620f.chunk.js",
+    "static/js/2.70cb620f.chunk.js.map": "/new-optimal-move/static/js/2.70cb620f.chunk.js.map",
     "index.html": "/new-optimal-move/index.html",
     "static/css/main.20fcf51d.chunk.css.map": "/new-optimal-move/static/css/main.20fcf51d.chunk.css.map",
-    "static/js/2.2881ff28.chunk.js.LICENSE.txt": "/new-optimal-move/static/js/2.2881ff28.chunk.js.LICENSE.txt",
+    "static/js/2.70cb620f.chunk.js.LICENSE.txt": "/new-optimal-move/static/js/2.70cb620f.chunk.js.LICENSE.txt",
     "static/media/index.css": "/new-optimal-move/static/media/betterOnPhones.efd09af8.png",
     "static/media/default_header.e0460f9d.png": "/new-optimal-move/static/media/default_header.e0460f9d.png",
     "static/media/loading.4271eea8.gif": "/new-optimal-move/static/media/loading.4271eea8.gif",
@@ -21,8 +21,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.038d910c.js",
-    "static/js/2.2881ff28.chunk.js",
+    "static/js/2.70cb620f.chunk.js",
     "static/css/main.20fcf51d.chunk.css",
-    "static/js/main.16064b05.chunk.js"
+    "static/js/main.80c3aefc.chunk.js"
   ]
 }
