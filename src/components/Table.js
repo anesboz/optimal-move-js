@@ -52,11 +52,8 @@ function Table(props) {
           </Fragment>
         )
 
-        // row.includes("velib") ? (
-        //   ) : noctilienEtJour(q) ? null : (
-        //   )
       )}
-      {/* <Plus /> */}
+      <Plus />
     </TableContainer>
   )
 }

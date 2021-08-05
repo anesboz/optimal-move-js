@@ -8,8 +8,6 @@ import {
 // import data from "../data"
 import test from "./debug.js"
 
-
-
 // export const uploadPage = (page) => {
 export const uploadOnglet = (iOnglet, queries) => (dispatch) => {
   // console.log("je charge la page :", iPage);
@@ -29,19 +27,16 @@ export const uploadOnglet = (iOnglet, queries) => (dispatch) => {
       .then((data) => {
         let times = data.result.schedules.map((e) => e.message)
         let destinations = data.result.schedules.map((e) => e.destination)
-        setTimeout(() => {
-          dispatch({
-            type: UPLOAD_PAGE,
-            payload: {
-              i,
-              row: {
-                arrivee: destinations,
-                times,
-              },
+        dispatch({
+          type: UPLOAD_PAGE,
+          payload: {
+            i,
+            row: {
+              arrivee: destinations,
+              times,
             },
-          })
-        }, 5555);
-        
+          },
+        })
       })
   })
 }
@@ -56,7 +51,6 @@ function noctilienEtJour(q) {
 //   return t > "00:15:00" && t < "06:30:00"
 // }
 
-
 // export const attributeOnglet = (i) => (dispatch) => {
 //   resetAll()(dispatch)
 //   uploadPageInOnglet(i, 0)(dispatch)
@@ -67,8 +61,6 @@ export const resetAll = () => (dispatch) => {
     type: RESET_ALL,
   })
 }
-
-
 
 const vel = {
   api: "https://velib-metropole-opendata.smoove.pro/opendata/Velib_Metropole/station_status.json",
@@ -90,7 +82,7 @@ export const velib = (codeStation, i) => (dispatch) => {
               row: {
                 mechanical: station.num_bikes_available_types[0].mechanical,
                 ebike: station.num_bikes_available_types[1].ebike,
-                docks: station.numDocksAvailable
+                docks: station.numDocksAvailable,
               },
             },
           })
@@ -109,5 +101,3 @@ export const velib = (codeStation, i) => (dispatch) => {
 export function goPageDansOnglet(params) {
   return
 }
-
-
