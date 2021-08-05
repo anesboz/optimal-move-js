@@ -2,9 +2,9 @@ import React, { Fragment } from "react"
 import { connect } from "react-redux"
 import styled from "styled-components"
 import loading from "../media/icons/loading.gif"
-import v1 from "../media/icons/velibE.png"
-import v2 from "../media/icons/velibP.png"
-import v3 from "../media/icons/velibM.png"
+import ebikeLogo from "../media/icons/velibE.png"
+import docksLogo from "../media/icons/velibP.png"
+import mechanicalLogo from "../media/icons/velibM.png"
 import logo_velib from "../media/icons/logo_velib.png"
 import sideRow from "../media/icons/sideRow.png"
 
@@ -16,26 +16,11 @@ const RowContainer = styled.div`
   overflow: scroll;
 `
 
-const velibImg = {
-  0: v1,
-  1: v2,
-  2: v3,
-}
-const isHere = [
-  "Train a l'approche",
-  "A l'approche",
-  "Train a quai",
-  "A l'arret",
-]
-const isComing = ["0 mn", "1 mn", "2 mn"]
-const problems = [
-  "SERVICE TERMINE",
-  "Schedules unavailable",
-  "Service termine",
-  "INFO INDISPO ....",
-  "Train retarde",
-  "SERVICE NON COMMENCE",
-]
+// const velibImg = {
+//   ebike: v1,
+//   1: v2,
+//   2: v3,
+// }
 
 const Case = styled.div`
   display: flex;
@@ -44,10 +29,7 @@ const Case = styled.div`
   border: 1px solid gray;
   margin: 0 0.1rem;
   padding: 0 0.5rem;
-  color: ${(props) =>
-    isHere.concat(isComing).includes(props.value) ? "orange" : "inital"};
-  flex: ${(props) =>
-    problems.includes(props.value) ? "1 0 66%" : "1 0 32.5%"};
+  flex: 1 0 32.5%;
   white-space: nowrap;
   overflow: hidden;
 `
@@ -82,7 +64,8 @@ const VelibStationName = styled.div`
 
 function Row(props) {
   let i = props.id
-  let page = props.page[i]
+  // let page = props.page[i]
+  let row = props.page[props.id]
   return (
     <RowContainer>
       <Case>
@@ -90,17 +73,22 @@ function Row(props) {
           <VelibLogo>
             <Img src={logo_velib} />
           </VelibLogo>
-          <VelibStationName>{page?.velibStationName}</VelibStationName>
+          <VelibStationName>{props.depart}</VelibStationName>
         </VelibContainer>
       </Case>
-      {[0, 1, 2].map((t, j) => (
-        <Case value={t} key={j}>
-          <Fragment>
-            <Img src={velibImg[j]} className="mr-2" />
-            {page?.times ? page.times[t] : <Img src={loading} />}
-          </Fragment>
-        </Case>
-      ))}
+      <Case>
+        <Img src={ebikeLogo} className="mr-2" />
+        {row?.ebike ? row.ebike : <Img src={loading} />}
+      </Case>
+      <Case>
+        <Img src={docksLogo} className="mr-2" />
+        {row?.docks ? row.docks : <Img src={loading} />}
+      </Case>
+      <Case>
+        <Img src={mechanicalLogo} className="mr-2" />
+        {row?.mechanical ? row.mechanical : <Img src={loading} />}
+      </Case>
+
       <Case key={5} style={{ flex: "1 0 18%" }}>
         <Img src={sideRow} />
       </Case>

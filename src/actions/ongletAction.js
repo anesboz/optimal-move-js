@@ -5,26 +5,62 @@ import {
   GO_PAGE,
   RESET_PAGE,
 } from "./types"
-import data from "../data"
-
-const transportTypes = {
-  m: "metros",
-  b: "buses",
-  r: "rers",
-  t: "tramways",
-  n: "noctiliens",
-}
+// import data from "../data"
+import test from "./debug.js"
 
 
 
-export const attributeOnglet = (i) => (dispatch) => {
-  resetAll()(dispatch)
+// export const uploadPage = (page) => {
+export const uploadOnglet = (iOnglet, queries) => (dispatch) => {
+  // console.log("je charge la page :", iPage);
   dispatch({
     type: ATTRIBUTE_ONGLET,
-    payload: i,
+    payload: iOnglet,
   })
-  uploadPage(i, 0)(dispatch)
+  queries.map((q, i) => {
+    if (/^[0-9]+$/.test(q)) {
+      return velib(q, i)(dispatch)
+    }
+    if (noctilienEtJour(q)) {
+      return
+    }
+    fetch(q)
+      .then((res) => res.json())
+      .then((data) => {
+        let times = data.result.schedules.map((e) => e.message)
+        let destinations = data.result.schedules.map((e) => e.destination)
+        setTimeout(() => {
+          dispatch({
+            type: UPLOAD_PAGE,
+            payload: {
+              i,
+              row: {
+                arrivee: destinations,
+                times,
+              },
+            },
+          })
+        }, 5555);
+        
+      })
+  })
 }
+
+function noctilienEtJour(q) {
+  let t = new Date().toLocaleTimeString()
+  return !(t > "00:00:00" && t < "07:00:00") && q.includes("noctiliens")
+}
+
+// function nightTime() {
+//   var t = new Date().toLocaleTimeString()
+//   return t > "00:15:00" && t < "06:30:00"
+// }
+
+
+// export const attributeOnglet = (i) => (dispatch) => {
+//   resetAll()(dispatch)
+//   uploadPageInOnglet(i, 0)(dispatch)
+// }
 
 export const resetAll = () => (dispatch) => {
   dispatch({
@@ -32,48 +68,6 @@ export const resetAll = () => (dispatch) => {
   })
 }
 
-// export const uploadPage = (page) => {
-export const uploadPage = (currentOnglet, currentPage) => (dispatch) => {
-  dispatch({
-    type: RESET_PAGE,
-  })
-  let page = data[currentOnglet].list[currentPage]
-  // example q = "m7 Villejuif Leo Lagrange"
-  page.map((q, i) => {
-    if (q.includes("velib")) {
-      return velib(q, i)(dispatch)
-    }
-    let s = q.split(/\s(.+)/)
-    let type = transportTypes[s[0][0]]
-    let code = s[0].slice(1)
-    let station = s[1].replace(/ /g, "%20")
-    let way = "A"
-    let query = `https://api-ratp.pierre-grimaud.fr/v4/schedules/${type}/${code}/${station}/${way}`
-    // dont display noctiliens during the day
-    if (!nightTime() && type === "noctiliens") {
-      return
-    }
-    fetch(query)
-      .then((res) => res.json())
-      .then((data) => {
-        let times = data.result.schedules.map((e) => e.message)
-        dispatch({
-          type: UPLOAD_PAGE,
-          payload: {
-            row: i,
-            data: {
-              times,
-            },
-          },
-        })
-      })
-  })
-}
-
-function nightTime() {
-  var t = new Date().toLocaleTimeString()
-  return t > "00:15:00" && t < "06:30:00"
-}
 
 
 const vel = {
@@ -81,11 +75,8 @@ const vel = {
   proxy: "https://anes-cors-everywhere.herokuapp.com/",
 }
 
-export const velib = (q,i) => (dispatch) => {
-  console.log("dans la fonction velib");
-  let s = q.split(/(velib [0-9]+ )/)
-  let codeStation = s[1].replace('velib', '').trim()
-  let nameStation = s[2].trim()
+export const velib = (codeStation, i) => (dispatch) => {
+  test(() => codeStation)
   fetch(vel.proxy + vel.api)
     .then((data) => data.json())
     .then((jsonFile) =>
@@ -95,14 +86,11 @@ export const velib = (q,i) => (dispatch) => {
           dispatch({
             type: UPLOAD_PAGE,
             payload: {
-              row: i,
-              data: {
-                velibStationName: nameStation,
-                times: [
-                  station.num_bikes_available_types[0].mechanical,
-                  station.num_bikes_available_types[1].ebike,
-                  station.numDocksAvailable,
-                ],
+              i,
+              row: {
+                mechanical: station.num_bikes_available_types[0].mechanical,
+                ebike: station.num_bikes_available_types[1].ebike,
+                docks: station.numDocksAvailable
               },
             },
           })
@@ -110,12 +98,16 @@ export const velib = (q,i) => (dispatch) => {
     )
 }
 
-export const goPageDansOnglet = (i, numOnglet) => (dispatch) => {
-  uploadPage(numOnglet, i)(dispatch)
-  dispatch({
-    type: GO_PAGE,
-    payload: i,
-  })
+// export const goPageDansOnglet = (i, numOnglet) => (dispatch) => {
+//   uploadPage(numOnglet, i)(dispatch)
+//   dispatch({
+//     type: GO_PAGE,
+//     payload: i,
+//   })
+// }
+
+export function goPageDansOnglet(params) {
+  return
 }
 
 

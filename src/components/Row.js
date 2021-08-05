@@ -41,51 +41,81 @@ const Case = styled.div`
   flex: ${(props) =>
     problems.includes(props.value) ? "1 0 66%" : "1 0 32.5%"};
   white-space: nowrap;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: visible ;
 `
 
 const Img = styled.img`
   height: 68%;
 `
-const ratpImgs = {
-  m: "https://www.ratp.fr/sites/default/files/lines-assets/picto/metro/picto_metro_ligne-",
-  b: "https://www.ratp.fr/sites/default/files/lines-assets/picto/busratp/picto_busratp_ligne-",
-  n: "https://www.ratp.fr/sites/default/files/lines-assets/picto/noctilien/picto_noctilien_ligne-n",
-  t: "https://www.ratp.fr/sites/default/files/lines-assets/picto/tram/picto_tram_ligne-t",
-  r: "https://www.ratp.fr/sites/default/files/lines-assets/picto/rer/picto_rer_ligne-",
-}
+
 
 function Row(props) {
   let page = props.page[props.id]
-  let s = props.q.split(/\s(.+)/)
-  let imgUrl = ratpImgs[s[0][0]] + s[0].slice(1) + ".svg"
+  // let s = props.q.split(/\s(.+)/)
+  // let imgUrl = ratpImgs[s[0][0]] + s[0].slice(1) + ".svg"
+  let imgUrl = props.imgUrl //ratpImgs[s[0][0]] + s[0].slice(1) + ".svg"
+  // const list = props.page
+  let row = props.page[props.id]
+  // return null
   return (
     <RowContainer>
       <Case>
-        <Img src={imgUrl} />
+        <Img src={props.row.imgUrl} />
       </Case>
-      {[0, 1, 2, 3].map((i, j) => {
-        if (!page?.times) {
-          return (
-            <Case key={j}>
-              <Img src={loading} />
-            </Case>
-          )
-        }
-        if (!page.times?.[i]) {
-          return null
-        }
-        return (
-          <Case value={page?.times?.[i]} key={j}>
-            <div className={isHere.includes(page.times[i]) ? "blink" : ""}>
-              {page.times[i]}
-            </div>
-          </Case>
-        )
-      })}
+      {row ?
+        row.times.map((time, j) => (
+        // if (!time) {
+        //   return (
+        //     
+        //   )
+        // }
+        <Case value={time} key={j}>
+            <div className={isHere.includes(time) ? "blink" : ""}>{time}</div>
+        </Case>
+        // if (!page.times?.[i]) {
+        //   return null
+        // }
+        // return (
+          
+        // )
+      ))
+      :
+      <Fragment>
+        <Case ><Img src={loading} /></Case>
+        <Case ><Img src={loading} /></Case>
+      </Fragment>
+      }
       <Case key={5} style={{ flex: "1 0 18%" }}>
         <Img src={sideRow} />
       </Case>
+      {/* <div class="dropdown">
+        <button
+          class="btn btn-secondary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Dropdown button
+        </button>
+        <div
+          class="dropdown-menu"
+          aria-labelledby="dropdownMenuButton"
+          style={{ zIndex: 55 }}
+        >
+          <a class="dropdown-item" href="#">
+            Action
+          </a>
+          <a class="dropdown-item" href="#">
+            Another action
+          </a>
+          <a class="dropdown-item" href="#">
+            Something else here
+          </a>
+        </div>
+      </div> */}
     </RowContainer>
   )
 }

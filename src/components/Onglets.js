@@ -1,32 +1,35 @@
-import data from "../data";
-import { connect } from "react-redux";
+// import data from "../data";
+// import { connect } from "react-redux";
 import OneButton from "./OneButton";
 import styled from "styled-components";
-
+import * as ls from "../actions/dataActions"
 
 const OngletsContainer = styled.div`
   position: absolute;
   bottom: 0;
   height: 10%;
   width: 100%;
-  border: 1px solid gray;
+  border-top: 1px solid #dddddd;
 
   display: flex;
   overflow-x: scroll;
   overflow-y: hidden;
 `;
 const Onglets = (props) => {
+  
   return (
     <OngletsContainer>
-      {data.map((onglet, index) => {
-        return <OneButton key={index} onglet={onglet} />;
+      {props.data.map((_, i) => {
+        return <OneButton key={i} id={i} onglet={props.data[i]} />
       })}
     </OngletsContainer>
   );
 };
 
-const mapStateToProps = (state) => ({
-  currentOnglet: state.onglets.currentOnglet,
-});
+// const mapStateToProps = (state) => ({
+//   currentOnglet: state.onglets.currentOnglet,
+// });
 
-export default connect(mapStateToProps)(Onglets);
+// export default connect(mapStateToProps)(Onglets);
+
+export default Onglets

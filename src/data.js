@@ -3,33 +3,23 @@ const liste = [
     name: "McDo-Stalingrad",
     logo: "https://www.citypng.com/public/uploads/preview/-11600735522qbwj7xtpxu.png",
     list: [
-      ["(Villejuif-Louis Aragon) m7 Stalingrad"],
-      ["m5 jaures", "(Villejuif-Louis Aragon) m7 place italie"],
+      ["m5 place italie r"],
       [
-        "m5 jaures",
-        "(Villejuif-Louis Aragon) m7 gare de l est",
-        "(Villejuif-Louis Aragon) m7 place italie",
-        "n15 place d'italie italie 2",
-        "n22 place d'italie italie 2",
-        "b47 place d'italie italie 2",
+        "b47 Kremlin Bicetre r",
+        "b75 Cardinal Lemoine Monge a",
+        "b38 Cite - Palais de Justice a",
       ],
       [
-        "velib 19004 Bassin Vilette, 19003 La place",
-        "velib 10037 Canal St-Martin, 10036 Stalingrad",
+        "b185 Dauphin - Anatole France r",
+        "b47 Kremlin Bicetre r",
+        "b131 Kremlin Bicetre r",
+        "b186 Convention - Fontainebleau r",
       ],
       [
-        "n13 jaures",
-        "n41 jaures",
-        "n45 jaures",
-        "n14 gare de est",
-        "n15 chatelet",
-        "n22 chatelet",
-      ],
-      [
-        "n43 place de la chapelle",
-        "velib 19004 Bassin Vilette, 19003 La place",
-        "velib 10037 Canal St-Martin, 10036 Stalingrad",
-        "velib 33018 Villebois",
+        "n22 Dauphin - Anatole France r",
+        "n15 Dauphin - Anatole France r",
+        "n13 Chatelet r",
+        "n14 Chatelet a",
       ],
     ],
   },
@@ -38,10 +28,16 @@ const liste = [
     logo: "https://logo-marque.com/wp-content/uploads/2021/02/Auchan-Logo.png",
     list: [
       [
-        "b185 Convention - Fontainebleau",
-        "m7 Le Kremlin-Bicetre",
-        "velib 42707 Okabé",
-        "velib 42703  Kremlin",
+        "b185 Dauphin - Anatole France r",
+        "m7 Villejuif Leo Lagrange r",
+        "velib 48002 Vivaldi, 42703 Kremlin",
+      ],
+    ],
+    backList: [
+      [
+        "b185 Convention - Fontainebleau a",
+        "m7 Le Kremlin-Bicetre a",
+        "velib 42707 Okabé,  42703  Kremlin",
       ],
     ],
   },
@@ -50,444 +46,114 @@ const liste = [
     logo: "http://cdn.shopify.com/s/files/1/0066/0478/3687/products/FA205-france_1200x1200.jpg?v=1580479406",
     list: [
       [
-        "m7 Villejuif Leo Lagrange",
-        "b185 Dauphin - Anatole France",
+        "m7 Villejuif Leo Lagrange r",
+        "b185 Dauphin - Anatole France r",
         "velib 48002 Vivaldi",
-        "n15 Dauphin - Anatole France",
-        "n22 Dauphin - Anatole France",
+        "n15 Dauphin - Anatole France r",
+        "n22 Dauphin - Anatole France r",
       ],
     ],
   },
   {
     name: "Agorae",
     logo: "https://www.universite-paris-saclay.fr/sites/default/files/2020-07/agorae.png",
-    list: [["t3a porte italie"]],
-    backList: [["t3a avenue de france"]],
+    list: [["t3a porte italie a"]],
+    backList: [["t3a avenue de france r"]],
   },
   {
     name: "PorteItalie",
     logo: "https://cdn.countryflags.com/thumbs/italy/flag-button-round-250.png",
     list: [
       [
-        "m7 Villejuif Leo Lagrange",
-        "b185 Dauphin - Anatole France",
+        "m7 Villejuif Leo Lagrange r",
+        "b185 Dauphin - Anatole France r",
         "velib 48002 Vivaldi",
-        "n15 Dauphin - Anatole France",
-        "n22 Dauphin - Anatole France",
+        "n15 Dauphin - Anatole France r",
+        "n22 Dauphin - Anatole France r",
       ],
       [
-        "b47 Kremlin Bicetre",
-        "b131 Kremlin Bicetre",
-        "b185 Kremlin Bicetre",
-        "m7 Kremlin Bicetre",
+        "b47 Kremlin Bicetre r",
+        "b131 Kremlin Bicetre r",
+        "b185 Kremlin Bicetre r",
+        "m7 Kremlin Bicetre r",
         "velib 42703 Kremlin",
-        "n15 Kremlin Bicetre",
-        "n22 Kremlin Bicetre",
+        "n15 Kremlin Bicetre r",
+        "n22 Kremlin Bicetre r",
       ],
       [
-        "b47 Convention Fontainebleau",
-        "b131 Convention Fontainebleau",
-        "b185 Convention Fontainebleau",
-        "b186 Convention Fontainebleau",
+        "b47 Convention Fontainebleau r",
+        "b131 Convention Fontainebleau r",
+        "b185 Convention Fontainebleau r",
+        "b186 Convention Fontainebleau r",
         "velib 42707 Okabé",
-        "n15 Convention Fontainebleau",
-        "n22 Convention Fontainebleau",
+        "n15 Convention Fontainebleau r",
+        "n22 Convention Fontainebleau r",
       ],
       [
-        "b47 Roger Salengro Fontainebleau",
-        "b131 Roger Salengro Fontainebleau",
-        "b185 Roger Salengro Fontainebleau",
-        "b186 Roger Salengro Fontainebleau",
+        "b47 Roger Salengro Fontainebleau r",
+        "b131 Roger Salengro Fontainebleau r",
+        "b185 Roger Salengro Fontainebleau r",
+        "b186 Roger Salengro Fontainebleau r",
         "velib 42706 Lidl",
-        "n15 Roger Salengro Fontainebleau",
-        "n22 Roger Salengro Fontainebleau",
+        "n15 Roger Salengro Fontainebleau r",
+        "n22 Roger Salengro Fontainebleau r",
       ],
     ],
     backList: [
       [
-        "b185 Porte Italie",
-        "b131 Porte Italie",
-        "b186 Porte Italie",
-        "b47 porte d'italie   helene boucher",
-        "(Villejuif-Louis Aragon) m7 maison blanche",
+        "b185 Porte Italie a",
+        "b131 Porte Italie a",
+        "b186 Porte Italie a",
+        "b47 porte d'italie   helene boucher a",
+        "(Villejuif-Louis Aragon) m7 maison blanche a",
         "velib 13032 Porte-Italie",
-        "n15 porte d'italie   helene boucher",
-        "n22 porte d'italie   helene boucher",
+        "n15 porte d'italie   helene boucher a",
+        "n22 porte d'italie   helene boucher a",
       ],
       [
-        "b47 Roger Salengro Fontainebleau",
-        "b131 Roger Salengro Fontainebleau",
-        "b185 Roger Salengro Fontainebleau",
-        "b186 Roger Salengro Fontainebleau",
+        "b47 Roger Salengro Fontainebleau a",
+        "b131 Roger Salengro Fontainebleau a",
+        "b185 Roger Salengro Fontainebleau a",
+        "b186 Roger Salengro Fontainebleau a",
         "velib 42706 Lidl",
-        "n15 Roger Salengro Fontainebleau",
-        "n22 Roger Salengro Fontainebleau",
+        "n15 Roger Salengro Fontainebleau a",
+        "n22 Roger Salengro Fontainebleau a",
       ],
       [
-        "b47 Convention Fontainebleau",
-        "b131 Convention Fontainebleau",
-        "b185 Convention Fontainebleau",
-        "b186 Convention Fontainebleau",
+        "b47 Convention Fontainebleau a",
+        "b131 Convention Fontainebleau a",
+        "b185 Convention Fontainebleau a",
+        "b186 Convention Fontainebleau a",
         "velib 42707 Okabé",
-        "n15 Convention Fontainebleau",
-        "n22 Convention Fontainebleau",
+        "n15 Convention Fontainebleau a",
+        "n22 Convention Fontainebleau a",
       ],
       [
-        "b185 Kremlin Bicetre",
-        "m7 Kremlin Bicetre",
+        "b185 Kremlin Bicetre a",
+        "m7 Kremlin Bicetre a",
         "velib 42703 Kremlin",
-        "n15 Kremlin Bicetre",
-        "n22 Kremlin Bicetre",
+        "n15 Kremlin Bicetre a",
+        "n22 Kremlin Bicetre a",
       ],
     ],
   },
   {
     name: "Montsouris",
     logo: "https://logodix.com/logo/403615.jpg",
-    list: [["t3a porte italie"]],
+    list: [["t3a porte italie r"]],
     backList: [
-      ["t3a Cite universitaire"],
+      ["t3a Cite universitaire a"],
       [
-        "b185 Porte Italie",
-        "b131 Porte Italie",
-        "b186 Porte Italie",
-        "b47 porte d'italie   helene boucher",
+        "b185 Porte Italie a",
+        "b131 Porte Italie a",
+        "b186 Porte Italie a",
+        "b47 porte d'italie   helene boucher a",
         "velib 13032 Porte-Italie",
-        "n15 porte d'italie   helene boucher",
-        "n22 porte d'italie   helene boucher",
+        "n15 porte d'italie   helene boucher a",
+        "n22 porte d'italie   helene boucher a",
       ],
     ],
   },
 ]
 
-export default liste;
-/*
-var obsolete = [
-  {
-    name: "qwartz",
-    logo: null,
-    list: [
-      [
-        "b173 murger",
-        "b137 jean jaures-mairie",
-        "b166 jean jaures-mairie",
-      ],
-    ],
-    backList: [
-      [
-        "b137 lycee petiet   c. commercial",
-        "b173 mairie de Saint ouen   metro",
-        "b166 quatre chemins",
-      ],
-    ],
-  },
-  {
-    name: "StadeFrance",
-    logo: null,
-    list: [
-      [
-        "b239 Saint Gobain",
-        "b139 Saint Gobain",
-        "b173 murger",
-        "velib 33020 Waldeck",
-      ],
-      [
-        "rb La Plaine Stade de France",
-        "(Villejuif-Louis Aragon) m7 chatelet",
-      ],
-      ["m10 cluny la sorbonne", "(Villejuif-Louis Aragon) m7 Jussieu"],
-    ],
-    backList: [
-      [
-        "b239 La Plaine Stade de France",
-        "b139 La Plaine-Stade de France",
-        "b173 La Plaine-Stade de France",
-        "velib 32011",
-      ],
-      ["rb chatelet"],
-    ],
-  },
-  {
-    name: "m12",
-    logo: null,
-    list: [
-      [
-        "b239 Saint Gobain",
-        "b139 Saint Gobain",
-        "m12 Front Populaire",
-        "velib 33020 Waldeck",
-      ],
-    ],
-    backList: [
-      [
-        "m2 jaures",
-        "m12 pigalle",
-        "b239 front-populaire proudhon",
-        "b139 front-populaire proudhon",
-        "b512 front-populaire proudhon",
-        "velib 32021 Waldeck",
-      ],
-      ["m7 Villejuif Leo Lagrange", "rb chatelet", "rb gare du nord"],
-    ],
-  },
-  {
-    name: "Millenaire",
-    logo: null,
-    list: [
-      ["b239 Saint Gobain", "velib 33020 Waldeck"],
-      ["b139 Saint Gobain", "velib 33020 Waldeck"],
-    ],
-    backList: [
-      [
-        "b239 parc du millenaire",
-        "velib 33019 Millenaire,  33001  M.Generaux",
-      ],
-      ["b139 quai lucien lefranc"],
-    ],
-  },
-];
-
-var _Obj_List_D = [
-  {
-    name: "m12",
-    logo: null,
-    list: [
-      [
-        "b239 Saint Gobain",
-        "b139 Saint Gobain",
-        "m12 Front Populaire",
-        "velib 33020 Waldeck",
-      ],
-    ],
-    backList: [
-      [
-        "m2 jaures",
-        "m12 pigalle",
-        "b239 front-populaire proudhon",
-        "b139 front-populaire proudhon",
-        "b512 front-populaire proudhon",
-        "velib 32021 Waldeck",
-      ],
-      ["m7 Villejuif Leo Lagrange", "rb chatelet", "rb gare du nord"],
-    ],
-  },
-  {
-    name: "StadeFrance",
-    logo: null,
-    list: [
-      [
-        "b239 Saint Gobain",
-        "b139 Saint Gobain",
-        "b173 murger",
-        "velib 33020 Waldeck",
-      ],
-      [
-        "rb La Plaine Stade de France",
-        "(Villejuif-Louis Aragon) m7 chatelet",
-      ],
-      ["m10 cluny la sorbonne", "(Villejuif-Louis Aragon) m7 Jussieu"],
-    ],
-    backList: [
-      [
-        "b239 La Plaine Stade de France",
-        "b139 La Plaine-Stade de France",
-        "b173 La Plaine-Stade de France",
-        "velib 32011",
-      ],
-      ["rb chatelet"],
-    ],
-  },
-  { name: "pray" },
-  {
-    name: "qwartz",
-    logo: null,
-    list: [
-      [
-        "b173 murger",
-        "b137 jean jaures-mairie",
-        "b166 jean jaures-mairie",
-      ],
-    ],
-    backList: [
-      [
-        "b137 lycee petiet   c. commercial",
-        "b173 mairie de Saint ouen   metro",
-        "b166 quatre chemins",
-      ],
-    ],
-  },
-  {
-    name: "Anes",
-    logo: null,
-    list: [
-      [
-        "t3a pont de garigliano",
-        "b185 Porte Italie",
-        "b47 porte d'italie helene boucher",
-        "b131 Porte Italie",
-      ],
-    ],
-    backList: [
-      [
-        "b185 Dauphin - Anatole France",
-        "m7 Villejuif Leo Lagrange",
-        "t3a porte italie",
-      ],
-    ],
-  },
-];
-
-var _ongletsPredefinis = [
-  {
-    name: "Jussieu",
-    logo: null,
-    list: [
-      ["m7 Jussieu", "m10 Jussieu"],
-      [
-        "(Mairie d'Ivry) m7 Jussieu",
-        "(Villejuif-Louis Aragon)  m7 Jussieu",
-        "m10 Jussieu",
-      ],
-      [
-        "velib 5119 O'Tacos, 5021 City-Center",
-        "velib 5022 C.Lemoine, 5020 M.Arabe",
-      ],
-    ],
-  },
-  {
-    name: "Vivaldi",
-    logo: null,
-    list: [
-      [
-        "m7 Villejuif Leo Lagrange",
-        "b185 Dauphin - Anatole France",
-        "velib 48002 Vivaldi",
-        "n15 Dauphin - Anatole France",
-        "n22 Dauphin - Anatole France",
-      ],
-      [
-        "m7 Villejuif Leo Lagrange",
-        "b185 Dauphin - Anatole France",
-        "velib 48002 Vivaldi",
-        "n15 Dauphin - Anatole France",
-        "n22 Dauphin - Anatole France",
-      ],
-    ],
-  },
-  {
-    name: "PorteItalie",
-    logo: null,
-    list: [
-      [
-        "m7 Villejuif Leo Lagrange",
-        "b185 Dauphin - Anatole France",
-        "velib 48002 Vivaldi",
-        "n15 Dauphin - Anatole France",
-        "n22 Dauphin - Anatole France",
-      ],
-      [
-        "b47 Kremlin Bicetre",
-        "b131 Kremlin Bicetre",
-        "b185 Kremlin Bicetre",
-        "m7 Kremlin Bicetre",
-        "velib 42703 Kremlin",
-        "n15 Kremlin Bicetre",
-        "n22 Kremlin Bicetre",
-      ],
-      [
-        "b47 Convention Fontainebleau",
-        "b131 Convention Fontainebleau",
-        "b185 Convention Fontainebleau",
-        "b186 Convention Fontainebleau",
-        "velib 42707 Okabé",
-        "n15 Convention Fontainebleau",
-        "n22 Convention Fontainebleau",
-      ],
-      [
-        "b47 Roger Salengro Fontainebleau",
-        "b131 Roger Salengro Fontainebleau",
-        "b185 Roger Salengro Fontainebleau",
-        "b186 Roger Salengro Fontainebleau",
-        "velib 42706 Lidl",
-        "n15 Roger Salengro Fontainebleau",
-        "n22 Roger Salengro Fontainebleau",
-      ],
-    ],
-    backList: [
-      [
-        "b185 Porte Italie",
-        "b131 Porte Italie",
-        "b186 Porte Italie",
-        "b47 porte d'italie   helene boucher",
-        "(Villejuif-Louis Aragon) m7 maison blanche",
-        "velib 13032 Porte-Italie",
-        "n15 porte d'italie   helene boucher",
-        "n22 porte d'italie   helene boucher",
-      ],
-      [
-        "b47 Roger Salengro Fontainebleau",
-        "b131 Roger Salengro Fontainebleau",
-        "b185 Roger Salengro Fontainebleau",
-        "b186 Roger Salengro Fontainebleau",
-        "velib 42706 Lidl",
-        "n15 Roger Salengro Fontainebleau",
-        "n22 Roger Salengro Fontainebleau",
-      ],
-      [
-        "b47 Convention Fontainebleau",
-        "b131 Convention Fontainebleau",
-        "b185 Convention Fontainebleau",
-        "b186 Convention Fontainebleau",
-        "velib 42707 Okabé",
-        "n15 Convention Fontainebleau",
-        "n22 Convention Fontainebleau",
-      ],
-      [
-        "b185 Kremlin Bicetre",
-        "m7 Kremlin Bicetre",
-        "velib 42703 Kremlin",
-        "n15 Kremlin Bicetre",
-        "n22 Kremlin Bicetre",
-      ],
-    ],
-  },
-  {
-    name: "McDo-Stalingrad",
-    logo: null,
-    list: [
-      [
-        // Metros
-        "m5 Jaures",
-        "(Villejuif-Louis Aragon) m7 Stalingrad",
-        "m2 Jaures",
-        "m7b Jaures",
-      ],
-      ["m5 Jaures", "m7 Stalingrad", "m2 Jaures", "m7b Jaures"],
-      [
-        // Velib
-        "velib 19004 Bassin Vilette, 19003 La place",
-        "velib 10037 Canal St-Martin, 10036 Stalingrad",
-      ],
-      [
-        // Noctiliens
-        "n13 Jaures",
-        "n41 Jaures",
-        "n45 Jaures",
-        "n42 Stalingrad",
-      ],
-      ["n13 Jaures", "n41 Jaures", "n45 Jaures", "n42 Stalingrad"],
-      [
-        // Buses
-        "b48 Jaures",
-        "b26 Jaures - Stalingrad",
-        "b54 Quai de la Seine - Stalingrad",
-      ],
-      [
-        "b48 Jaures",
-        "b26 Jaures - Stalingrad",
-        "b54 Quai de la Seine - Stalingrad",
-      ],
-    ],
-  },
-];
-*/
+export default liste

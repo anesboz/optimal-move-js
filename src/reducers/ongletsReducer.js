@@ -9,22 +9,22 @@ import {
 const initalState = {
   currentOnglet: null,
   currentPage: 0,
-  page: {},
-  home: false,
+  page: []
 };
 
 export default (state = initalState, action) => {
   switch (action.type) {
     case ATTRIBUTE_ONGLET:
+      console.log("ATTRIBUTE_ONGLET")
+      console.log(action.payload)
       return {
-        ...state,
-        currentOnglet: action.payload,
-        currentPage: 0,
+        ...initalState,
+        currentOnglet: action.payload
       }
 
     case UPLOAD_PAGE:
-      let clonePage = { ...state.page }
-      clonePage[action.payload.row] = action.payload.data
+      let clonePage = [...state.page ]
+      clonePage[action.payload.i] = action.payload.row
       return {
         ...state,
         page: clonePage,

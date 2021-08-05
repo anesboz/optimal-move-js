@@ -8,27 +8,43 @@ import { connect } from "react-redux";
 const Header = styled.header`
   height: 25%;
   background-color: rgb(249, 209, 25);
-  text-align: center;
-  border-bottom: 1px solid gray;
 `
 const Row = styled.div`
-  height: 5%;
-  border-bottom: 1px solid gray;
-`;
+  display: flex;
+  justify-content: space-between;
+  height: 6%;
+  width: 100%;
+  border-bottom: 1px solid #dddddd;
+`
+
+const Half = styled.div`
+  flex: 1 1 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+`
+
+const Img = styled.img`
+  height: 63%;
+  margin-left: 1rem;
+`
+
 const Banner = (props) =>{
   return (
-    <Fragment >
+    <Fragment>
       <Header className="center w-100" onClick={props.resetAll}>
         <img src={default_header} className="h-100" />
       </Header>
-      <Row className="row d-flex justify-content-between w-100">
-        <div className="col-4 h-100" onClick={() => window.location.reload()}>
-          <img src={optimalMove} className="h-75" />
-        </div>
-        <div className="center col-4">Meteo</div>
+      <Row>
+        <Half onClick={() => window.location.reload()}>
+          <Img src={optimalMove} style={{ height: "60%" }} />
+        </Half>
+        <Half style={{justifyContent: "center"}}>
+          🌞  Météo  🌞
+        </Half>
       </Row>
     </Fragment>
-  );
+  )
 }
 
 export default connect(null, {resetAll})(Banner);
