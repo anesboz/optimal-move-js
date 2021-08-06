@@ -2,8 +2,9 @@ import default_header from "../media/default_header.png";
 import optimalMove from "../media/optimalMove.png";
 import { resetAll } from "../actions/ongletAction";
 import styled from "styled-components";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { connect } from "react-redux";
+import { fetchData } from "../actions/dataActions"
 
 const Header = styled.header`
   height: 25%;
@@ -30,6 +31,8 @@ const Img = styled.img`
 `
 
 const Banner = (props) =>{
+  // HERE DATA IS FETCHED
+  props.fetchData()
   return (
     <Fragment>
       <Header className="center w-100" onClick={props.resetAll}>
@@ -39,12 +42,10 @@ const Banner = (props) =>{
         <Half onClick={() => window.location.reload()}>
           <Img src={optimalMove} style={{ height: "60%" }} />
         </Half>
-        <Half style={{justifyContent: "center"}}>
-          🌞  Météo  🌞
-        </Half>
+        <Half style={{ justifyContent: "center" }}>🌞 Météo 🌞</Half>
       </Row>
     </Fragment>
   )
 }
 
-export default connect(null, {resetAll})(Banner);
+export default connect(null, { resetAll, fetchData })(Banner)

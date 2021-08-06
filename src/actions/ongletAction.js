@@ -41,7 +41,7 @@ export const uploadOnglet = (iOnglet, queries) => (dispatch) => {
   })
 }
 
-function noctilienEtJour(q) {
+export function noctilienEtJour(q) {
   let t = new Date().toLocaleTimeString()
   return !(t > "00:00:00" && t < "07:00:00") && q.includes("noctiliens")
 }

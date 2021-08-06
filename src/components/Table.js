@@ -6,21 +6,21 @@ import { connect } from "react-redux"
 
 import Plus from "./Plus"
 import test from "../actions/debug"
+import { noctilienEtJour } from "../actions/ongletAction"
 
 const TableContainer = styled.div`
   scroll-behavior: smooth;
   overflow-y: scroll;
-  /* border: 4px solid red; */
   max-height: 30%;
 `
 
 const Description = styled.div`
-  /* display: flex; */
-  /* justify-content: center; */
-  /* height: 6%; */
-  /* border: 1px solid red; */
   font-size: 50%;
 `
+
+// depart: "Villejuif Leo Lagrange"
+// imgUrl: "https://www.ratp.fr/sites/default/files/lines-assets/picto/metro/picto_metro_ligne-7.svg"
+// query: "https://api-ratp.pierre-grimaud.fr/v4/schedules/metros/7/Villejuif%20L
 
 function Table(props) {
   let currentOnglet = props.currentOnglet
@@ -29,7 +29,7 @@ function Table(props) {
   if (currentOnglet == null) {
     return null
   }
-  const list = props.data[currentOnglet].list[currentPage]
+  const list = props.allOnglets[currentOnglet].list[currentPage]
   test(() => list)
   if (list.length == 0) {
     return null
@@ -42,12 +42,16 @@ function Table(props) {
             {/^[0-9]+$/.test(row.query) ? (
               <RowVelib depart={row.depart} id={i} key={i} />
             ) : (
+              noctilienEtJour(row.query) ?
+              null
+              :
               <Fragment>
                 <Description>
                   {row.depart} ➙ {props.page?.[i]?.arrivee?.[0]}
                 </Description>
                 <Row row={row} id={i} key={i} />
               </Fragment>
+              
             )}
           </Fragment>
         )
@@ -62,6 +66,7 @@ const mapStateToProps = (state) => ({
   currentOnglet: state.onglets.currentOnglet,
   currentPage: state.onglets.currentPage,
   page: state.onglets.page,
+  allOnglets: state.data.allOnglets,
 })
 
 export default connect(mapStateToProps)(Table)
