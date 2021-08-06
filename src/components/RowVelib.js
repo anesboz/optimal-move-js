@@ -26,7 +26,7 @@ const Case = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid gray;
+  border: 1px solid #dddddd;
   margin: 0 0.1rem;
   padding: 0 0.5rem;
   flex: 1 0 32.5%;

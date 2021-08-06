@@ -2,6 +2,7 @@ const initialData = [
   {
     name: "McDo-Stalingrad",
     logo: "https://www.citypng.com/public/uploads/preview/-11600735522qbwj7xtpxu.png",
+    description: ["De chez moi vers MAcdo", "desc 2eme page Bus"],
     list: [
       [
         {
@@ -117,15 +118,19 @@ const initialData = [
             "https://api-ratp.pierre-grimaud.fr/v4/schedules/metros/7/Villejuif%20Leo%20Lagrange/R",
         },
         {
-          depart: "Vivaldi, 42703 Kremlin",
+          depart: "Vivaldi",
           query: "48002",
+        },
+        {
+          depart: "Kremlin",
+          query: "42703",
         },
       ],
     ],
   },
   {
     name: "Paris",
-    logo: "http://cdn.shopify.com/s/files/1/0066/0478/3687/products/FA205-france_1200x1200.jpg?v=1580479406",
+    logo: "https://www.clipartmax.com/png/full/11-110571_eiffel-tower-free-icon-eiffel-tower-icon-png.png",
     list: [
       [
         {

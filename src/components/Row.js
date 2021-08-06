@@ -1,4 +1,4 @@
-import React, { Fragment } from "react"
+import React, { Fragment, useEffect } from "react"
 import { connect } from "react-redux"
 import styled from "styled-components"
 import loading from "../media/icons/loading.gif"
@@ -35,7 +35,7 @@ const Case = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid gray;
+  border: 1px solid #dddddd;
   margin: 0 0.1rem;
   padding: 0 0.5rem;
   color: ${(props) =>

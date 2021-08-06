@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import styled from "styled-components"
 import data from "../data"
-import { goPageDansOnglet } from "../actions/ongletAction"
+import { uploadOnglet } from "../actions/ongletAction"
 
 const DotsContainer = styled.div`
   display: flex;
@@ -28,14 +28,17 @@ function Dots(props) {
   if (props.currentOnglet == null) {
     return null
   }
-  let nbDots = data[props.currentOnglet].list
+  let onglet = props.allOnglets[props.currentOnglet]
+  let allPages = onglet.list
   return (
     <DotsContainer>
-      {nbDots.map((e, i) => (
+      {allPages.map((e, i) => (
         <Dot
           key={i}
           selected={props.currentPage === i}
-          onClick={() => props.goPageDansOnglet(i, props.currentOnglet)}
+          onClick={() =>
+            props.uploadOnglet(props.currentOnglet, onglet.list[i].map(e => e.query), i)
+          }
         />
       ))}
     </DotsContainer>
@@ -45,6 +48,7 @@ function Dots(props) {
 const mapStateToProps = (state) => ({
   currentOnglet: state.onglets.currentOnglet,
   currentPage: state.onglets.currentPage,
+  allOnglets: state.data.allOnglets,
 })
 
-export default connect(mapStateToProps, { goPageDansOnglet })(Dots)
+export default connect(mapStateToProps, { uploadOnglet })(Dots)

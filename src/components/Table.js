@@ -16,6 +16,7 @@ const TableContainer = styled.div`
 
 const Description = styled.div`
   font-size: 50%;
+  color: gray;
 `
 
 // depart: "Villejuif Leo Lagrange"
@@ -29,36 +30,33 @@ function Table(props) {
   if (currentOnglet == null) {
     return null
   }
-  const list = props.allOnglets[currentOnglet].list[currentPage]
+  const onglet = props.allOnglets[currentOnglet]
+  const list = onglet.list[currentPage]
   test(() => list)
   if (list.length == 0) {
     return null
   }
   return (
-    <TableContainer className="col-10 mt-5 p-0">
-      {list.map(
-        (row, i) => (
+    <Fragment>
+      <h6 className="mt-2">{onglet.description?.[currentPage]}</h6>
+      <TableContainer className="col-10 mt-2 p-0">
+        {list.map((row, i) => (
           <Fragment key={i}>
             {/^[0-9]+$/.test(row.query) ? (
               <RowVelib depart={row.depart} id={i} key={i} />
-            ) : (
-              noctilienEtJour(row.query) ?
-              null
-              :
+            ) : noctilienEtJour(row.query) ? null : (
               <Fragment>
                 <Description>
                   {row.depart} ➙ {props.page?.[i]?.arrivee?.[0]}
                 </Description>
                 <Row row={row} id={i} key={i} />
               </Fragment>
-              
             )}
           </Fragment>
-        )
-
-      )}
+        ))}
+      </TableContainer>
       <Plus />
-    </TableContainer>
+    </Fragment>
   )
 }
 

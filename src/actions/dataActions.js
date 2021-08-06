@@ -98,7 +98,7 @@ export const changeDirection = (iOnglet, iPage, iRow)  => (dispatch) => {
       newQuery: data[iOnglet].list[iPage][iRow].query,
     },
   })
-  uploadOnglet(iOnglet, data[iOnglet].list[iPage].map(e=> e.query))(dispatch)
+  uploadOnglet(iOnglet, data[iOnglet].list[iPage].map(e=> e.query), iPage)(dispatch)
 }
 
 

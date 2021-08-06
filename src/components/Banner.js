@@ -39,7 +39,7 @@ const Banner = (props) =>{
         <img src={default_header} className="h-100" />
       </Header>
       <Row>
-        <Half onClick={() => window.location.reload()}>
+        <Half onClick={() => {window.location.reload(); localStorage.clear()}}>
           <Img src={optimalMove} style={{ height: "60%" }} />
         </Half>
         <Half style={{ justifyContent: "center" }}>🌞 Météo 🌞</Half>

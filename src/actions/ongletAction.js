@@ -9,11 +9,11 @@ import {
 import test from "./debug.js"
 
 // export const uploadPage = (page) => {
-export const uploadOnglet = (iOnglet, queries) => (dispatch) => {
-  // console.log("je charge la page :", iPage);
+export const uploadOnglet = (iOnglet, queries, iPage=0) => (dispatch) => {
+  console.log("je charge les queries :", queries)
   dispatch({
     type: ATTRIBUTE_ONGLET,
-    payload: iOnglet,
+    payload: { iOnglet, iPage },
   })
   queries.map((q, i) => {
     if (/^[0-9]+$/.test(q)) {
