@@ -15,8 +15,8 @@ const initalState = {
 export default (state = initalState, action) => {
   switch (action.type) {
     case ATTRIBUTE_ONGLET:
-      console.log("ATTRIBUTE_ONGLET")
-      console.log(action.payload)
+      // console.log("ATTRIBUTE_ONGLET")
+      // console.log(action.payload)
       return {
         ...initalState,
         currentOnglet: action.payload.iOnglet,
@@ -24,8 +24,8 @@ export default (state = initalState, action) => {
       }
 
     case UPLOAD_PAGE:
-      console.log("UPLOAD_PAGE")
-      console.log(action.payload)
+      // console.log("UPLOAD_PAGE")
+      // console.log(action.payload)
       let clonePage = [...state.page ]
       clonePage[action.payload.i] = action.payload.row
       return {

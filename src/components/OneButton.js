@@ -1,7 +1,9 @@
 import React from "react"
 import { connect } from "react-redux"
+import { useHistory } from "react-router-dom";
 import styled from "styled-components"
 import { uploadOnglet } from "../actions/ongletAction"
+import { addOnglet } from "../actions/ongletsAction"
 import test from "./debug.js";
 const Div = styled.div`
   display: flex;
@@ -19,11 +21,19 @@ const Img = styled.img`
 function OneButton(props) {
   const id = props.id
   const onglet = props.onglet
+  const history = useHistory()
   // test(()=> onglet)
   let selected = id === props.currentOnglet
   return (
     <Div
       onClick={() => {
+        if (onglet.name == "addOnlget") {
+          // return history.push("/addOnglet")
+          return props.addOnglet({
+            name: "test",
+            logo: "gg"
+          })
+        }
         props.uploadOnglet(id, onglet.list[props.currentPage].map(e => e.query))
       }}
       selected={selected}
@@ -38,4 +48,4 @@ const mapStateToProps = (state) => ({
   currentPage: state.onglets.currentPage,
 })
 
-export default connect(mapStateToProps, { uploadOnglet })(OneButton)
+export default connect(mapStateToProps, { uploadOnglet, addOnglet })(OneButton)

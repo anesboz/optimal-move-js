@@ -1,28 +1,30 @@
-import default_header from "../media/default_header.png";
-import optimalMove from "../media/optimalMove.png";
-import { resetAll } from "../actions/ongletAction";
-import styled from "styled-components";
-import { Fragment, useEffect } from "react";
-import { connect } from "react-redux";
-import { fetchData } from "../actions/dataActions"
+import default_header from "../media/default_header.png"
+import optimalMove from "../media/optimalMove.png"
+import { resetAll } from "../actions/ongletAction"
+import styled from "styled-components"
+import { Fragment, useEffect } from "react"
+import { connect } from "react-redux"
+import { fetchData } from "../actions/ongletsAction"
+import { Link } from "react-router-dom"
+import { useHistory } from "react-router-dom";
 
-const Header = styled.header`
-  height: 25%;
+let h = 80
+const ImgContainer = styled.div`
+  height: ${h}%;
   background-color: rgb(249, 209, 25);
 `
 const Row = styled.div`
   display: flex;
   justify-content: space-between;
-  height: 6%;
+  height: ${100 - h}%;
   width: 100%;
   border-bottom: 1px solid #dddddd;
-`
-
-const Half = styled.div`
-  flex: 1 1 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
+  > * {
+    flex: 1 1 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
 `
 
 const Img = styled.img`
@@ -30,22 +32,31 @@ const Img = styled.img`
   margin-left: 1rem;
 `
 
-const Banner = (props) =>{
-  // HERE DATA IS FETCHED
-  props.fetchData()
+const Banner = (props) => {
+  const history = useHistory()
   return (
-    <Fragment>
-      <Header className="center w-100" onClick={props.resetAll}>
-        <img src={default_header} className="h-100" />
-      </Header>
+    <header style={{ height: "30%", width: '100%' }}>
+        <ImgContainer className="center w-100" onClick={() => {
+          props.resetAll()
+          history.push("/")
+        }}>
+          <img src={default_header} className="h-100" />
+        </ImgContainer>
       <Row>
-        <Half onClick={() => {window.location.reload(); localStorage.clear()}}>
+        <div
+          onClick={() => {
+            localStorage.clear()
+            window.location.reload()
+          }}
+        >
           <Img src={optimalMove} style={{ height: "60%" }} />
-        </Half>
-        <Half style={{ justifyContent: "center" }}>🌞 Météo 🌞</Half>
+        </div>
+        <div style={{ justifyContent: "center" }}>
+          <Link to="/add">🌞 Météo 🌞</Link>
+        </div>
       </Row>
-    </Fragment>
+    </header>
   )
 }
 
-export default connect(null, { resetAll, fetchData })(Banner)
+export default connect(null, { resetAll, })(Banner)

@@ -2,8 +2,9 @@
 import { connect } from "react-redux"
 import OneButton from "./OneButton"
 import styled from "styled-components"
-import * as ls from "../actions/dataActions"
-
+import { readOnglets } from "../actions/ongletsAction"
+import { useEffect } from "react"
+import {debug, flag} from '../debug'
 const OngletsContainer = styled.div`
   position: absolute;
   bottom: 0;
@@ -16,11 +17,14 @@ const OngletsContainer = styled.div`
   overflow-y: hidden;
 `
 const Onglets = (props) => {
-  // console.log(typeof(props.data))
+  // CRUD READ onglets names and logo
+  useEffect(() => props.readOnglets(), [])
+
+  const allOnglets = props.allOnglets
   return (
     <OngletsContainer>
-      {props.allOnglets.map((_, i) => (
-        <OneButton key={i} id={i} onglet={props.allOnglets[i]} />
+      {allOnglets?.map((onglet, i) => (
+        <OneButton key={i} id={i} onglet={onglet} />
       ))}
     </OngletsContainer>
   )
@@ -30,6 +34,6 @@ const mapStateToProps = (state) => ({
   allOnglets: state.data.allOnglets,
 })
 
-export default connect(mapStateToProps)(Onglets)
+export default connect(mapStateToProps, { readOnglets })(Onglets)
 
 // export default Onglets

@@ -4,6 +4,7 @@ import styled from "styled-components"
 import data from "../data"
 import { goPageDansOnglet } from "../actions/ongletAction"
 import plusLogo from "../media/icons/plus.png"
+import { Link } from "react-router-dom"
 
 const PlusContainer = styled.div`
   display: flex;
@@ -26,9 +27,11 @@ const DotImg = styled.img`
 
 function Plus(props) {
   return (
-    <PlusContainer>
-      <DotImg src={plusLogo} />
-    </PlusContainer>
+    <Link to="/add">
+      <PlusContainer>
+        <DotImg src={plusLogo}/>
+      </PlusContainer>
+    </Link>
   )
 }
 

@@ -5,7 +5,6 @@ import styled from "styled-components"
 import { connect } from "react-redux"
 
 import Plus from "./Plus"
-import test from "../actions/debug"
 import { noctilienEtJour } from "../actions/ongletAction"
 
 const TableContainer = styled.div`
@@ -32,7 +31,7 @@ function Table(props) {
   }
   const onglet = props.allOnglets[currentOnglet]
   const list = onglet.list[currentPage]
-  test(() => list)
+  // test(() => list)
   if (list.length == 0) {
     return null
   }

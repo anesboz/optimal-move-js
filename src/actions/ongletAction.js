@@ -6,11 +6,45 @@ import {
   RESET_PAGE,
 } from "./types"
 // import data from "../data"
-import test from "./debug.js"
 
 // export const uploadPage = (page) => {
-export const uploadOnglet = (iOnglet, queries, iPage=0) => (dispatch) => {
-  console.log("je charge les queries :", queries)
+// export const uploadOnglet = (iOnglet, queries, iPage=0) => (dispatch) => {
+//   const queries = JSON.parse(localStorage.getItem("data"))[iOnglet].list[iPage]
+//   // console.log("je charge les queries :", queries)
+//   dispatch({
+//     type: ATTRIBUTE_ONGLET,
+//     payload: { iOnglet, iPage },
+//   })
+//   queries.map((q, i) => {
+//     if (/^[0-9]+$/.test(q)) {
+//       return velib(q, i)(dispatch)
+//     }
+//     if (noctilienEtJour(q)) {
+//       return
+//     }
+//     fetch(q)
+//       .then((res) => res.json())
+//       .then((data) => {
+//         let times = data.result.schedules.map((e) => e.message)
+//         let destinations = data.result.schedules.map((e) => e.destination)
+//         dispatch({
+//           type: UPLOAD_PAGE,
+//           payload: {
+//             i,
+//             row: {
+//               arrivee: destinations,
+//               times,
+//             },
+//           },
+//         })
+//       })
+//   })
+// }
+
+
+export const uploadOnglet = (iOnglet, iPage=0) => (dispatch) => {
+  const queries = JSON.parse(localStorage.getItem("data"))[iOnglet].list[iPage].map(e=> e.query)
+  // console.log("je charge les queries :", queries)
   dispatch({
     type: ATTRIBUTE_ONGLET,
     payload: { iOnglet, iPage },
@@ -68,7 +102,7 @@ const vel = {
 }
 
 export const velib = (codeStation, i) => (dispatch) => {
-  test(() => codeStation)
+  // test(() => codeStation)
   fetch(vel.proxy + vel.api)
     .then((data) => data.json())
     .then((jsonFile) =>

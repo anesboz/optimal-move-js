@@ -4,7 +4,7 @@ import styled from "styled-components"
 import loading from "../media/icons/loading.gif"
 import sideRow from "../media/icons/sideRow.png"
 
-import { changeDirection } from "../actions/dataActions"
+import { changeDirection } from "../actions/ongletsAction"
 
 const RowContainer = styled.div`
   display: flex;

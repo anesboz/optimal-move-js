@@ -4,5 +4,6 @@ export const UPLOAD_PAGE = "UPLOAD_PAGE";
 export const GO_PAGE = "GO_PAGE";
 export const RESET_PAGE = "RESET_PAGE";
 
-export const FETCH_DATA = "FETCH_DATA";
+export const READ_ONGLETS = "READ_ONGLETS";
 export const UPDATE_DIRECTION = "UPDATE_DIRECTION";
+export const ADD_STATION = "ADD_STATION"

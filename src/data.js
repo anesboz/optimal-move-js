@@ -11,7 +11,7 @@ const initialData = [
             "https://www.ratp.fr/sites/default/files/lines-assets/picto/metro/picto_metro_ligne-5.svg",
           query:
             "https://api-ratp.pierre-grimaud.fr/v4/schedules/metros/5/place%20italie/R",
-        },
+        }
       ],
       [
         {
