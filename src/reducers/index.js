@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import onglets from "./ongletsReducer"
+import ongletsBranch from "./ongletsReducer"
 import data from "./dataReducer"
 
-export default combineReducers({ onglets, data });
+export default combineReducers({ ongletsBranch, data })

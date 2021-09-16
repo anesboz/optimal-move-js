@@ -1,8 +1,9 @@
 import React from "react"
 import { connect } from "react-redux"
 import styled from "styled-components"
+import { getOnglet } from "../actions/dataAction"
 import { uploadOnglet } from "../actions/ongletAction"
-import test from "./debug.js";
+
 const Div = styled.div`
   display: flex;
   flex: 0 0 25%;
@@ -16,16 +17,16 @@ const Img = styled.img`
   height: 65%;
   border-radius: 50%;
 `
+
 function OneButton(props) {
   const id = props.id
-  const onglet = props.onglet
-  let selected = id === props.currentOnglet
+  const onglet = getOnglet(id)
+  let selected = id === props.iOnglet
   return (
     <Div
       onClick={() => {
-        test(() => onglet);
-        let j = selected ? props.currentPage : 0
-        props.uploadOnglet(id, onglet.list[j].map(e => e.query))
+        let j = selected ? props.iPage : 0
+        props.uploadOnglet(id, j)
       }}
       selected={selected}
     >
@@ -35,8 +36,8 @@ function OneButton(props) {
 }
 
 const mapStateToProps = (state) => ({
-  currentOnglet: state.onglets.currentOnglet,
-  currentPage: state.onglets.currentPage,
+  iOnglet: state.ongletsBranch.iOnglet,
+  iPage: state.ongletsBranch.iPage,
 })
 
 export default connect(mapStateToProps, { uploadOnglet })(OneButton)

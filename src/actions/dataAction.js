@@ -1,6 +1,6 @@
 import test from "./debug.js";
 import initialData from "../data";
-import { FETCH_DATA, UPDATE_DIRECTION } from "../actions/types"
+import { FETCH_DATA, UPDATE_DIRECTION } from "./types"
 import { uploadOnglet } from "./ongletAction"
 export function checkData() {
   return localStorage.getItem("data") != null
@@ -118,3 +118,14 @@ export const changeDirection = (iOnglet, iPage, iRow)  => (dispatch) => {
 //   localStorage.setItem("c_Obj_List", JSON.stringify(_Obj_List))
 //   localStorage.setItem("c_name", currentObjName)
 // }
+
+
+export const getOnglets = () => {
+  return JSON.parse(localStorage.getItem("data"))
+}
+
+
+export const getOnglet = (iOnglet) => {
+  const allOnglets =  JSON.parse(localStorage.getItem("data"))
+  return allOnglets[iOnglet]
+}

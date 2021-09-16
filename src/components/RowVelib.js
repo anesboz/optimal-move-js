@@ -63,7 +63,7 @@ const VelibStationName = styled.div`
 `
 
 function Row(props) {
-  let i = props.id
+  // let i = props.id
   // let page = props.page[i]
   let row = props.page[props.id]
   return (
@@ -78,15 +78,15 @@ function Row(props) {
       </Case>
       <Case>
         <Img src={ebikeLogo} className="mr-2" />
-        {row?.ebike ? row.ebike : <Img src={loading} />}
+        {row?.ebike != null ? row.ebike : <Img src={loading} />}
       </Case>
       <Case>
         <Img src={docksLogo} className="mr-2" />
-        {row?.docks ? row.docks : <Img src={loading} />}
+        {row?.docks != null ? row.docks : <Img src={loading} />}
       </Case>
       <Case>
         <Img src={mechanicalLogo} className="mr-2" />
-        {row?.mechanical ? row.mechanical : <Img src={loading} />}
+        {row?.mechanical != null ? row.mechanical : <Img src={loading} />}
       </Case>
 
       <Case key={5} style={{ flex: "1 0 18%" }}>
@@ -97,7 +97,7 @@ function Row(props) {
 }
 
 const mapStateToProps = (state) => ({
-  page: state.onglets.page,
+  page: state.ongletsBranch.page,
 })
 
 export default connect(mapStateToProps)(Row)

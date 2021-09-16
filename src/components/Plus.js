@@ -33,8 +33,8 @@ function Plus(props) {
 }
 
 const mapStateToProps = (state) => ({
-  currentOnglet: state.onglets.currentOnglet,
-  currentPage: state.onglets.currentPage,
+  iOnglet: state.ongletsBranch.iOnglet,
+  iPage: state.ongletsBranch.iPage,
 })
 
 export default connect(mapStateToProps, { goPageDansOnglet })(Plus)

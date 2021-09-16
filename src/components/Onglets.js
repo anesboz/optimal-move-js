@@ -2,7 +2,7 @@
 import { connect } from "react-redux"
 import OneButton from "./OneButton"
 import styled from "styled-components"
-import * as ls from "../actions/dataActions"
+import { getOnglets } from "../actions/dataAction"
 
 const OngletsContainer = styled.div`
   position: absolute;
@@ -15,21 +15,13 @@ const OngletsContainer = styled.div`
   overflow-x: scroll;
   overflow-y: hidden;
 `
-const Onglets = (props) => {
-  // console.log(typeof(props.data))
+export default function Onglets() {
+  const onglets = getOnglets()
   return (
     <OngletsContainer>
-      {props.allOnglets.map((_, i) => (
-        <OneButton key={i} id={i} onglet={props.allOnglets[i]} />
+      {onglets.map((_, i) => (
+        <OneButton key={i} id={i} />
       ))}
     </OngletsContainer>
   )
 }
-
-const mapStateToProps = (state) => ({
-  allOnglets: state.data.allOnglets,
-})
-
-export default connect(mapStateToProps)(Onglets)
-
-// export default Onglets

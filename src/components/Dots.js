@@ -1,23 +1,20 @@
 import React from "react"
 import { connect } from "react-redux"
 import styled from "styled-components"
-import data from "../data"
 import { uploadOnglet } from "../actions/ongletAction"
+import { getOnglet } from "../actions/dataAction"
 
 const DotsContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   margin-top: 1rem;
-  /* height: 5rem; */
-  /* border: 3px solid red; */
 `
 let d = "1.1rem"
 const Dot = styled.div`
   display: flex;
   height: ${d};
   width: ${d};
-  /* border: 3px solid red; */
   border-radius: 50%;
   background-color: black;
   opacity: ${(props) => (props.selected ? 0.7 : 0.4)};
@@ -25,20 +22,19 @@ const Dot = styled.div`
 `
 
 function Dots(props) {
-  if (props.currentOnglet == null) {
+  const iOnglet = props.ongletsBranch.iOnglet
+  const iPage = props.ongletsBranch.iPage
+  if (iOnglet == null) {
     return null
   }
-  let onglet = props.allOnglets[props.currentOnglet]
-  let allPages = onglet.list
+  let onglet = getOnglet(iOnglet)
   return (
     <DotsContainer>
-      {allPages.map((e, i) => (
+      {onglet.list.map((e, i) => (
         <Dot
           key={i}
-          selected={props.currentPage === i}
-          onClick={() =>
-            props.uploadOnglet(props.currentOnglet, onglet.list[i].map(e => e.query), i)
-          }
+          selected={iPage === i}
+          onClick={() => props.uploadOnglet(iOnglet, i)}
         />
       ))}
     </DotsContainer>
@@ -46,9 +42,7 @@ function Dots(props) {
 }
 
 const mapStateToProps = (state) => ({
-  currentOnglet: state.onglets.currentOnglet,
-  currentPage: state.onglets.currentPage,
-  allOnglets: state.data.allOnglets,
+  ongletsBranch: state.ongletsBranch
 })
 
 export default connect(mapStateToProps, { uploadOnglet })(Dots)

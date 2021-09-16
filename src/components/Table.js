@@ -5,8 +5,8 @@ import styled from "styled-components"
 import { connect } from "react-redux"
 
 import Plus from "./Plus"
-import test from "../actions/debug"
 import { noctilienEtJour } from "../actions/ongletAction"
+import { getOnglet } from "../actions/dataAction"
 
 const TableContainer = styled.div`
   scroll-behavior: smooth;
@@ -24,21 +24,19 @@ const Description = styled.div`
 // query: "https://api-ratp.pierre-grimaud.fr/v4/schedules/metros/7/Villejuif%20L
 
 function Table(props) {
-  let currentOnglet = props.currentOnglet
-  let currentPage = props.currentPage
-  // n'affiche rien si aucune button n'est selectionne
-  if (currentOnglet == null) {
+  const iOnglet = props.ongletsBranch.iOnglet
+  if (iOnglet == null) {
     return null
   }
-  const onglet = props.allOnglets[currentOnglet]
-  const list = onglet.list[currentPage]
-  test(() => list)
-  if (list.length == 0) {
-    return null
-  }
+  const iPage = props.ongletsBranch.iPage
+  const onglet = getOnglet(iOnglet)
+  const list = onglet.list[iPage]
+  // if (list.length == 0) {  
+  //   return null
+  // }
   return (
     <Fragment>
-      <h6 className="mt-2">{onglet.description?.[currentPage]}</h6>
+      <h6 className="mt-2">{onglet.description?.[iPage]}</h6>
       <TableContainer className="col-10 mt-2 p-0">
         {list.map((row, i) => (
           <Fragment key={i}>
@@ -60,11 +58,10 @@ function Table(props) {
   )
 }
 
+
 const mapStateToProps = (state) => ({
-  currentOnglet: state.onglets.currentOnglet,
-  currentPage: state.onglets.currentPage,
-  page: state.onglets.page,
-  allOnglets: state.data.allOnglets,
+  ongletsBranch: state.ongletsBranch,
+  page: state.ongletsBranch.page,
 })
 
 export default connect(mapStateToProps)(Table)

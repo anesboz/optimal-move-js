@@ -4,7 +4,7 @@ import styled from "styled-components"
 import loading from "../media/icons/loading.gif"
 import sideRow from "../media/icons/sideRow.png"
 
-import { changeDirection } from "../actions/dataActions"
+import { changeDirection } from "../actions/dataAction"
 
 const RowContainer = styled.div`
   display: flex;
@@ -53,13 +53,7 @@ const Img = styled.img`
 
 
 function Row(props) {
-  let page = props.page[props.id]
-  // let s = props.q.split(/\s(.+)/)
-  // let imgUrl = ratpImgs[s[0][0]] + s[0].slice(1) + ".svg"
-  let imgUrl = props.imgUrl //ratpImgs[s[0][0]] + s[0].slice(1) + ".svg"
-  // const list = props.page
   let row = props.page[props.id]
-  // return null
   return (
     <RowContainer>
       <Case>
@@ -67,20 +61,9 @@ function Row(props) {
       </Case>
       {row ? (
         row.times?.map((time, j) => (
-          // if (!time) {
-          //   return (
-          //
-          //   )
-          // }
           <Case value={time} key={j}>
             <div className={isHere.includes(time) ? "blink" : ""}>{time}</div>
           </Case>
-          // if (!page.times?.[i]) {
-          //   return null
-          // }
-          // return (
-
-          // )
         ))
       ) : (
         <Fragment>
@@ -96,46 +79,19 @@ function Row(props) {
         key={5}
         style={{ flex: "1 0 18%" }}
         onClick={() =>
-          props.changeDirection(props.currentOnglet, props.currentPage, props.id)
+          props.changeDirection(props.iOnglet, props.iPage, props.id)
         }
       >
         <Img src={sideRow} />
       </Case>
-      {/* <div class="dropdown">
-        <button
-          class="btn btn-secondary dropdown-toggle"
-          type="button"
-          id="dropdownMenuButton"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          Dropdown button
-        </button>
-        <div
-          class="dropdown-menu"
-          aria-labelledby="dropdownMenuButton"
-          style={{ zIndex: 55 }}
-        >
-          <a class="dropdown-item" href="#">
-            Action
-          </a>
-          <a class="dropdown-item" href="#">
-            Another action
-          </a>
-          <a class="dropdown-item" href="#">
-            Something else here
-          </a>
-        </div>
-      </div> */}
     </RowContainer>
   )
 }
 
 const mapStateToProps = (state) => ({
-  currentOnglet: state.onglets.currentOnglet,
-  currentPage: state.onglets.currentPage,
-  page: state.onglets.page,
+  iOnglet: state.ongletsBranch.iOnglet,
+  iPage: state.ongletsBranch.iPage,
+  page: state.ongletsBranch.page,
 })
 
 export default connect(mapStateToProps, { changeDirection })(Row)

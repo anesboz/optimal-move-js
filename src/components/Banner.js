@@ -4,7 +4,7 @@ import { resetAll } from "../actions/ongletAction";
 import styled from "styled-components";
 import { Fragment, useEffect } from "react";
 import { connect } from "react-redux";
-import { fetchData } from "../actions/dataActions"
+import { fetchData } from "../actions/dataAction"
 
 const Header = styled.header`
   height: 25%;

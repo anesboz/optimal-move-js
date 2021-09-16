@@ -7,38 +7,45 @@ import {
 } from "../actions/types"
 
 const initalState = {
-  currentOnglet: null,
-  currentPage: 0,
+  iOnglet: null,
+  iPage: 0,
+  laps: null,
   page: []
 };
 
 export default (state = initalState, action) => {
   switch (action.type) {
     case ATTRIBUTE_ONGLET:
-      console.log("ATTRIBUTE_ONGLET")
-      console.log(action.payload)
       return {
         ...initalState,
-        currentOnglet: action.payload.iOnglet,
-        currentPage: action.payload.iPage,
+        iOnglet: action.payload.iOnglet,
+        iPage: action.payload.iPage,
+        laps: action.payload.laps,
       }
 
     case UPLOAD_PAGE:
-      console.log("UPLOAD_PAGE")
-      console.log(action.payload)
-      let clonePage = [...state.page ]
-      clonePage[action.payload.i] = action.payload.row
+      // fix latence bug
+      if(action.payload.laps != state.laps){
+        console.log("@@@@@@@@@@@@@@");
+        return state
+      }
+      let newPage = state.page.map((row, i) => {
+        if (i !== action.payload.i) {
+          return row
+        }
+      })
+      newPage[action.payload.i] = action.payload.row
       return {
         ...state,
-        page: clonePage,
+        page: newPage,
       }
     case GO_PAGE:
-      return { ...state, currentPage: action.payload }
+      return { ...state, iPage: action.payload }
     case RESET_ALL:
       return initalState
 
     case RESET_PAGE:
-      return {...state, page : {}}
+      return { ...state, page: [] }
 
     default:
       return state
