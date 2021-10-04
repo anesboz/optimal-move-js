@@ -1,18 +1,15 @@
-import {
-  ATTRIBUTE_ONGLET,
-  RESET_ALL,
-  UPLOAD_PAGE,
-} from "./types"
+import { ATTRIBUTE_ONGLET, RESET_ALL, UPLOAD_PAGE } from "./types"
 import { getOnglet } from "./dataAction"
 
 export const uploadOnglet = (iOnglet, iPage) => (dispatch) => {
-  const queries = getOnglet(iOnglet).list[iPage].map((e) => e.query)
+  const onglet = getOnglet(iOnglet)
+  const queries = onglet.list[iPage].map((e) => e.query)
   // console.log("queries")
   // console.log(queries)
   const laps = new Date().getTime()
   dispatch({
     type: ATTRIBUTE_ONGLET,
-    payload: { iOnglet, iPage, laps},
+    payload: { iOnglet, iPage, laps },
   })
   var velibArray = []
   queries.map((q, i) => {
@@ -28,15 +25,24 @@ export const uploadOnglet = (iOnglet, iPage) => (dispatch) => {
     fetch(q)
       .then((res) => res.json())
       .then((data) => {
-        let times = data.result.schedules.map((e) => e.message)
-        let destinations = data.result.schedules.map((e) => e.destination)
+        var expiciteDestination = onglet.list[iPage][i].destination
+        let times = data.result.schedules.flatMap((e) =>
+          expiciteDestination != undefined &&
+          e.destination != expiciteDestination
+            ? []
+            : [e.message]
+        )
+        // let destinations = data.result.schedules.map((e) => e.destination)
+        const destination =
+          expiciteDestination || data.result.schedules[0].destination
+        console.log(destination)
         return dispatch({
           type: UPLOAD_PAGE,
           payload: {
             laps,
             i,
             row: {
-              arrivee: destinations,
+              arrivee: destination,
               times,
             },
           },

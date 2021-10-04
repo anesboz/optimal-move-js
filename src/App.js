@@ -8,6 +8,8 @@ function App() {
   if (!localStorage.getItem("data")) {
     localStorage.setItem("data", JSON.stringify(initialData))
   }
+  // to delete !!!!
+  localStorage.setItem("data", JSON.stringify(initialData))
   return (
     <Provider store={store}>
       <Banner />

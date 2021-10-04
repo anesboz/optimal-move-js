@@ -45,7 +45,7 @@ function Table(props) {
             ) : noctilienEtJour(row.query) ? null : (
               <Fragment>
                 <Description>
-                  {row.depart} ➙ {props.page?.[i]?.arrivee?.[0]}
+                  {row.depart} ➙ {props.page?.[i]?.arrivee}
                 </Description>
                 <Row row={row} id={i} key={i} />
               </Fragment>

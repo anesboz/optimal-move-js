@@ -33,6 +33,11 @@ const initialData = [
       ],
       [
         {
+          depart: "Radiguey",
+          imgUrl: ratpImgs.b + "126.svg",
+          query: apiLinks.b + "126/Radiguey/R",
+        },
+        {
           depart: "Montrouge",
           query: "21217",
         },
@@ -68,16 +73,30 @@ const initialData = [
           depart: "Pompe à essence",
           query: "13033",
         },
-
         {
-          depart: "Roger Salengro Fontainebleau",
+          depart: "Porte d'Italie - Hélène Boucher",
           imgUrl: ratpImgs.n + "n15.svg",
-          query: apiLinks.n + "15/Roger%20Salengro%20Fontainebleau/R",
+          query:
+            apiLinks.n +
+            "15/Porte%20d'Italie%20-%20H%C3%A9l%C3%A8ne%20Boucher/A",
         },
         {
-          depart: "Roger Salengro Fontainebleau",
+          depart: "Porte d'Italie - Hélène Boucher",
           imgUrl: ratpImgs.n + "n22.svg",
-          query: apiLinks.n + "22/Roger%20Salengro%20Fontainebleau/R",
+          query:
+            apiLinks.n +
+            "22/Porte%20d'Italie%20-%20H%C3%A9l%C3%A8ne%20Boucher/A",
+        },
+        {
+          depart: "Porte d'Italie",
+          imgUrl: ratpImgs.m + "7.svg",
+          query: apiLinks.m + "7/Porte%20d'Italie/R",
+        },
+        {
+          depart: "maison blanche",
+          imgUrl: ratpImgs.m + "7.svg",
+          query: apiLinks.m + "7/maison%20blanche/A",
+          destination: "Villejuif-Louis Aragon",
         },
       ],
       [
@@ -93,6 +112,19 @@ const initialData = [
         {
           depart: "Okabé",
           query: "42707",
+        },
+      ],
+      [
+        {
+          depart: "Porte d'Italie",
+          imgUrl: ratpImgs.m + "7.svg",
+          query: apiLinks.m + "7/Porte%20d'Italie/R",
+        },
+        {
+          depart: "maison blanche",
+          imgUrl: ratpImgs.m + "7.svg",
+          query: apiLinks.m + "7/maison%20blanche/A",
+          destination: "Villejuif-Louis Aragon",
         },
       ],
     ],
@@ -176,12 +208,18 @@ const initialData = [
           imgUrl: ratpImgs.t + "3a.svg",
           query: apiLinks.t + "3a/porte%20italie/A",
         },
+        {
+          depart: "maison blanche",
+          imgUrl: ratpImgs.m + "7.svg",
+          query: apiLinks.m + "7/maison%20blanche/A",
+          destination: "Mairie d'Ivry",
+        },
       ],
       [
         {
           depart: "Avenue de France",
           imgUrl: ratpImgs.t + "3a.svg",
-          query: apiLinks.t + "3a/porte%20italie/A",
+          query: apiLinks.t + "3a/porte%20italie/R",
         },
         {
           depart: "Pont jardin",
