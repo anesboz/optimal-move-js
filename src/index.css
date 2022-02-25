@@ -12,7 +12,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url('./media/betterOnPhones.png');
+  background-image: url('assets/images/betterOnPhones-bg.png');
   background-size: auto 10%;
 }
 
@@ -64,9 +64,6 @@ body {
     opacity: 0;
   }
 }
-
-
-
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

@@ -1,25 +1,29 @@
-import { ratpImgs, apiLinks } from "./constantes"
+const ratpImgs = {
+  m: "https://www.ratp.fr/sites/default/files/lines-assets/picto/metro/picto_metro_ligne-",
+  b: "https://www.ratp.fr/sites/default/files/lines-assets/picto/busratp/picto_busratp_ligne-",
+  n: "https://www.ratp.fr/sites/default/files/lines-assets/picto/noctilien/picto_noctilien_ligne-",
+  t: "https://www.ratp.fr/sites/default/files/lines-assets/picto/tram/picto_tram_ligne-t",
+  // r: "https://www.ratp.fr/sites/default/files/lines-assets/picto/rer/picto_rer_ligne-",
+}
 
-const initialData = [
+const apiLinks = {
+  m: "https://api-ratp.pierre-grimaud.fr/v4/schedules/metros/",
+  b: "https://api-ratp.pierre-grimaud.fr/v4/schedules/buses/",
+  n: "https://api-ratp.pierre-grimaud.fr/v4/schedules/noctiliens/",
+  t: "https://api-ratp.pierre-grimaud.fr/v4/schedules/tramways/",
+  // r: "https://www.ratp.fr/sites/default/files/lines-assets/picto/rer/picto_rer_ligne-",
+}
+
+const initalData = [
   {
     name: "CA",
     logo: "https://upload.wikimedia.org/wikipedia/fr/thumb/a/a6/Cr%C3%A9dit_Agricole.svg/langfr-800px-Cr%C3%A9dit_Agricole.svg.png",
+    description: [
+      "📍 porte d'Orléans ➙ Boulot ",
+      "📍 Boulot ➙ Chez moi ",
+      "Le tram marche pas ",
+    ],
     list: [
-      [
-        {
-          depart: "porte italie",
-          imgUrl: ratpImgs.t + "3a.svg",
-          query: apiLinks.t + "3a/porte%20italie/R",
-        },
-        {
-          depart: "Vers Maison Blanche",
-          query: "13032",
-        },
-        {
-          depart: "Dir Tram",
-          query: "13110",
-        },
-      ],
       [
         {
           depart: "porte d'orléans",
@@ -40,6 +44,21 @@ const initialData = [
         {
           depart: "Montrouge",
           query: "21217",
+        },
+      ],
+      [
+        {
+          depart: "porte italie",
+          imgUrl: ratpImgs.t + "3a.svg",
+          query: apiLinks.t + "3a/porte%20italie/R",
+        },
+        {
+          depart: "Vers Maison Blanche",
+          query: "13032",
+        },
+        {
+          depart: "Dir Tram",
+          query: "13110",
         },
       ],
     ],
@@ -198,56 +217,6 @@ const initialData = [
     ],
   },
   {
-    name: "Fac",
-    logo: "https://moodle.u-paris.fr/pluginfile.php/1/theme_fordson/favicon/1628026585/favicon.png",
-    description: ["", "Retour", "Vers la Fac si pas de Tram"],
-    list: [
-      [
-        {
-          depart: "porte italie",
-          imgUrl: ratpImgs.t + "3a.svg",
-          query: apiLinks.t + "3a/porte%20italie/A",
-        },
-        {
-          depart: "maison blanche",
-          imgUrl: ratpImgs.m + "7.svg",
-          query: apiLinks.m + "7/maison%20blanche/A",
-          destination: "Mairie d'Ivry",
-        },
-      ],
-      [
-        {
-          depart: "Avenue de France",
-          imgUrl: ratpImgs.t + "3a.svg",
-          query: apiLinks.t + "3a/porte%20italie/R",
-        },
-        {
-          depart: "Pont jardin",
-          query: "13055",
-        },
-        {
-          depart: "Agoraé",
-          query: "13050",
-        },
-        {
-          depart: "Hebta vers tram",
-          query: "13118",
-        },
-        {
-          depart: "Buger King",
-          query: "13016",
-        },
-      ],
-      [
-        {
-          depart: "Italie - Tolbiac",
-          imgUrl: ratpImgs.b + "62.svg",
-          query: apiLinks.b + "62/Italie%20-%20Tolbiac/A",
-        },
-      ],
-    ],
-  },
-  {
     name: "Auchan",
     logo: "https://logo-marque.com/wp-content/uploads/2021/02/Auchan-Logo.png",
     list: [
@@ -311,6 +280,57 @@ const initialData = [
       ],
     ],
   },
+  {
+    name: "Fac",
+    logo: "https://moodle.u-paris.fr/pluginfile.php/1/theme_fordson/favicon/1628026585/favicon.png",
+    description: ["", "Retour", "Vers la Fac si pas de Tram"],
+    list: [
+      [
+        {
+          depart: "porte italie",
+          imgUrl: ratpImgs.t + "3a.svg",
+          query: apiLinks.t + "3a/porte%20italie/A",
+        },
+        {
+          depart: "maison blanche",
+          imgUrl: ratpImgs.m + "7.svg",
+          query: apiLinks.m + "7/maison%20blanche/A",
+          destination: "Mairie d'Ivry",
+        },
+      ],
+      [
+        {
+          depart: "Avenue de France",
+          imgUrl: ratpImgs.t + "3a.svg",
+          query: apiLinks.t + "3a/porte%20italie/R",
+        },
+        {
+          depart: "Pont jardin",
+          query: "13055",
+        },
+        {
+          depart: "Agoraé",
+          query: "13050",
+        },
+        {
+          depart: "Hebta vers tram",
+          query: "13118",
+        },
+        {
+          depart: "Buger King",
+          query: "13016",
+        },
+      ],
+      [
+        {
+          depart: "Italie - Tolbiac",
+          imgUrl: ratpImgs.b + "62.svg",
+          query: apiLinks.b + "62/Italie%20-%20Tolbiac/A",
+        },
+      ],
+    ],
+  },
+
   {
     name: "Danone",
     logo: "https://logos-marques.com/wp-content/uploads/2021/03/Danone-Logo-500x283.png",
@@ -424,4 +444,4 @@ const initialData = [
   },
 ]
 
-export default initialData
+export default initalData

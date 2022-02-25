@@ -1,8 +1,5 @@
-// import data from "../data";
-import { connect } from "react-redux"
 import OneButton from "./OneButton"
 import styled from "styled-components"
-import { getOnglets } from "../actions/dataAction"
 
 const OngletsContainer = styled.div`
   position: absolute;
@@ -10,17 +7,22 @@ const OngletsContainer = styled.div`
   height: 10%;
   width: 100%;
   border-top: 1px solid #dddddd;
-
   display: flex;
   overflow-x: scroll;
   overflow-y: hidden;
 `
-export default function Onglets() {
-  const onglets = getOnglets()
+export default function Footer({ onglets, i_selectedOnglet, onButtonClick }) {
   return (
     <OngletsContainer>
-      {onglets.map((_, i) => (
-        <OneButton key={i} id={i} />
+      {onglets.map(({ name, logo }, i) => (
+        <OneButton
+          key={i}
+          id={i}
+          logo={logo}
+          name={name}
+          onButtonClick={onButtonClick}
+          i_selectedOnglet={i_selectedOnglet}
+        />
       ))}
     </OngletsContainer>
   )

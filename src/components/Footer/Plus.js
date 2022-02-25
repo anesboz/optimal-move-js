@@ -1,9 +1,15 @@
 import React from "react"
-import { connect } from "react-redux"
 import styled from "styled-components"
-import data from "../data"
-import { goPageDansOnglet } from "../actions/ongletAction"
-import plusLogo from "../media/icons/plus.png"
+import plusLogo from "assets/icons/plus.png"
+
+export default function Plus(props) {
+  return (
+    <PlusContainer>
+      <DotImg src={plusLogo} />
+    </PlusContainer>
+  )
+}
+
 
 const PlusContainer = styled.div`
   display: flex;
@@ -23,18 +29,3 @@ const DotImg = styled.img`
   /* opacity: ${(props) => (props.selected ? 0.7 : 0.4)}; */
   margin-top: 0.4rem;
 `
-
-function Plus(props) {
-  return (
-    <PlusContainer>
-      <DotImg src={plusLogo} />
-    </PlusContainer>
-  )
-}
-
-const mapStateToProps = (state) => ({
-  iOnglet: state.ongletsBranch.iOnglet,
-  iPage: state.ongletsBranch.iPage,
-})
-
-export default connect(mapStateToProps, { goPageDansOnglet })(Plus)

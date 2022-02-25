@@ -1,21 +1,7 @@
-import { Provider } from "react-redux" //connect redux with react
-import store from "./store"
-import Banner from "./components/Banner"
-import MainContainer from "./components/MainContainer"
-import initialData from "./data"
+import Main from "views/Main"
 
 function App() {
-  if (!localStorage.getItem("data")) {
-    localStorage.setItem("data", JSON.stringify(initialData))
-  }
-  // to delete !!!!
-  localStorage.setItem("data", JSON.stringify(initialData))
-  return (
-    <Provider store={store}>
-      <Banner />
-      <MainContainer />
-    </Provider>
-  )
+  return <Main />
 }
 
 export default App
