@@ -9,7 +9,7 @@ export default function Main(props) {
   const [i_onglet, setI_onglet] = useState(null)
   const [i_page, setI_page] = useState(0)
   const [refresh, setRefresh] = useState(null)
-
+  const onglets = JSON.parse(localStorage.getItem("data"))
   useEffect(() => {
     if (!localStorage.getItem("data")) {
       console.log(`🚩🚩🚩🚩🚩🚩🚩🚩 `)
@@ -22,7 +22,7 @@ export default function Main(props) {
       setI_page(i_default_page)
     }
   }, [])
-  const onglets = JSON.parse(localStorage.getItem("data"))
+  if (!onglets) return null
   return (
     <Fragment>
       <Banner onClickImg={() => setI_onglet(null)} />
