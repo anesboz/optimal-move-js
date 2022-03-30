@@ -1,7 +1,9 @@
 import axios from "axios"
-import { velibLinks } from "variables/constants"
+import { velibURL } from "variables/constants"
+import { getScheduleURL } from "variables/data"
 
-export const getRatpStation = (query) => {
+export const getStationSchedule = ({ mode, line, station, way, terminus }) => {
+  const query = getScheduleURL(mode, line, station, way)
   return new Promise((resolve, reject) => {
     axios
       .get(query)
@@ -9,19 +11,24 @@ export const getRatpStation = (query) => {
         reject(err)
       })
       .then((res) => {
-        resolve(res.data.result.schedules)
+        if (!res) return reject(`cannot fetch ratp api`)
+        var tmp = res.data.result.schedules
+        // case metro 7 for example
+        if (terminus) tmp = tmp.filter((e) => e.destination === terminus)
+        resolve(tmp)
       })
   })
 }
 
 export const getVelibData = () => {
-  const url = velibLinks.proxy + velibLinks.api
   return new Promise((resolve, reject) => {
     axios
-      .get(url)
-      .catch((err) => reject(err))
+      .get(velibURL)
       .then((res) => {
+        if (!res) reject(`cannot fetch velib api`)
         resolve(res.data.data.stations)
       })
+      .catch((err) => reject(err))
   })
 }
+

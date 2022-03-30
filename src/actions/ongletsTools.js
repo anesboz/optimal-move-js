@@ -1,12 +1,7 @@
 import dateformat from "dateformat"
 
-export function noctilienEtJour(q) {
-  let t = new Date().toLocaleTimeString()
-  return !(t > "00:00:00" && t < "07:00:00") && q.includes("noctiliens")
-}
-
-export function isVelib(row) {
-  return /^[0-9]+$/.test(row.query)
+export function isDayTime() {
+  return dateformat(new Date(), `HH:MM`) > `07:00`
 }
 
 export function velibDataToOneStation(velibData, stationCode) {
@@ -32,7 +27,6 @@ export function toggleDefaultIndexes() {
   localStorage.setItem("DEFAULT_INDEXES", newState)
   return newState
 }
-
 
 export function defaultIndexesByTime() {
   const hhmm = dateformat(new Date(), `HH:MM`)

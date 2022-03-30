@@ -1,7 +1,9 @@
 import bannerImg from "assets/images/banner.png"
 import omLogoImg from "assets/images/omLogo.png"
 import { Grid } from "@mui/material"
-import { toggleDefaultIndexes } from "actions/utils"
+import { toggleDefaultIndexes } from "actions/ongletsTools"
+import BuildIcon from "@mui/icons-material/Build"
+import { Link } from "react-router-dom"
 
 export default function Banner({ onClickImg }) {
   return (
@@ -13,7 +15,9 @@ export default function Banner({ onClickImg }) {
           backgroundColor: `#f9d119`,
         }}
         justifyContent={`center`}
-        onClick={() => onClickImg()}
+        onClick={() => {
+          if (onClickImg) onClickImg()
+        }}
       >
         <img style={{ height: `100%` }} src={bannerImg} alt="bannerImg" />
       </Grid>
@@ -39,7 +43,7 @@ export default function Banner({ onClickImg }) {
           onClick={() => {
             const tmp = toggleDefaultIndexes()
             var str = `DEFAULT_INDEXES sont désormais :`
-            str += tmp === `true` ? `activé`: `désactivé`
+            str += tmp === `true` ? `activé` : `désactivé`
             alert(str)
           }}
         ></Grid>

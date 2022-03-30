@@ -4,56 +4,90 @@ import RowVelib from "./RowVelib"
 import styled from "styled-components"
 import Dots from "./Dots"
 import { getVelibData } from "actions/dataAction"
-import { isVelib, velibDataToOneStation } from "actions/utils"
+import { isVelib, velibDataToOneStation } from "actions/ongletsTools"
+import Plus from "components/Footer/Plus"
+import { Link } from "react-router-dom"
+import PageMenu from "components/MyMenu/PageMenu"
+import { Grid } from "@mui/material"
 
 
 
 export default function Table({
   onglets,
-  i_selectedOnglet,
-  i_selectedPage,
-  refresh,
-  onPagesChange,
+  i_onglet,
+  i_page,
+  refreshState,
+  onDotClick,
 }) {
-  const list = onglets[i_selectedOnglet].list[i_selectedPage]
+  const page = onglets[i_onglet].pages[i_page]
   const [velibData, setVelibData] = useState(null)
+  const [refresh, setRefresh] = refreshState
 
   function gettingVelib() {
-    if (i_selectedOnglet == null) return null
+    if (i_onglet == null) return null
     setVelibData(null)
-    console.log(`🚩 getting VelibData ..`)
     getVelibData()
       .then((res) => setVelibData(res))
-      .catch((err) => console.log(`🚩 . err`, err))
   }
 
   useEffect(() => gettingVelib(), [])
   return (
     <Fragment>
-      <h6 className="mt-2">
-        {onglets[i_selectedOnglet].description?.[i_selectedPage]}
-      </h6>
+      <Grid container >
+        <Grid item xs={2}>
+          <PageMenu
+            i_onglet={i_onglet}
+            i_page={i_page}
+            afterAction={setRefresh}
+          />
+        </Grid>
+        <Grid item>
+          <h6 className="mt-2">{page.description}</h6>
+        </Grid>
+      </Grid>
+      {/* <Fragment style={{ width: `100%` }}>
+        <PageMenu
+          i_onglet={i_onglet}
+          i_page={i_page}
+          afterAction={setRefresh}
+        />
+        <h6 className="mt-2">{page.description}</h6>
+      </Fragment> */}
       <TableContainer className="col-10 mt-2 p-0">
-        {list.map((row, i) => (
+        {page.lines.map((row, i) => (
           <Fragment key={i}>
-            {isVelib(row) ? (
+            {row.mode === `velib` ? (
               <RowVelib
-                data={velibDataToOneStation(velibData, row.query)}
-                row={row}
-                id={i}
-                key={i}
+                data={velibDataToOneStation(velibData, row.line)}
                 logoOnclick={gettingVelib}
+                row={row}
+                key={i}
+                i_onglet={i_onglet}
+                i_page={i_page}
+                id={i}
+                refreshState={refreshState}
               />
             ) : (
-              <Row row={row} id={i} key={i} refresh={refresh} />
+              <Row
+                row={row}
+                key={i}
+                i_onglet={i_onglet}
+                i_page={i_page}
+                id={i}
+                refreshState={refreshState}
+              />
             )}
           </Fragment>
         ))}
+        <Link to={`/addStation`} state={{ i_onglet, i_page }}>
+          <Plus />
+        </Link>
       </TableContainer>
       <Dots
-        onglet={onglets[i_selectedOnglet]}
-        i_selectedPage={i_selectedPage}
-        onPagesChange={onPagesChange}
+        onglet={onglets[i_onglet]}
+        i_onglet={i_onglet}
+        i_page={i_page}
+        onDotClick={onDotClick}
       />
     </Fragment>
   )
@@ -62,5 +96,6 @@ export default function Table({
 const TableContainer = styled.div`
   scroll-behavior: smooth;
   overflow-y: scroll;
-  max-height: 30%;
+  max-height: 40%;
+  // border: 1px solid red;
 `

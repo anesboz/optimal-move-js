@@ -2,32 +2,41 @@ import React, { Fragment, useEffect, useState } from "react"
 import styled from "styled-components"
 import loading from "assets/icons/loading.gif"
 import sideRow from "assets/icons/sideRow.png"
-import { getRatpStation } from "actions/dataAction"
-import { noctilienEtJour } from "actions/utils"
+import { getStationSchedule } from "actions/dataAction"
+import { isDayTime } from "actions/ongletsTools"
+import { getLineImgURL, om_assets } from "variables/data"
+import { capitalizeFirstLetter } from "Utils/tools"
+import MyMenu from "components/MyMenu/RowMenu"
 
-export default function Row({ row, id, refresh }) {
-  const { depart, imgUrl, query } = row
+export default function Row({ i_page, i_onglet, row, id, refreshState }) {
+  const [refresh, setRefresh] = refreshState
+  const { mode, line, station, way, terminus } = row
   const [data, setData] = useState(null)
   useEffect(() => {
     setData(null)
-    if (noctilienEtJour(query)) return null
-    getRatpStation(query)
+    if (mode == `noctilien` && isDayTime()) return null
+    getStationSchedule({
+      mode,
+      line,
+      station,
+      way,
+      terminus,
+    })
       .then((res) => {
         setData(res)
       })
-      .catch((err) => {
-        console.log(`🚩 error. res`, err)
-      })
-  }, [refresh, query])
-  if (noctilienEtJour(query)) return null
+      .catch((err) => console.log(`🚩 . err fetching row `, err))
+  }, [refresh])
+  if (mode == `noctilien` && isDayTime()) return null
   return (
     <Fragment>
       <Description>
-        {depart} ➙ {data?.[0].destination}
+        {capitalizeFirstLetter(station.replaceAll(`+`, ` `))} ➙{" "}
+        {data?.[0]?.destination}
       </Description>
       <RowContainer>
         <Case>
-          <Img src={imgUrl} />
+          <Img src={getLineImgURL(mode, line)} />
         </Case>
         {data ? (
           data?.map(({ message }, j) => (
@@ -47,18 +56,23 @@ export default function Row({ row, id, refresh }) {
             </Case>
           </Fragment>
         )}
-        <Case
+        {/* <Case
           key={5}
           style={{ flex: "1 0 18%" }}
           onClick={() => console.log(`🚩 . changeDirection`)}
         >
           <Img src={sideRow} />
-        </Case>
+        </Case> */}
+        <MyMenu
+          id={id}
+          i_onglet={i_onglet}
+          i_page={i_page}
+          afterAction={setRefresh}
+        />
       </RowContainer>
     </Fragment>
   )
 }
-
 
 const RowContainer = styled.div`
   display: flex;
