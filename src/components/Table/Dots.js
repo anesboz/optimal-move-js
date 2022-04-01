@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import plusDot from "assets/icons/plusDot.png"
-import { page_addPage } from "actions/crudAction"
+import { page_addPage } from "actions/crud/rowsCrud"
 
 export default function Dots({ onglet, i_onglet, i_page, onDotClick }) {
   let pages = onglet.pages

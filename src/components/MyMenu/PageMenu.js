@@ -21,7 +21,7 @@ import {
   page_reverseDirection,
   page_right,
   page_up,
-} from "actions/crudAction"
+} from "actions/crud/rowsCrud"
 import {
   ArrowDownward,
   ArrowLeft,

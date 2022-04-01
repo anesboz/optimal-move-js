@@ -1,4 +1,5 @@
 import initialData from "data/initialData"
+import { getData, updateData } from "./generalCrud"
 
 export function changeDirection(i_onglet, i_page) {}
 
@@ -7,17 +8,6 @@ export function createStation({ station, i_onglet, i_page }) {
   const data = localStorage.getItem(`data`)
   data[i_onglet].pages[i_page].lines.push(station)
   localStorage.setItem(`data`, data)
-}
-
-export function getData() {
-  if (!localStorage.getItem(`data`)) {
-    localStorage.setItem(`data`, JSON.stringify(initialData))
-  }
-  return JSON.parse(localStorage.getItem(`data`))
-}
-
-export function updateData(newData) {
-  localStorage.setItem(`data`, JSON.stringify(newData))
 }
 
 export function addStation({ station, i_onglet, i_page }) {

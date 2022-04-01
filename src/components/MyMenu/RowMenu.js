@@ -13,7 +13,7 @@ import Settings from "@mui/icons-material/Settings"
 import Logout from "@mui/icons-material/Logout"
 import MoreVertIcon from "@mui/icons-material/MoreVert"
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows"
-import { row_delete, row_down, row_reverseDirection, row_up } from "actions/crudAction"
+import { row_delete, row_down, row_reverseDirection, row_up } from "actions/crud/rowsCrud"
 import { ArrowDownward, Delete } from "@mui/icons-material"
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward"
 

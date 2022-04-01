@@ -25,16 +25,16 @@ import FormControl from "@mui/material/FormControl"
 import FormLabel from "@mui/material/FormLabel"
 import Banner from "components/Banner/Banner"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
-import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 import { useLocation } from "react-router-dom"
 import initialData from "data/initialData"
-import { addStation } from "actions/crudAction"
+import { addStation } from "actions/crud/rowsCrud"
 
 export default function AddStation(props) {
   const location = useLocation()
-  const { i_onglet, i_page } = location.state
-  // console.log(`🚩 . state`, { i_onglet, i_page })
+  const i_onglet = location.state?.i_onglet || 0
+  const i_page = location.state?.i_page || 0
 
   const [mode, setMode] = useState(undefined)
   const [line, setLine] = useState(undefined)
@@ -47,6 +47,7 @@ export default function AddStation(props) {
   const [allstation, setAllstation] = useState([])
   const [allDestinations, setAllDestinations] = useState([])
 
+  const navigate = useNavigate()
   const [expanded, setExpanded] = useState(`panel1`)
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false)
@@ -76,13 +77,11 @@ export default function AddStation(props) {
   }))
   return (
     <div style={{ width: `100%` }}>
-      {/* <ArrowBackIcon style={{}} /> */}
-      <Link to={`/`}>
-        <ArrowBackIcon
-          color="disabled"
-          style={{ position: `absolute`, margin: 10, left: 0, zIndex: 10 }}
-        />
-      </Link>
+      <ArrowBackIcon
+        color="disabled"
+        style={{ position: `absolute`, margin: 10, left: 0, zIndex: 10 }}
+        onButtonClick={() => navigate(-1)}
+      />
       <Banner />
       {/* TAB1 */}
       <Accordion
@@ -313,34 +312,25 @@ export default function AddStation(props) {
           padding: `3rem`,
         }}
       >
-        <Link
-          to={`/`}
-          state={{
-            i_default_onglet: i_onglet,
-            i_default_page: i_page,
+        <Button
+          variant="contained"
+          color="success"
+          disabled={[mode, line, station, way, terminus].some((e) => e == null)}
+          fullWidth
+          onClick={() => {
+            const newStation = {
+              mode,
+              line,
+              station,
+              way,
+              terminus,
+            }
+            addStation({ station: newStation, i_onglet, i_page })
+            navigate(-1)
           }}
         >
-          <Button
-            variant="contained"
-            color="success"
-            disabled={[mode, line, station, way, terminus].some(
-              (e) => e == null
-            )}
-            fullWidth
-            onClick={() => {
-              const newStation = {
-                mode,
-                line,
-                station,
-                way,
-                terminus,
-              }
-              addStation({ station: newStation, i_onglet, i_page })
-            }}
-          >
-            Add Station
-          </Button>
-        </Link>
+          Add Station
+        </Button>
       </div>
     </div>
   )

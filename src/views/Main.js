@@ -6,7 +6,8 @@ import { defaultIndexesByTime } from "actions/ongletsTools"
 import SettingsIcon from "@mui/icons-material/Settings"
 import { Link, useLocation } from "react-router-dom"
 import initialData from "data/initialData"
-import { getData } from "actions/crudAction"
+import { getData } from "actions/crud/generalCrud"
+
 
 export default function Main(props) {
   const location = useLocation()
@@ -26,7 +27,7 @@ export default function Main(props) {
     //   setI_page(i_default_page)
     // }
   }, [])
-  if (!onglets) return null
+  // if (!onglets) return null
   return (
     <Fragment>
       {/* <Link to={`/addStation`} state={{ from: "occupation" }}> */}
