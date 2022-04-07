@@ -1,101 +1,105 @@
-import React, { Fragment, useEffect, useState } from "react"
-import Row from "./Row"
-import RowVelib from "./RowVelib"
-import styled from "styled-components"
-import Dots from "./Dots"
-import { getVelibData } from "actions/dataAction"
-import { isVelib, velibDataToOneStation } from "actions/ongletsTools"
-import Plus from "components/Footer/Plus"
-import { Link } from "react-router-dom"
-import PageMenu from "components/MyMenu/PageMenu"
-import { Grid } from "@mui/material"
+import React, { Fragment, useEffect, useState } from 'react'
+import Row from './Row'
+import RowVelib from './RowVelib'
+import Dots from './Dots'
+import { getVelibData } from 'actions/mainActions'
+import { velibDataToOneStation } from 'actions/ongletsTools'
+import PageMenu from 'components/MyMenu/PageMenu'
+import { Grid } from '@mui/material'
+import plusLogo from 'assets/icons/plus.png'
+import styled from 'styled-components'
+import { useNavigate } from 'react-router-dom'
 
-
-
-export default function Table({
-  onglets,
-  i_onglet,
-  i_page,
-  refreshState,
-  onDotClick,
-}) {
-  const page = onglets[i_onglet].pages[i_page]
+export default function Table(props) {
+  const { onglet, iCurrentOnglet, iCurrentPage } = props
+  const page = onglet?.pages?.[iCurrentPage]
   const [velibData, setVelibData] = useState(null)
-  const [refresh, setRefresh] = refreshState
 
-  function gettingVelib() {
-    if (i_onglet == null) return null
-    setVelibData(null)
-    getVelibData()
-      .then((res) => setVelibData(res))
-  }
+  useEffect(() => {
+    getVelibData().then((res) => setVelibData(res))
+  }, [])
 
-  useEffect(() => gettingVelib(), [])
+  const navigate = useNavigate()
+  if (!page)
+    return (
+      <Dots
+        pages={onglet.pages}
+        iCurrentOnglet={iCurrentOnglet}
+        iCurrentPage={iCurrentPage}
+      />
+    )
   return (
     <Fragment>
-      <Grid container >
+      <Grid container>
         <Grid item xs={2}>
-          <PageMenu
-            i_onglet={i_onglet}
-            i_page={i_page}
-            afterAction={setRefresh}
-          />
+          <PageMenu iOnglet={iCurrentOnglet} iPage={iCurrentPage} />
         </Grid>
         <Grid item>
-          <h6 className="mt-2">{page.description}</h6>
+          <h6 className="mt-2">{page?.description}</h6>
         </Grid>
       </Grid>
-      {/* <Fragment style={{ width: `100%` }}>
-        <PageMenu
-          i_onglet={i_onglet}
-          i_page={i_page}
-          afterAction={setRefresh}
-        />
-        <h6 className="mt-2">{page.description}</h6>
-      </Fragment> */}
-      <TableContainer className="col-10 mt-2 p-0">
-        {page.lines.map((row, i) => (
+      <div
+        className="col-10 mt-2 p-0"
+        style={{
+          scrollBehavior: `smooth`,
+          overflowY: `scroll`,
+          maxHeight: `40%`,
+        }}
+      >
+        {page?.lines.map((row, i) => (
           <Fragment key={i}>
             {row.mode === `velib` ? (
               <RowVelib
                 data={velibDataToOneStation(velibData, row.line)}
-                logoOnclick={gettingVelib}
+                logoOnclick={() =>
+                  getVelibData().then((res) => setVelibData(res))
+                }
                 row={row}
                 key={i}
-                i_onglet={i_onglet}
-                i_page={i_page}
+                iCurrentOnglet={iCurrentOnglet}
+                iCurrentPage={iCurrentPage}
                 id={i}
-                refreshState={refreshState}
               />
             ) : (
               <Row
                 row={row}
                 key={i}
-                i_onglet={i_onglet}
-                i_page={i_page}
-                id={i}
-                refreshState={refreshState}
+                iOnglet={iCurrentOnglet}
+                iPage={iCurrentPage}
+                iRow={i}
               />
             )}
           </Fragment>
         ))}
-        <Link to={`/addStation`} state={{ i_onglet, i_page }}>
-          <Plus />
-        </Link>
-      </TableContainer>
+        <PlusContainer onClick={() => navigate(`/pageAddRow`)}>
+          <DotImg src={plusLogo} />
+        </PlusContainer>
+        {/* `/page_addRow` */}
+      </div>
       <Dots
-        onglet={onglets[i_onglet]}
-        i_onglet={i_onglet}
-        i_page={i_page}
-        onDotClick={onDotClick}
+        pages={onglet.pages}
+        iCurrentOnglet={iCurrentOnglet}
+        iCurrentPage={iCurrentPage}
       />
     </Fragment>
   )
 }
 
-const TableContainer = styled.div`
-  scroll-behavior: smooth;
-  overflow-y: scroll;
-  max-height: 40%;
-  // border: 1px solid red;
+const PlusContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+  /* height: 5rem; */
+  /* border: 3px solid red; */
+`
+
+const DotImg = styled.img`
+  height: 2rem;
+  /* width: 1rem; */
+  /* border: 3px solid red; */
+  border-radius: 50%;
+  /* background-color: black; */
+  /* opacity: ${(props) => (props.selected ? 0.7 : 0.4)}; */
+  margin-top: 0.4rem;
 `

@@ -1,0 +1,40 @@
+{
+  "env": {
+    "browser": true,
+    "node": true,
+    "es2021": true
+  },
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["react"],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"]
+      }
+    }
+  },
+  "rules": {
+    // "semi": ["error", "never"],
+    // "react/jsx-filename-extension": "off",
+    // "eslint-plugin-react": "off",
+    "no-unused-vars": "warn",
+    // REACT 
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off"
+    
+    // "implicit-arrow-linebreak": "off",
+    // "object-curly-newline": "off",
+    // "prefer-promise-reject-errors": "off",
+    // "comma-dangle": "warn",
+    // "react/jsx-one-expression-per-line": "off",
+    // "react/jsx-props-no-spreading": "off",
+    // "import/prefer-default-export": "warn"
+  }
+}

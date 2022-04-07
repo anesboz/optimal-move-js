@@ -1,23 +1,24 @@
-import React from "react"
-import styled from "styled-components"
-import plusDot from "assets/icons/plusDot.png"
-import { page_addPage } from "actions/crud/rowsCrud"
+import React from 'react'
+import styled from 'styled-components'
+import plusDot from 'assets/icons/plusDot.png'
+import { setOngletPage } from 'actions/mainActions'
+import { page_addEmptyPage } from 'actions/crud/pagesCrud'
 
-export default function Dots({ onglet, i_onglet, i_page, onDotClick }) {
-  let pages = onglet.pages
+export default function Dots({ pages, iCurrentOnglet, iCurrentPage }) {
   return (
     <DotsContainer>
       {pages.map((_, i) => (
         <Dot
           key={i}
-          selected={i_page === i}
-          onClick={() => onDotClick(i)}
+          selected={iCurrentPage === i}
+          onClick={() => setOngletPage(iCurrentOnglet, i)}
         />
       ))}
-      <Dot onClick={() => {
-        page_addPage({ i_onglet, i_page })
-        onDotClick(onglet.pages.length)
-      }}>
+      <Dot
+        onClick={() => {
+          page_addEmptyPage(iCurrentOnglet)
+        }}
+      >
         <img src={plusDot} />
       </Dot>
     </DotsContainer>
@@ -30,7 +31,7 @@ const DotsContainer = styled.div`
   justify-content: center;
   margin-top: 1rem;
 `
-let d = "1.1rem"
+let d = '1.1rem'
 const Dot = styled.div`
   display: flex;
   height: ${d};

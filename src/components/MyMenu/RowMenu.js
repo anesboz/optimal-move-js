@@ -1,30 +1,22 @@
-import * as React from "react"
 import Box from "@mui/material/Box"
-import Avatar from "@mui/material/Avatar"
 import Menu from "@mui/material/Menu"
 import MenuItem from "@mui/material/MenuItem"
 import ListItemIcon from "@mui/material/ListItemIcon"
-import Divider from "@mui/material/Divider"
 import IconButton from "@mui/material/IconButton"
-import Typography from "@mui/material/Typography"
 import Tooltip from "@mui/material/Tooltip"
-import PersonAdd from "@mui/icons-material/PersonAdd"
-import Settings from "@mui/icons-material/Settings"
-import Logout from "@mui/icons-material/Logout"
 import MoreVertIcon from "@mui/icons-material/MoreVert"
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows"
 import { row_delete, row_down, row_reverseDirection, row_up } from "actions/crud/rowsCrud"
 import { ArrowDownward, Delete } from "@mui/icons-material"
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward"
+import { Fragment, useState } from "react"
 
 export default function RowMenu({
-  i_onglet,
-  i_page,
-  id,
-  afterAction,
-  ...props
+  iOnglet,
+  iPage,
+  iRow,
 }) {
-  const [anchorEl, setAnchorEl] = React.useState(null)
+  const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
@@ -33,7 +25,7 @@ export default function RowMenu({
     setAnchorEl(null)
   }
   return (
-    <React.Fragment>
+    <Fragment>
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
         <Tooltip title="Account settings">
           <IconButton
@@ -51,7 +43,7 @@ export default function RowMenu({
       </Box>
       <Menu
         anchorEl={anchorEl}
-        id="account-menu"
+        iRow="account-menu"
         open={open}
         onClose={handleClose}
         onClick={handleClose}
@@ -86,8 +78,7 @@ export default function RowMenu({
       >
         <MenuItem
           onClick={() => {
-            row_reverseDirection({ i_onglet, i_page, id })
-            afterAction(new Date().getTime())
+            row_reverseDirection(iOnglet, iPage, iRow)
           }}
         >
           <ListItemIcon>
@@ -97,8 +88,7 @@ export default function RowMenu({
         </MenuItem>
         <MenuItem
           onClick={() => {
-            row_delete({ i_onglet, i_page, id })
-            afterAction(new Date().getTime())
+            row_delete({ iOnglet, iPage, iRow })
           }}
         >
           <ListItemIcon>
@@ -108,8 +98,7 @@ export default function RowMenu({
         </MenuItem>
         <MenuItem
           onClick={() => {
-            row_up({ i_onglet, i_page, id })
-            afterAction(new Date().getTime())
+            row_up({ iOnglet, iPage, iRow })
           }}
         >
           <ListItemIcon>
@@ -119,8 +108,7 @@ export default function RowMenu({
         </MenuItem>
         <MenuItem
           onClick={() => {
-            row_down({ i_onglet, i_page, id })
-            afterAction(new Date().getTime())
+            row_down({ iOnglet, iPage, iRow })
           }}
         >
           <ListItemIcon>
@@ -129,6 +117,6 @@ export default function RowMenu({
           Move down
         </MenuItem>
       </Menu>
-    </React.Fragment>
+    </Fragment>
   )
 }

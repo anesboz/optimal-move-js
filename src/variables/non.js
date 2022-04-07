@@ -21,7 +21,7 @@ const properType = (assetsORapi, mode) => {
   return types[assetsORapi][mode]
 }
 
-export const om_api = (mode) => {
+export const omApi = (mode) => {
   const obj = {
     linesURL: grimaudAPI+`lines/${properType(`api`,mode)}/`,
     scheduleURL_prefix: grimaudAPI+`schedules/${properType(`api`,mode)}/`,
@@ -29,7 +29,7 @@ export const om_api = (mode) => {
   return obj
 }
 
-export const om_assets = (mode) => {
+export const omAssets = (mode) => {
   const obj = {
     logoURL: assetsURL+`${properType(`assets`,mode)}/symbole.1634824971.svg`,
     lineImgURL_prefix: assetsURL+`metro/picto_metro_ligne-`,
@@ -39,11 +39,11 @@ export const om_assets = (mode) => {
 
 
 function getSchedeleURL(mode,line, station, dir = `R`) {
-  return om_api(mode).scheduleLinkPrefix+`${line}/${encodeURIComponent(station.trim())}/${dir}`
+  return omApi(mode).scheduleLinkPrefix+`${line}/${encodeURIComponent(station.trim())}/${dir}`
 }
 
 function getLineImgURL(mode,line) {
-  return om_assets(mode).lineImgURL_prefix+`${line}.svg`
+  return omAssets(mode).lineImgURL_prefix+`${line}.svg`
 }
 
 const initalData = [

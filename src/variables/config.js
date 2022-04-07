@@ -1,1 +1,1 @@
-export const DEFAULT_INDEXES_STATE = 
+export const DEFAULT_INDEXES_STATE = 1

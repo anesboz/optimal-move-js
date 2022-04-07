@@ -1,97 +1,74 @@
-import initialData from "data/initialData"
-import { getData, updateData } from "./generalCrud"
+import { getData, updateData } from './generalCrud'
+import { omApi } from 'variables/data'
+import axios from 'axios'
+import { proxy } from 'variables/constants'
 
-export function changeDirection(i_onglet, i_page) {}
-
-export function createStation({ station, i_onglet, i_page }) {
-  // const { mode, line, station, direction, destination } = station
-  const data = localStorage.getItem(`data`)
-  data[i_onglet].pages[i_page].lines.push(station)
-  localStorage.setItem(`data`, data)
-}
-
-export function addStation({ station, i_onglet, i_page }) {
-  if ([station, i_onglet, i_page].some((e) => e == null))
-    return alert(`Erreur d'ajout`)
-  const data = getData()
-  data[i_onglet].pages[i_page].lines.push(station)
-  updateData(data)
-}
-
-export function row_reverseDirection({ i_onglet, i_page, id }) {
-  const data = getData()
-  const currentRow = data[i_onglet].pages[i_page].lines[id]
-  currentRow.way = currentRow.way === `R` ? `A` : `R`
-  currentRow.terminus = null
-  data[i_onglet].pages[i_page].lines[id] = currentRow
-  updateData(data)
-}
-
-export function row_delete({ i_onglet, i_page, id }) {
-  const data = getData()
-  data[i_onglet].pages[i_page].lines.splice(id, 1)
-  updateData(data)
-}
-
-export function row_up({ i_onglet, i_page, id }) {
-  if (id == 0) return
-  const data = getData()
-  const elem = data[i_onglet].pages[i_page].lines[id]
-  // delete in current position
-  data[i_onglet].pages[i_page].lines.splice(id, 1)
-  data[i_onglet].pages[i_page].lines.splice(id - 1, 0, elem)
-  updateData(data)
-}
-
-export function row_down({ i_onglet, i_page, id }) {
-  const data = getData()
-  const n = data[i_onglet].pages[i_page].lines.length
-  if (id == n - 1) return
-  const elem = data[i_onglet].pages[i_page].lines[id]
-  // delete in current position
-  data[i_onglet].pages[i_page].lines.splice(id, 1)
-  data[i_onglet].pages[i_page].lines.splice(id + 1, 0, elem)
-  updateData(data)
-}
-
-export function page_addPage({ i_onglet, i_page, id }) {
-  const data = getData()
-  data[i_onglet].pages.push({
-    description: `New Page`,
-    lines: [],
+export function row_getWays(mode, line) {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(proxy + omApi(mode).destinationsURL + line)
+      .then((res) => {
+        const tmp = res.data.result.destinations
+        const destinations = [...new Set(tmp)]
+        // traiter le cas deux branch :
+        const rv = []
+        destinations.forEach((dest) => {
+          if (dest.name.includes('/')) {
+            const branch1 = dest.name.split('/')[0].trim()
+            const branch2 = dest.name.split('/')[1].trim()
+            rv.push({ name: branch1, way: dest.way })
+            rv.push({ name: branch2, way: dest.way })
+          } else {
+            rv.push(dest)
+          }
+        })
+        resolve(rv)
+      })
+      .catch((err) => reject(err))
   })
+}
+export async function row_reverseDirection(iOnglet, iPage, iRow) {
+  const data = getData()
+  const currentRow = data[iOnglet].pages[iPage].lines[iRow]
+  console.log(`🚩 . avant`, currentRow)
+  const allDirections = await row_getWays(currentRow.mode, currentRow.line)
+  console.log(`🚩 . allDirections`, allDirections)
+  const n = allDirections.length
+  for (const [i, { name }] of allDirections.entries()) {
+    if (name === currentRow.terminus) {
+      currentRow.way = allDirections[(i + 1) % n].way
+      currentRow.terminus = allDirections[(i + 1) % n].name
+      break
+    }
+  }
+  console.log(`🚩 . apres`, currentRow)
+  data[iOnglet].pages[iPage].lines[iRow] = currentRow
   updateData(data)
 }
 
-export function page_delete({ i_onglet, i_page, id }) {
+export function row_delete(iOnglet, iPage, iRow) {
   const data = getData()
-  if (data[i_onglet].pages.length > 1) data[i_onglet].pages.splice(i_page, 1)
+  data[iOnglet].pages[iPage].lines.splice(iRow, 1)
   updateData(data)
 }
 
-export function page_modifyDescription({ i_onglet, i_page, id }) {
+export function row_up(iOnglet, iPage, iRow) {
+  if (iRow == 0) return
   const data = getData()
-  data[i_onglet].pages[i_page].lines.splice(id, 1)
-  updateData(data)
-}
-
-export function page_left({ i_onglet, i_page }) {
-  if (i_page == 0) return
-  const data = getData()
-  const elem = data[i_onglet].pages[i_page]
+  const elem = data[iOnglet].pages[iPage].lines[iRow]
   // delete in current position
-  data[i_onglet].pages.splice(i_page, 1)
-  data[i_onglet].pages.splice(i_page - 1, 0, elem)
+  data[iOnglet].pages[iPage].lines.splice(iRow, 1)
+  data[iOnglet].pages[iPage].lines.splice(iRow - 1, 0, elem)
   updateData(data)
 }
 
-export function page_right({ i_onglet, i_page }) {
+export function row_down(iOnglet, iPage, iRow) {
   const data = getData()
-  const n = data[i_onglet].pages.length
-  if (i_page == n - 1) return
-  const elem = data[i_onglet].pages[i_page]
+  const n = data[iOnglet].pages[iPage].lines.length
+  if (iRow == n - 1) return
+  const elem = data[iOnglet].pages[iPage].lines[iRow]
   // delete in current position
-  data[i_onglet].pages.splice(i_page, 1)
-  data[i_onglet].pages.splice(i_page + 1, 0, elem)
+  data[iOnglet].pages[iPage].lines.splice(iRow, 1)
+  data[iOnglet].pages[iPage].lines.splice(iRow + 1, 0, elem)
   updateData(data)
 }

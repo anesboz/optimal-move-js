@@ -1,15 +1,16 @@
 import React, { Fragment, useEffect, useState } from "react"
 import styled from "styled-components"
 import loading from "assets/icons/loading.gif"
-import sideRow from "assets/icons/sideRow.png"
-import { getStationSchedule } from "actions/dataAction"
+import { getStationSchedule } from "actions/mainActions"
 import { isDayTime } from "actions/ongletsTools"
-import { getLineImgURL, om_assets } from "variables/data"
-import { capitalizeFirstLetter } from "Utils/tools"
+import { getLineImgURL } from "variables/data"
+import { capitalizeFirstLetter } from "actions/tools"
 import MyMenu from "components/MyMenu/RowMenu"
+import { connect } from "react-redux"
 
-export default function Row({ i_page, i_onglet, row, id, refreshState }) {
-  const [refresh, setRefresh] = refreshState
+function Row(props) {
+  const { lastRefresh } = props.mainBranch
+  const { iPage, iOnglet, row, iRow } = props
   const { mode, line, station, way, terminus } = row
   const [data, setData] = useState(null)
   useEffect(() => {
@@ -26,12 +27,12 @@ export default function Row({ i_page, i_onglet, row, id, refreshState }) {
         setData(res)
       })
       .catch((err) => console.log(`🚩 . err fetching row `, err))
-  }, [refresh])
+  }, [lastRefresh])
   if (mode == `noctilien` && isDayTime()) return null
   return (
     <Fragment>
       <Description>
-        {capitalizeFirstLetter(station.replaceAll(`+`, ` `))} ➙{" "}
+        {capitalizeFirstLetter(station.replaceAll(`+`, ` `))} ➙{' '}
         {data?.[0]?.destination}
       </Description>
       <RowContainer>
@@ -41,7 +42,7 @@ export default function Row({ i_page, i_onglet, row, id, refreshState }) {
         {data ? (
           data?.map(({ message }, j) => (
             <Case value={message} key={j}>
-              <div className={isHere.includes(message) ? "blink" : ""}>
+              <div className={isHere.includes(message) ? 'blink' : ''}>
                 {message}
               </div>
             </Case>
@@ -64,10 +65,9 @@ export default function Row({ i_page, i_onglet, row, id, refreshState }) {
           <Img src={sideRow} />
         </Case> */}
         <MyMenu
-          id={id}
-          i_onglet={i_onglet}
-          i_page={i_page}
-          afterAction={setRefresh}
+          iOnglet={iOnglet}
+          iPage={iPage}
+          iRow={iRow}
         />
       </RowContainer>
     </Fragment>
@@ -122,3 +122,8 @@ const Description = styled.div`
   font-size: 50%;
   color: gray;
 `
+const mapStateToProps = (state) => ({
+  mainBranch: state.mainBranch,
+})
+
+export default connect(mapStateToProps)(Row)

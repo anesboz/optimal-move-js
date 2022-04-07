@@ -5,19 +5,18 @@ import ebikeLogo from "assets/icons/velibE.png"
 import docksLogo from "assets/icons/velibP.png"
 import mechanicalLogo from "assets/icons/velibM.png"
 import logo_velib from "assets/icons/logo_velib.png"
-import sideRow from "assets/icons/sideRow.png"
 import MyMenu from "components/MyMenu/RowMenu"
 
 export default function Row({
   data,
   logoOnclick,
-  i_page,
-  i_onglet,
+  iPage,
+  iOnglet,
   row,
   id,
   refreshState,
 }) {
-  const [refresh, setRefresh] = refreshState
+  const setRefresh = refreshState[1]
   const { station } = row
   const { mechanical, ebike, docks } = data
   return (
@@ -44,8 +43,8 @@ export default function Row({
       </Case>
       <MyMenu
         id={id}
-        i_onglet={i_onglet}
-        i_page={i_page}
+        iOnglet={iOnglet}
+        iPage={iPage}
         afterAction={setRefresh}
       />
     </RowContainer>

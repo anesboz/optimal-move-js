@@ -1,44 +1,22 @@
-import * as React from "react"
-import Box from "@mui/material/Box"
-import Avatar from "@mui/material/Avatar"
-import Menu from "@mui/material/Menu"
-import MenuItem from "@mui/material/MenuItem"
-import ListItemIcon from "@mui/material/ListItemIcon"
-import Divider from "@mui/material/Divider"
-import IconButton from "@mui/material/IconButton"
-import Typography from "@mui/material/Typography"
-import Tooltip from "@mui/material/Tooltip"
-import PersonAdd from "@mui/icons-material/PersonAdd"
-import Settings from "@mui/icons-material/Settings"
-import Logout from "@mui/icons-material/Logout"
-import MoreVertIcon from "@mui/icons-material/MoreVert"
-import CompareArrowsIcon from "@mui/icons-material/CompareArrows"
+import Box from '@mui/material/Box'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import IconButton from '@mui/material/IconButton'
+import Tooltip from '@mui/material/Tooltip'
+import MoreVertIcon from '@mui/icons-material/MoreVert'
 import {
   page_delete,
-  page_down,
   page_left,
   page_modifyDescription,
-  page_reverseDirection,
   page_right,
-  page_up,
-} from "actions/crud/rowsCrud"
-import {
-  ArrowDownward,
-  ArrowLeft,
-  ArrowRight,
-  Delete,
-  Edit,
-} from "@mui/icons-material"
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward"
+} from 'actions/crud/pagesCrud'
+import { ArrowLeft, ArrowRight, Delete, Edit } from '@mui/icons-material'
+import { Fragment, useState } from 'react'
 
-export default function PageMenu({
-  i_onglet,
-  i_page,
-  id,
-  afterAction,
-  ...props
-}) {
-  const [anchorEl, setAnchorEl] = React.useState(null)
+export default function PageMenu(props) {
+  const { iOnglet, iPage } = props
+  const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
@@ -47,16 +25,16 @@ export default function PageMenu({
     setAnchorEl(null)
   }
   return (
-    <React.Fragment>
-      <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
+    <Fragment>
+      <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
         <Tooltip title="Account settings">
           <IconButton
             onClick={handleClick}
             size="small"
             sx={{ ml: 2 }}
-            aria-controls={open ? "account-menu" : undefined}
+            aria-controls={open ? 'account-menu' : undefined}
             aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
+            aria-expanded={open ? 'true' : undefined}
           >
             {/* <Avatar sx={{ width: 32, height: 32 }}>M</Avatar> */}
             <MoreVertIcon />
@@ -72,36 +50,35 @@ export default function PageMenu({
         PaperProps={{
           elevation: 0,
           sx: {
-            overflow: "visible",
-            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+            overflow: 'visible',
+            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
             mt: 1.5,
-            "& .MuiAvatar-root": {
+            '& .MuiAvatar-root': {
               width: 32,
               height: 32,
               ml: -0.5,
               mr: 1,
             },
-            "&:before": {
+            '&:before': {
               content: '""',
-              display: "block",
-              position: "absolute",
+              display: 'block',
+              position: 'absolute',
               top: 0,
               right: 14,
               width: 10,
               height: 10,
-              bgcolor: "background.paper",
-              transform: "translateY(-50%) rotate(45deg)",
+              bgcolor: 'background.paper',
+              transform: 'translateY(-50%) rotate(45deg)',
               zIndex: 0,
             },
           },
         }}
-        transformOrigin={{ horizontal: "right", vertical: "top" }}
-        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         <MenuItem
           onClick={() => {
-            page_modifyDescription({ i_onglet, i_page, id })
-            afterAction(new Date().getTime())
+            page_modifyDescription(iOnglet, iPage)
           }}
         >
           <ListItemIcon>
@@ -110,10 +87,7 @@ export default function PageMenu({
           Modify description
         </MenuItem>
         <MenuItem
-          onClick={() => {
-            page_delete({ i_onglet, i_page, id })
-            afterAction(new Date().getTime())
-          }}
+          onClick={() => page_delete(iOnglet, iPage)}
         >
           <ListItemIcon>
             <Delete fontSize="small" />
@@ -122,8 +96,7 @@ export default function PageMenu({
         </MenuItem>
         <MenuItem
           onClick={() => {
-            page_left({ i_onglet, i_page, id })
-            afterAction(new Date().getTime())
+            page_left(iOnglet, iPage)
           }}
         >
           <ListItemIcon>
@@ -133,8 +106,7 @@ export default function PageMenu({
         </MenuItem>
         <MenuItem
           onClick={() => {
-            page_right({ i_onglet, i_page, id })
-            afterAction(new Date().getTime())
+            page_right(iOnglet, iPage)
           }}
         >
           <ListItemIcon>
@@ -143,6 +115,6 @@ export default function PageMenu({
           Move Right
         </MenuItem>
       </Menu>
-    </React.Fragment>
+    </Fragment>
   )
 }

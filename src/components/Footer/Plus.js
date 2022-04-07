@@ -1,8 +1,7 @@
-import React from "react"
 import styled from "styled-components"
 import plusLogo from "assets/icons/plus.png"
 
-export default function Plus(props) {
+export default function Plus() {
   return (
     <PlusContainer>
       <DotImg src={plusLogo} />

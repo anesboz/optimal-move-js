@@ -1,9 +1,7 @@
 import bannerImg from "assets/images/banner.png"
 import omLogoImg from "assets/images/omLogo.png"
-import { Grid } from "@mui/material"
 import { toggleDefaultIndexes } from "actions/ongletsTools"
-import BuildIcon from "@mui/icons-material/Build"
-import { Link } from "react-router-dom"
+import { Grid } from "@mui/material"
 
 export default function Banner({ onClickImg }) {
   return (

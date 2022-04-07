@@ -21,7 +21,7 @@ export const properType = (assetsORapi, mode) => {
   return types[assetsORapi][mode]
 }
 
-export const om_api = (mode) => {
+export const omApi = (mode) => {
   const obj = {
     linesURL: apiURL + `lines/${properType(`api`, mode)}/`,
     stationsURL: apiURL + `stations/${properType(`api`, mode)}/`,
@@ -31,7 +31,7 @@ export const om_api = (mode) => {
   return obj
 }
 
-export const om_assets = (mode) => {
+export const omAssets = (mode) => {
   const t = mode === `tram` ? `t` :``
   const obj = {
     logoURL: assetsURL + `${properType(`assets`, mode)}/symbole.1634824971.svg`,
@@ -49,13 +49,13 @@ export function getScheduleURL(mode, line, station, direction = `R`) {
   var normalized_station = station.trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
   normalized_station = encodeURI(station)
   return (
-    om_api(mode).scheduleURL_prefix +
+    omApi(mode).scheduleURL_prefix +
     `${line}/${normalized_station}/${direction}`
   )
 }
 
 export function getLineImgURL(mode, line) {
-  const url = om_assets(mode).lineImgURL_prefix + `${line}.svg`
+  const url = omAssets(mode).lineImgURL_prefix + `${line}.svg`
   // console.log(`🚩 . url`, url)
   return url
 }
