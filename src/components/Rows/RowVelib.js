@@ -5,7 +5,7 @@ import ebikeLogo from "assets/icons/velibE.png"
 import docksLogo from "assets/icons/velibP.png"
 import mechanicalLogo from "assets/icons/velibM.png"
 import logo_velib from "assets/icons/logo_velib.png"
-import MyMenu from "components/MyMenu/RowMenu"
+import MyMenu from "components/Rows/RowMenu"
 
 export default function Row({
   data,
@@ -53,6 +53,8 @@ export default function Row({
 
 const RowContainer = styled.div`
   display: flex;
+  width: 80%;
+  border: 2px solid green;
   height: 3.4rem;
   margin-bottom: 0.2rem;
   padding: 0;

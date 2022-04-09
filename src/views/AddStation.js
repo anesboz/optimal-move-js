@@ -4,7 +4,7 @@ import AccordionDetails from '@mui/material/AccordionDetails'
 import AccordionSummary from '@mui/material/AccordionSummary'
 import Typography from '@mui/material/Typography'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import ToggleButtons from 'components/Choisir/ToggleButtons'
+import ToggleButtons from 'components/ToggleButtons/ToggleButtons'
 import { Autocomplete, Box, Button, TextField } from '@mui/material'
 import { getLineImgURL, omApi, omAssets, properType } from 'variables/data'
 import axios from 'axios'
@@ -61,18 +61,27 @@ function AddStation(props) {
   //   })
   // }, [line])
 
-  const modesButtons = ['metro', 'bus', 'tram', 'rer'].map((e) => ({
-    value: e,
-    imgSrc: omAssets(e).logoURL,
-  }))
+  const modesButtons = ['metro', 'bus', 'tram', 'rer', 'noctilien'].map(
+    (e) => ({
+      value: e,
+      imgSrc: omAssets(e).logoURL,
+    })
+  )
   return (
-    <div style={{ width: '100%' }}>
-      <ArrowBackIcon
-        color="disabled"
-        style={{ position: 'absolute', margin: 10, left: 0, zIndex: 10 }}
-        onClick={() => navigate(-1)}
-      />
-      <Banner />
+    <div style={{ height: `100vh` }}>
+      <div style={{ position: `relative`, height: `30%` }}>
+        <ArrowBackIcon
+          color="disabled"
+          style={{
+            position: 'absolute',
+            margin: 10,
+            left: 0,
+            zIndex: 10,
+          }}
+          onClick={() => navigate(-1)}
+        />
+        <Banner />
+      </div>
       {/* TAB1 */}
       <Accordion
         expanded={expanded === 'panel1'}

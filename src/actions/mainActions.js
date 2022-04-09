@@ -10,17 +10,20 @@ export const getStationSchedule = ({ mode, line, station, way, terminus }) => {
     axios
       .get(query)
       .catch((err) => {
-        reject(err)
+        console.log(`🚩 .axios catch((err) `)
+        return reject(err)
       })
       .then((res) => {
-        if (!res) {
-          reject('cannot fetch ratp api')
-          return
+        console.log(`🚩 .axios then((res)`)
+        if (res?.status != 200) {
+          console.log(`axios if (res?.status != 200)`)
+          return reject('cannot fetch ratp api')
         }
+        console.log(`axios tmp`)
         let tmp = res.data.result.schedules
         // case metro 7 for example
         if (terminus) tmp = tmp.filter((e) => e.destination === terminus)
-        resolve(tmp)
+        return resolve(tmp)
       })
   })
 }
@@ -45,6 +48,3 @@ export const setOngletPage = (iOnglet = 0, iPage = 0) => {
 }
 
 export const refresh = () => store.dispatch({ type: REFRESH })
-
-
-

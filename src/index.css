@@ -1,5 +1,5 @@
 * {
-  box-sizing: border-box
+  box-sizing: border-box;
 }
 
 body {
@@ -9,50 +9,34 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+}
+
+#root {
   background-image: url('assets/images/betterOnPhones-bg.png');
   background-size: auto 10%;
 }
 
-#root {
-  height: 100vh;
-  position: relative;
-  background-color: white;
-  padding: 0;
-  overflow: hidden;
-}
-
-/* RGB */
-.red {
-  border: 2px solid red;
-}
-.green {
-  border: 2px solid green;
-}
-.blue {
-  border: 2px solid blue;
-}
-
-/* centrer */
 .center {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
 }
+.centerMe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 
 .center-x {
   display: flex;
-  align-items: center;
-  flex-direction: column;
+  justify-content: center;
 }
 
 .center-y {
   display: flex;
-  justify-content: center;
-  flex-direction: row;
+  align-items: center;
 }
 
 .blink {
@@ -68,4 +52,8 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.red {
+  border: 2px solid red;
 }

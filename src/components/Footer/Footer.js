@@ -7,12 +7,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 
 const OngletsContainer = styled.div`
-  position: absolute;
-  bottom: 0;
-  // height: 10%;
-  width: 100%;
   border-top: 1px solid #dddddd;
-  display: flex;
   overflow-x: scroll;
   overflow-y: hidden;
 `
@@ -24,18 +19,19 @@ export default function Footer(props) {
   return (
     <OngletsContainer>
       <Box>
-        <BottomNavigation
-          showLabels
-          value={iCurrentOnglet}
-          onChange={(event, newValue) => {
-            setOngletPage(newValue)
-          }}
-        >
+        <BottomNavigation showLabels value={iCurrentOnglet}>
           {onglets.map(({ name, emoji, imgURL }, i) => {
             let logo = <LocationOnIcon />
             if (emoji != null) logo = emoji
             if (imgURL != null) logo = <img src={imgURL} />
-            return <BottomNavigationAction key={i} label={name} icon={logo} />
+            return (
+              <BottomNavigationAction
+                key={i}
+                label={name}
+                icon={logo}
+                onClick={() => setOngletPage(i)}
+              />
+            )
           })}
           <BottomNavigationAction
             key={n}

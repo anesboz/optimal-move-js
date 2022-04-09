@@ -16,7 +16,7 @@ export default function Dots({ pages, iCurrentOnglet, iCurrentPage }) {
       ))}
       <Dot
         onClick={() => {
-          page_addEmptyPage(iCurrentOnglet)
+          page_addEmptyPage(iCurrentOnglet, pages.length)
         }}
       >
         <img src={plusDot} />

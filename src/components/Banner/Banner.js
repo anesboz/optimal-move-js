@@ -1,51 +1,48 @@
-import bannerImg from "assets/images/banner.png"
-import omLogoImg from "assets/images/omLogo.png"
-import { toggleDefaultIndexes } from "actions/ongletsTools"
-import { Grid } from "@mui/material"
+import bannerImg from 'assets/images/banner.png'
+import omLogoImg from 'assets/images/omLogo.png'
+import { toggleDefaultIndexes } from 'actions/ongletsTools'
+import { setOngletPage } from 'actions/mainActions'
+import SettingsIcon from '@mui/icons-material/Settings'
 
-export default function Banner({ onClickImg }) {
+export default function Banner() {
   return (
-    <Grid container>
-      <Grid
-        container
-        sx={{
-          height: `25vh`,
-          backgroundColor: `#f9d119`,
-        }}
-        justifyContent={`center`}
-        onClick={() => {
-          if (onClickImg) onClickImg()
-        }}
+    <div style={{ height: `100%` }}>
+      <div
+        style={{ height: `80%`, backgroundColor: `#f9d119` }}
+        className="center-x"
       >
-        <img style={{ height: `100%` }} src={bannerImg} alt="bannerImg" />
-      </Grid>
-      <Grid
-        container
-        style={{ borderBottom: `1px solid #80808040` }}
-        padding={1}
-      >
-        <Grid
-          item
-          // container
-          sx={{ height: `4vh` }}
-          onClick={() => {
-            window.location.reload()
-          }}
-          xs={6}
-        >
-          <img style={{ height: `100%` }} src={omLogoImg} alt="omLogoImg" />
-        </Grid>
-        <Grid
-          item
-          xs={6}
+        <img
+          style={{ height: `100%` }}
+          src={bannerImg}
+          alt="bannerImg"
+          onClick={() => setOngletPage(null, null)}
+        />
+        <SettingsIcon
+          color="disabled"
+          style={{ position: 'absolute', margin: 10, right: 0, zIndex: 10 }}
           onClick={() => {
             const tmp = toggleDefaultIndexes()
             var str = `DEFAULT_INDEXES sont désormais :`
             str += tmp === `true` ? `activé` : `désactivé`
             alert(str)
           }}
-        ></Grid>
-      </Grid>
-    </Grid>
+        />
+      </div>
+      <div
+        style={{
+          height: `20%`,
+          padding: 5,
+          borderBottom: `1px solid #80808040`,
+        }}
+      >
+        <div
+          onClick={() => window.location.reload()}
+          style={{ height: `90%` }}
+          className="center-y"
+        >
+          <img style={{ height: `70%` }} src={omLogoImg} alt="omLogoImg" />
+        </div>
+      </div>
+    </div>
   )
 }

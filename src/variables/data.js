@@ -1,4 +1,4 @@
-import { apiURL, assetsURL } from "./constants"
+import { apiURL, assetsURL } from './constants'
 
 // (assetsORapi: `api | assets`, mode: `metro | bus | tram | noctilien | rer`  )
 export const properType = (assetsORapi, mode) => {
@@ -32,7 +32,9 @@ export const omApi = (mode) => {
 }
 
 export const omAssets = (mode) => {
-  const t = mode === `tram` ? `t` :``
+  let t = ``
+  if (mode === `tram`) t = 't'
+  if (mode === `noctilien`) t = 'n'
   const obj = {
     logoURL: assetsURL + `${properType(`assets`, mode)}/symbole.1634824971.svg`,
     lineImgURL_prefix:
@@ -40,13 +42,17 @@ export const omAssets = (mode) => {
       `${properType(`assets`, mode)}/picto_${properType(
         `assets`,
         mode
-      )}_ligne-`+t,
+      )}_ligne-` +
+      t,
   }
   return obj
 }
 
 export function getScheduleURL(mode, line, station, direction = `R`) {
-  var normalized_station = station.trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+  var normalized_station = station
+    .trim()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
   normalized_station = encodeURI(station)
   return (
     omApi(mode).scheduleURL_prefix +

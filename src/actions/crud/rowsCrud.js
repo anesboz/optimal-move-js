@@ -53,6 +53,7 @@ export function row_delete(iOnglet, iPage, iRow) {
 }
 
 export function row_up(iOnglet, iPage, iRow) {
+  console.log(`🚩 . iOnglet, iPage, iRow`, iOnglet, iPage, iRow)
   if (iRow == 0) return
   const data = getData()
   const elem = data[iOnglet].pages[iPage].lines[iRow]

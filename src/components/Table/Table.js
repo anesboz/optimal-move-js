@@ -1,10 +1,10 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import Row from './Row'
-import RowVelib from './RowVelib'
+import Row from '../Rows/Row'
+import RowVelib from '../Rows/RowVelib'
 import Dots from './Dots'
 import { getVelibData } from 'actions/mainActions'
 import { velibDataToOneStation } from 'actions/ongletsTools'
-import PageMenu from 'components/MyMenu/PageMenu'
+import PageMenu from 'components/Table/PageMenu'
 import { Grid } from '@mui/material'
 import plusLogo from 'assets/icons/plus.png'
 import styled from 'styled-components'
@@ -14,13 +14,13 @@ export default function Table(props) {
   const { onglet, iCurrentOnglet, iCurrentPage } = props
   const page = onglet?.pages?.[iCurrentPage]
   const [velibData, setVelibData] = useState(null)
-
-  useEffect(() => {
-    getVelibData().then((res) => setVelibData(res))
-  }, [])
-
   const navigate = useNavigate()
-  if (!page)
+  // useEffect(() => {
+  //   getVelibData().then((res) => setVelibData(res))
+  // }, [])
+
+  if (iCurrentOnglet == null) return null
+  if (!page) {
     return (
       <Dots
         pages={onglet.pages}
@@ -28,39 +28,20 @@ export default function Table(props) {
         iCurrentPage={iCurrentPage}
       />
     )
+  }
+  const heightRow = `3.5rem`
   return (
-    <Fragment>
-      <Grid container>
-        <Grid item xs={2}>
+    <div style={{ height: `100%` }}>
+      <div className="center" style={{ height: `10%`, padding: 5 }}>
+        <div>{page?.description}</div>
+        <div style={{ position: 'absolute', right: 5, zIndex: 10 }}>
           <PageMenu iOnglet={iCurrentOnglet} iPage={iCurrentPage} />
-        </Grid>
-        <Grid item>
-          <h6 className="mt-2">{page?.description}</h6>
-        </Grid>
-      </Grid>
-      <div
-        className="col-10 mt-2 p-0"
-        style={{
-          scrollBehavior: `smooth`,
-          overflowY: `scroll`,
-          maxHeight: `40%`,
-        }}
-      >
-        {page?.lines.map((row, i) => (
-          <Fragment key={i}>
-            {row.mode === `velib` ? (
-              <RowVelib
-                data={velibDataToOneStation(velibData, row.line)}
-                logoOnclick={() =>
-                  getVelibData().then((res) => setVelibData(res))
-                }
-                row={row}
-                key={i}
-                iCurrentOnglet={iCurrentOnglet}
-                iCurrentPage={iCurrentPage}
-                id={i}
-              />
-            ) : (
+        </div>
+      </div>
+      <div style={{ height: `90%`,  }}>
+        <div style={{ height: `80%`, margin: `0 10%`, overflowY: `scroll` }}>
+          {page?.lines.map((row, i) => (
+            <div key={i} style={{ height: heightRow, margin: `0.6rem 0` }}>
               <Row
                 row={row}
                 key={i}
@@ -68,38 +49,40 @@ export default function Table(props) {
                 iPage={iCurrentPage}
                 iRow={i}
               />
-            )}
-          </Fragment>
-        ))}
-        <PlusContainer onClick={() => navigate(`/pageAddRow`)}>
-          <DotImg src={plusLogo} />
-        </PlusContainer>
-        {/* `/page_addRow` */}
+            </div>
+          ))}
+          <div
+            style={{ height: heightRow, margin: 20 }}
+            className="center"
+            onClick={() => navigate(`/pageAddRow`)}
+          >
+            <img style={{ height: ` 70%` }} src={plusLogo} />
+          </div>
+        </div>
+        <div style={{ height: `20%` }}>
+          <Dots
+            pages={onglet.pages}
+            iCurrentOnglet={iCurrentOnglet}
+            iCurrentPage={iCurrentPage}
+          />
+        </div>
       </div>
-      <Dots
-        pages={onglet.pages}
-        iCurrentOnglet={iCurrentOnglet}
-        iCurrentPage={iCurrentPage}
-      />
-    </Fragment>
+    </div>
   )
 }
 
-const PlusContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 1rem;
-  /* height: 5rem; */
-  /* border: 3px solid red; */
-`
-
-const DotImg = styled.img`
-  height: 2rem;
-  /* width: 1rem; */
-  /* border: 3px solid red; */
-  border-radius: 50%;
-  /* background-color: black; */
-  /* opacity: ${(props) => (props.selected ? 0.7 : 0.4)}; */
-  margin-top: 0.4rem;
-`
+/* {row.mode === `velib` ? (
+                <RowVelib
+                  data={velibDataToOneStation(velibData, row.line)}
+                  logoOnclick={() =>
+                    getVelibData().then((res) => setVelibData(res))
+                  }
+                  row={row}
+                  key={i}
+                  iCurrentOnglet={iCurrentOnglet}
+                  iCurrentPage={iCurrentPage}
+                  id={i}
+                />
+              ) : (
+                
+              )} */

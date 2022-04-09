@@ -1,8 +1,8 @@
 import { SET_ONGLET_PAGE, REFRESH } from '../actions/types'
 
 const initalState = {
-  iCurrentOnglet: null,
-  iCurrentPage: null,
+  iCurrentOnglet: 0,
+  iCurrentPage: 0,
   lastRefresh: null,
 }
 
