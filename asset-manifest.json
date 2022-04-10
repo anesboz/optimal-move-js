@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/optimal-move/static/css/main.e1b89c67.css",
-    "main.js": "/optimal-move/static/js/main.4a60e49e.js",
+    "main.js": "/optimal-move/static/js/main.b8752330.js",
     "static/media/plusDot.png": "/optimal-move/static/media/plusDot.d1c2a8853601fc8825d3.png",
     "static/media/loading.gif": "/optimal-move/static/media/loading.4271eea891d4b79c6eba.gif",
     "static/media/omLogo.png": "/optimal-move/static/media/omLogo.c61f3e907b2a029e524d.png",
@@ -13,10 +13,10 @@
     "static/media/velibE.png": "/optimal-move/static/media/velibE.69bc8de089c73d806d8f.png",
     "index.html": "/optimal-move/index.html",
     "main.e1b89c67.css.map": "/optimal-move/static/css/main.e1b89c67.css.map",
-    "main.4a60e49e.js.map": "/optimal-move/static/js/main.4a60e49e.js.map"
+    "main.b8752330.js.map": "/optimal-move/static/js/main.b8752330.js.map"
   },
   "entrypoints": [
     "static/css/main.e1b89c67.css",
-    "static/js/main.4a60e49e.js"
+    "static/js/main.b8752330.js"
   ]
 }
