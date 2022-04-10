@@ -8,9 +8,9 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 import {
   page_delete,
   page_left,
-  page_modifyDescription,
+  page_updateDescription,
   page_right,
-} from 'actions/crud/pagesCrud'
+} from 'actions/localstorage/pagesActions'
 import { ArrowLeft, ArrowRight, Delete, Edit } from '@mui/icons-material'
 import { Fragment, useState } from 'react'
 
@@ -78,7 +78,7 @@ export default function PageMenu(props) {
       >
         <MenuItem
           onClick={() => {
-            page_modifyDescription(iOnglet, iPage)
+            page_updateDescription(iOnglet, iPage)
           }}
         >
           <ListItemIcon>

@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import Banner from 'components/Banner/Banner'
 import Footer from 'components/Footer/Footer'
 import Table from 'components/Table/Table'
-import { getData } from 'actions/crud/generalCrud'
+import { getData } from 'actions/localstorage/generalActions'
 import { connect } from 'react-redux'
 
 function Main(props) {

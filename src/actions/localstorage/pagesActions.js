@@ -1,5 +1,5 @@
 import { setOngletPage } from 'actions/mainActions'
-import { getData, updateData } from './generalCrud'
+import { getData, updateData } from './generalActions'
 
 export function page_addEmptyPage(iOnglet, iPage) {
   const data = getData()
@@ -21,17 +21,17 @@ export function page_delete(iOnglet, iPage) {
 
 export function page_addRow(iOnglet, iPage, station) {
   if ([station, iOnglet, iPage].some((e) => e == null))
-    return alert(`Erreur d'ajout`)
+    return alert(`page_addRow error type == null`, { station, iOnglet, iPage })
   const data = getData()
   data[iOnglet].pages[iPage].lines.push(station)
   updateData(data)
 }
 
-export function page_modifyDescription(iOnglet, iPage) {
-  alert(`page_modifyDescription a definir`)
-  // const data = getData()
-  // data[iOnglet].pages[iPage].lines.splice(id, 1)
-  // updateData(data)
+export function page_updateDescription(iOnglet, iPage, newDescription) {
+    const data = getData()
+    data[iOnglet].pages[iPage].description = newDescription
+    updateData(data)
+    setOngletPage(iOnglet, iPage)
 }
 
 export function page_left(iOnglet, iPage) {

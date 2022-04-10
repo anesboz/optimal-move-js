@@ -1,6 +1,6 @@
 import { createTheme } from '@mui/material'
 
-
+export const DEFAULT_INDEXES_STATE = 1
 export const proxy = 'https://anes-cors-everywhere.herokuapp.com/'
 export const velibURL =
   proxy +

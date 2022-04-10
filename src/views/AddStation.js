@@ -5,11 +5,9 @@ import AccordionSummary from '@mui/material/AccordionSummary'
 import Typography from '@mui/material/Typography'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ToggleButtons from 'components/ToggleButtons/ToggleButtons'
-import { Autocomplete, Box, Button, TextField } from '@mui/material'
-import { getLineImgURL, omApi, omAssets, properType } from 'variables/data'
-import axios from 'axios'
-import { proxy } from 'variables/constants'
-
+import { Autocomplete, Box, Button, Grid, TextField } from '@mui/material'
+import { getLineImgURL, omAssets } from 'variables/data'
+import CachedIcon from '@mui/icons-material/Cached'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
@@ -17,49 +15,29 @@ import FormControl from '@mui/material/FormControl'
 import Banner from 'components/Banner/Banner'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { useNavigate } from 'react-router-dom'
-import { page_addRow } from 'actions/crud/pagesCrud'
+import { page_addRow } from 'actions/localstorage/pagesActions'
 import { connect } from 'react-redux'
-import { row_getWays } from 'actions/crud/rowsCrud'
+import { getLines, getStations, getWays } from 'actions/fetching/ratp'
 
 function AddStation(props) {
   const { iCurrentOnglet, iCurrentPage } = props.mainBranch
-  console.log(`🚩 . iCurrentPage`, iCurrentPage)
-  console.log(`🚩 . iCurrentOnglet`, iCurrentOnglet)
-  const [mode, setMode] = useState(undefined)
-  const [line, setLine] = useState(undefined)
-  const [station, setStation] = useState(undefined)
-  const [terminus, setTerminus] = useState(undefined)
-  const [way, setWay] = useState(undefined)
+  const [mode, setMode] = useState()
 
-  const initalLines = ['Loading ...']
-  const [allLines, setAllLines] = useState(initalLines)
-  const [allstation, setAllstation] = useState([])
+  const [allLines, setAllLines] = useState([])
+  const [line, setLine] = useState()
+
+  const [allstations, setAllstations] = useState([])
+  const [station, setStation] = useState()
+
   const [allDestinations, setAllDestinations] = useState([])
-  console.log(`🚩 . allDestinations`, allDestinations)
+  const [terminus, setTerminus] = useState()
+  const [way, setWay] = useState()
 
   const navigate = useNavigate()
   const [expanded, setExpanded] = useState('panel1')
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false)
   }
-
-  // useEffect(() => {
-  //   if (!mode) return
-  //   axios.get(proxy + omApi(mode).linesURL).then((res) => {
-  //     const tmp = res.data.result[properType(`api`, mode)].map((e) => e.code)
-  //     const uniq = [...new Set(tmp)]
-  //     setAllLines(uniq)
-  //   })
-  // }, [mode])
-
-  // useEffect(() => {
-  //   if (!line) return
-  //   axios.get(proxy + omApi(mode).stationsURL + line).then((res) => {
-  //     const tmp = res.data.result.stations
-  //     const uniq = [...new Set(tmp)]
-  //     setAllstation(uniq)
-  //   })
-  // }, [line])
 
   const modesButtons = ['metro', 'bus', 'tram', 'rer', 'noctilien'].map(
     (e) => ({
@@ -106,17 +84,22 @@ function AddStation(props) {
         <AccordionDetails style={{ textAlign: 'center' }}>
           <ToggleButtons
             onSelect={(newMode) => {
+              // mode > line > station > terminus > way
               setMode(newMode)
+              // initialisation
+              setAllLines([])
+              setLine()
+
+              setAllstations([])
+              setStation()
+
+              setAllDestinations([])
+              setTerminus()
+              setWay()
+
               if (!newMode) return
+              getLines(newMode).then((lines) => setAllLines(lines))
               setExpanded('panel2')
-              axios.get(proxy + omApi(newMode).linesURL).then((res) => {
-                let tmp = res.data.result[properType('api', newMode)]
-                tmp = tmp.map((e) => e.code)
-                const uniq = [...new Set(tmp)]
-                setAllLines(uniq)
-              })
-              setLine(undefined)
-              setStation(undefined)
             }}
             elements={modesButtons}
           />
@@ -145,56 +128,69 @@ function AddStation(props) {
           ) : null}
         </AccordionSummary>
         <AccordionDetails>
-          <Autocomplete
-            // sx={{ width: 300 }}
-            options={allLines}
-            autoHighlight
-            getOptionLabel={(newLine) => newLine}
-            renderOption={(props, newLine) => (
-              <Box
-                component="li"
-                sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
-                {...props}
-              >
-                {allLines === initalLines ? null : (
-                  <img
-                    loading="lazy"
-                    width="20"
-                    // src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
-                    src={getLineImgURL(mode, newLine)}
-                    // srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
-                    alt={newLine}
+          <Grid container>
+            <Grid item mob={1} className="center">
+              <CachedIcon
+                color="disabled"
+                onClick={() =>
+                  getLines(mode).then((lines) => setAllLines(lines))
+                }
+              />
+            </Grid>
+            <Grid item mob={11}>
+              <Autocomplete
+                options={allLines}
+                autoHighlight
+                getOptionLabel={(newLine) => newLine}
+                renderOption={(props, newLine) => (
+                  <Box
+                    component="li"
+                    sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
+                    {...props}
+                  >
+                    <img
+                      loading="lazy"
+                      width="20"
+                      src={getLineImgURL(mode, newLine)}
+                      alt={newLine}
+                    />
+                    {newLine}
+                  </Box>
+                )}
+                renderInput={(params) => (
+                  <TextField
+                    id="field1"
+                    {...params}
+                    label="Choose a line"
+                    autoComplete="off"
+                    inputProps={{
+                      ...params.inputProps,
+                      autoComplete: 'new-password', // disable autocomplete and autofill
+                    }}
                   />
                 )}
-                {newLine}
-              </Box>
-            )}
-            renderInput={(params) => (
-              <TextField
-                id="field1"
-                {...params}
-                label="Choose a line"
-                autoComplete="off"
-                inputProps={{
-                  ...params.inputProps,
-                  autoComplete: 'new-password', // disable autocomplete and autofill
+                onChange={(_, newLine) => {
+                  // mode > line > station > terminus > way
+                  setLine(newLine)
+                  // initialisation
+                  setAllstations([])
+                  setStation()
+
+                  setAllDestinations([])
+                  setTerminus()
+                  setWay()
+
+                  if (!newLine) return
+                  setExpanded('panel3')
+                  getStations(mode, newLine).then((res) => setAllstations(res))
+                  getWays(mode, newLine).then((ways) =>
+                    setAllDestinations(ways)
+                  )
                 }}
+                value={line}
               />
-            )}
-            onChange={(_, newLine) => {
-              setLine(newLine)
-              if (!newLine) return
-              setExpanded('panel3')
-              axios
-                .get(proxy + omApi(mode).stationsURL + newLine)
-                .then((res) => {
-                  const tmp = res.data.result.stations
-                  const uniq = [...new Set(tmp)]
-                  setAllstation(uniq)
-                })
-            }}
-            value={line}
-          />
+            </Grid>
+          </Grid>
         </AccordionDetails>
       </Accordion>
       {/* TAB3 */}
@@ -213,38 +209,48 @@ function AddStation(props) {
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Autocomplete
-            // sx={{ width: 300 }}
-            options={allstation}
-            autoHighlight
-            getOptionLabel={(newStation) => newStation.name}
-            renderOption={(props, newStation) => (
-              <Box
-                component="li"
-                sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
-                {...props}
-              >
-                {newStation.name}
-              </Box>
-            )}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Choose a line"
-                autoComplete="off"
-                inputProps={{
-                  ...params.inputProps,
-                  autoComplete: 'new-password', // disable autocomplete and autofill
+          <Grid container>
+            <Grid item mob={1} className="center">
+              <CachedIcon
+                color="disabled"
+                onClick={() =>
+                  getStations(mode, line).then((res) => setAllstations(res))
+                }
+              />
+            </Grid>
+            <Grid item mob={11}>
+              <Autocomplete
+                options={allstations}
+                autoHighlight
+                getOptionLabel={(newStation) => newStation.name}
+                renderOption={(props, newStation) => (
+                  <Box
+                    component="li"
+                    sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
+                    {...props}
+                  >
+                    {newStation.name}
+                  </Box>
+                )}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Choose a line"
+                    autoComplete="off"
+                    inputProps={{
+                      ...params.inputProps,
+                      autoComplete: 'new-password', // disable autocomplete and autofill
+                    }}
+                  />
+                )}
+                onChange={(event, newStation) => {
+                  setStation(newStation?.slug)
+                  if (!newStation) return
+                  setExpanded('panel4')
                 }}
               />
-            )}
-            onChange={(event, newStation) => {
-              setStation(newStation?.slug)
-              if (!newStation) return
-              setExpanded('panel4')
-              row_getWays(mode, line).then((res) => setAllDestinations(res))
-            }}
-          />
+            </Grid>
+          </Grid>
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -262,31 +268,41 @@ function AddStation(props) {
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <FormControl>
-            {/* <FormLabel id="demo-radio-buttons-group-label">
-              destination
-            </FormLabel> */}
-            <RadioGroup
-              aria-labelledby="demo-radio-buttons-group-label"
-              // defaultValue="female"
-              name="radio-buttons-group"
-              onChange={(_, value) => {
-                const dest = allDestinations.filter((e) => e.name === value)[0]
-                setWay(dest.way)
-                setTerminus(dest.name)
-                setExpanded(null)
-              }}
-            >
-              {allDestinations.map((dest, i) => (
-                <FormControlLabel
-                  value={dest.name}
-                  control={<Radio />}
-                  label={dest.name}
-                  key={i}
-                />
-              ))}
-            </RadioGroup>
-          </FormControl>
+          <Grid container>
+            <Grid item mob={1} className="center">
+              <CachedIcon
+                color="disabled"
+                onClick={() =>
+                  getWays(mode, line).then((ways) => setAllDestinations(ways))
+                }
+              />
+            </Grid>
+            <Grid item mob={11}>
+              <FormControl>
+                <RadioGroup
+                  aria-labelledby="demo-radio-buttons-group-label"
+                  name="radio-buttons-group"
+                  onChange={(_, value) => {
+                    const dest = allDestinations.filter(
+                      (e) => e.name === value
+                    )[0]
+                    setWay(dest.way)
+                    setTerminus(dest.name)
+                    setExpanded(null)
+                  }}
+                >
+                  {allDestinations.map((dest, i) => (
+                    <FormControlLabel
+                      value={dest.name}
+                      control={<Radio />}
+                      label={dest.name}
+                      key={i}
+                    />
+                  ))}
+                </RadioGroup>
+              </FormControl>
+            </Grid>
+          </Grid>
         </AccordionDetails>
       </Accordion>
       <div

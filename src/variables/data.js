@@ -1,6 +1,5 @@
 import { apiURL, assetsURL } from './constants'
 
-// (assetsORapi: `api | assets`, mode: `metro | bus | tram | noctilien | rer`  )
 export const properType = (assetsORapi, mode) => {
   const types = {
     assets: {
@@ -62,6 +61,5 @@ export function getScheduleURL(mode, line, station, direction = `R`) {
 
 export function getLineImgURL(mode, line) {
   const url = omAssets(mode).lineImgURL_prefix + `${line}.svg`
-  // console.log(`🚩 . url`, url)
   return url
 }

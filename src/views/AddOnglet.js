@@ -8,10 +8,10 @@ import { Button, TextField } from '@mui/material'
 import Banner from 'components/Banner/Banner'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { useNavigate } from 'react-router-dom'
-import { addOnglet } from 'actions/crud/ongletsCrud'
+import { addOnglet } from 'actions/localstorage/ongletsActions'
 import { setOngletPage } from 'actions/mainActions'
 import { connect } from 'react-redux'
-import { getData } from 'actions/crud/generalCrud'
+import { getData } from 'actions/localstorage/generalActions'
 
 function AddOnglet(props) {
   const { iCurrentPage } = props

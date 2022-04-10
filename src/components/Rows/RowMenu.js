@@ -11,7 +11,7 @@ import {
   row_down,
   row_reverseDirection,
   row_up,
-} from 'actions/crud/rowsCrud'
+} from 'actions/localstorage/rowsActions'
 import { ArrowDownward, Delete } from '@mui/icons-material'
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 import { Fragment, useState } from 'react'

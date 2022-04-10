@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import plusDot from 'assets/icons/plusDot.png'
 import { setOngletPage } from 'actions/mainActions'
-import { page_addEmptyPage } from 'actions/crud/pagesCrud'
+import { page_addEmptyPage } from 'actions/localstorage/pagesActions'
 
 export default function Dots({ pages, iCurrentOnglet, iCurrentPage }) {
   return (

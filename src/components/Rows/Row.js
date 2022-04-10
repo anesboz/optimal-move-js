@@ -1,14 +1,13 @@
-import React, { Fragment, useEffect, useState } from 'react'
-import styled from 'styled-components'
+import React, { useEffect, useState } from 'react'
 import loadingIcon from 'assets/icons/loading.gif'
-import { getStationSchedule } from 'actions/mainActions'
 import { isDayTime } from 'actions/ongletsTools'
 import { getLineImgURL } from 'variables/data'
-import { capitalizeFirstLetter } from 'actions/tools'
+import { capitalizeFirstLetter, insistWhenErrors } from 'actions/tools'
 import RowMenu from 'components/Rows/RowMenu'
 import { connect } from 'react-redux'
 import Case from './Case'
 import WifiOffIcon from '@mui/icons-material/WifiOff'
+import * as ratp from 'actions/fetching/ratp'
 
 const initialData = [
   { message: <img style={{ height: `70%` }} src={loadingIcon} /> },
@@ -22,42 +21,29 @@ const offlineData = [
 function Row(props) {
   const { lastRefresh } = props.mainBranch
   const { iPage, iOnglet, row, iRow } = props
-
   const { mode, line, station, way, terminus } = row
-
   const [data, setData] = useState(initialData)
-  console.log(`🚩 . data`, data)
+  console.log(`🚩 .  iRow data`,iRow, data)
 
-  const thread = () => {
-    return new Promise((resolve, reject) => {
-      if (mode == `noctilien` && isDayTime()) return null
-      getStationSchedule({ mode, line, station, way, terminus })
-        .then((res) => {
-          resolve(res)
-          console.log(`🚩 thread then((res)`, res)
-        })
-        .catch((err) => {
-          console.log(`🚩 thread .catch((err)`, err)
-          setTimeout(() => thread(), 800)
-        })
-    })
-  }
   useEffect(() => {
+    if (mode == `noctilien` && isDayTime()) return null
     setData(initialData)
-    thread()
-      .then((res) => {
-        setData(res)
-        console.log(`🚩 useEffect(() .then((res)`, res)
+    insistWhenErrors(() =>
+      ratp.getSchedule({
+        mode,
+        line,
+        station,
+        way,
+        terminus,
       })
-      .catch((err) => {
-        setData(offlineData)
-        console.log(`🚩 useEffect(() .catch((err)`, err)
-      })
+    )
+      .then((res) => setData(res))
+      .catch((err) => setData(offlineData))
   }, [lastRefresh])
 
   return (
     <div style={{ height: ` 100%` }}>
-      <div style={{ fontSize: `55%`, color: `gray`, margin: `5 0` }}>
+      <div style={{ fontSize: `55%`, color: `gray`, margin: `5px 0` }}>
         {capitalizeFirstLetter(station.replaceAll(`+`, ` `))} ➙{' '}
         {data?.[0]?.destination}
       </div>
@@ -66,9 +52,7 @@ function Row(props) {
           display: `block`,
           height: `100%`,
           width: `100%`,
-          // border: `2px solid green`,
           overflowX: `scroll`,
-          // overflowY: `hidden`,
           whiteSpace: `nowrap`,
         }}
       >
