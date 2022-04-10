@@ -1,27 +1,22 @@
 {
   "files": {
-    "main.css": "/new-optimal-move/static/css/main.a03b186a.chunk.css",
-    "main.js": "/new-optimal-move/static/js/main.a9a488bc.chunk.js",
-    "main.js.map": "/new-optimal-move/static/js/main.a9a488bc.chunk.js.map",
-    "runtime-main.js": "/new-optimal-move/static/js/runtime-main.038d910c.js",
-    "runtime-main.js.map": "/new-optimal-move/static/js/runtime-main.038d910c.js.map",
-    "static/js/2.10073b1f.chunk.js": "/new-optimal-move/static/js/2.10073b1f.chunk.js",
-    "static/js/2.10073b1f.chunk.js.map": "/new-optimal-move/static/js/2.10073b1f.chunk.js.map",
-    "index.html": "/new-optimal-move/index.html",
-    "static/css/main.a03b186a.chunk.css.map": "/new-optimal-move/static/css/main.a03b186a.chunk.css.map",
-    "static/js/2.10073b1f.chunk.js.LICENSE.txt": "/new-optimal-move/static/js/2.10073b1f.chunk.js.LICENSE.txt",
-    "static/media/banner.e0460f9d.png": "/new-optimal-move/static/media/banner.e0460f9d.png",
-    "static/media/index.css": "/new-optimal-move/static/media/betterOnPhones-bg.efd09af8.png",
-    "static/media/loading.4271eea8.gif": "/new-optimal-move/static/media/loading.4271eea8.gif",
-    "static/media/logo_velib.92de839d.png": "/new-optimal-move/static/media/logo_velib.92de839d.png",
-    "static/media/omLogo.c61f3e90.png": "/new-optimal-move/static/media/omLogo.c61f3e90.png",
-    "static/media/velibE.69bc8de0.png": "/new-optimal-move/static/media/velibE.69bc8de0.png",
-    "static/media/velibP.a400f89b.png": "/new-optimal-move/static/media/velibP.a400f89b.png"
+    "main.css": "/optimal-move/static/css/main.e1b89c67.css",
+    "main.js": "/optimal-move/static/js/main.4a60e49e.js",
+    "static/media/plusDot.png": "/optimal-move/static/media/plusDot.d1c2a8853601fc8825d3.png",
+    "static/media/loading.gif": "/optimal-move/static/media/loading.4271eea891d4b79c6eba.gif",
+    "static/media/omLogo.png": "/optimal-move/static/media/omLogo.c61f3e907b2a029e524d.png",
+    "static/media/betterOnPhones-bg.png": "/optimal-move/static/media/betterOnPhones-bg.efd09af8196736506b1b.png",
+    "static/media/banner.png": "/optimal-move/static/media/banner.e0460f9d124940844871.png",
+    "static/media/logo_velib.png": "/optimal-move/static/media/logo_velib.92de839dfb354a837601.png",
+    "static/media/plus.png": "/optimal-move/static/media/plus.b54f29e13fd6dc206cd3.png",
+    "static/media/velibP.png": "/optimal-move/static/media/velibP.a400f89b0da5b828d29e.png",
+    "static/media/velibE.png": "/optimal-move/static/media/velibE.69bc8de089c73d806d8f.png",
+    "index.html": "/optimal-move/index.html",
+    "main.e1b89c67.css.map": "/optimal-move/static/css/main.e1b89c67.css.map",
+    "main.4a60e49e.js.map": "/optimal-move/static/js/main.4a60e49e.js.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.038d910c.js",
-    "static/js/2.10073b1f.chunk.js",
-    "static/css/main.a03b186a.chunk.css",
-    "static/js/main.a9a488bc.chunk.js"
+    "static/css/main.e1b89c67.css",
+    "static/js/main.4a60e49e.js"
   ]
 }
