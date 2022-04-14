@@ -8,9 +8,14 @@ import MenuIcon from '@mui/icons-material/Menu'
 import BugReportIcon from '@mui/icons-material/BugReport'
 import { useState } from 'react'
 import { deleteData, getData } from 'actions/localstorage/generalActions'
+import { refresh } from 'actions/mainActions'
 
 // ici la liste des buttons
 const testButtonsList = [
+  {
+    name: `refresh`,
+    fun: refresh,
+  },
   {
     name: `logData`,
     fun: () => console.log(getData()),

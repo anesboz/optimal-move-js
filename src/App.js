@@ -5,7 +5,7 @@ import AddOnglet from 'views/AddOnglet'
 import React from 'react'
 import { Grid, ThemeProvider } from '@mui/material'
 import { myTheme } from 'variables/constants'
-import TestMenu from 'components/Rows/TestMenu'
+import TestMenu from 'components/TestMenu'
 
 function App() {
   return (

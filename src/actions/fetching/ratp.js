@@ -3,46 +3,28 @@ import axios from 'axios'
 import { proxy } from 'variables/constants'
 import { getScheduleURL, omApi, properType } from 'variables/data'
 
-export const getSchedule = async ({ mode, line, station, way, terminus }) => {
-  const query = getScheduleURL(mode, line, station, way)
-  console.log(`🚩 . query`, query)
+export const getSchedule = async (StationObject) => {
+  const { mode, line, station, terminus } = StationObject
+  const query = getScheduleURL(mode, line, station)
   const res = await insistWhenErrors(() => axios.get(query))
   if (res?.status != 200) throw 'status != 200'
   let tmp = res.data.result.schedules
-  tmp = tmp.filter((e) => {
-    console.log(`🚩 . terminus`, terminus)
-    console.log(`🚩 . e.destination`, e.destination)
-    console.log(`🚩 . e.destination === terminus`, e.destination === terminus)
-    return e.destination === terminus
-  })
-  // case metro 7 for example
-  // if (terminus) tmp = tmp.filter((e) => e.destination === terminus)
-  console.log(`🚩 . tmp`, tmp)
+  if (terminus != null) tmp = tmp.filter((e) => e.destination === terminus)
   return tmp
 }
 
-export async function getWays(mode, line) {
-  console.log(`🚩 . getWays`)
-  const query = omApi(mode).destinationsURL + line
-  const res = await insistWhenErrors(() => axios.get(query))
-  const destinations = res.data.result.destinations
-  // traiter le cas deux branch :
-  const rv = []
-  destinations.forEach((dest) => {
-    if (dest.name.includes('/')) {
-      const branch1 = dest.name.split('/')[0].trim()
-      const branch2 = dest.name.split('/')[1].trim()
-      rv.push({ name: branch1, way: dest.way })
-      rv.push({ name: branch2, way: dest.way })
-    } else {
-      rv.push(dest)
-    }
-  })
-  return rv
+export async function getTerminus(mode, line, station) {
+  if (station == null) {
+    const stations = await getStations(mode, line)
+    station = stations[0].slug
+  }
+
+  let scheduleA = await getSchedule({ mode, line, station })
+  const res = [...new Set(scheduleA.map((e) => e.destination))]
+  return res
 }
 
 export async function getLines(mode) {
-  console.log(`🚩 . getLines`)
   const query = proxy + omApi(mode).linesURL
   const res = await insistWhenErrors(() => axios.get(query))
   let tmp = res.data.result[properType('api', mode)]

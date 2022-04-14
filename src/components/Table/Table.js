@@ -36,6 +36,7 @@ export default function Table(props) {
           onBlur={() =>
             page_updateDescription(iCurrentOnglet, iCurrentPage, desc)
           }
+          sx={{ input: { color: '#4f504e5e' } }}
         />
         <div style={{ position: 'absolute', right: 5, zIndex: 10 }}>
           <PageMenu iOnglet={iCurrentOnglet} iPage={iCurrentPage} />

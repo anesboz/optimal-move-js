@@ -5,7 +5,14 @@ import AccordionSummary from '@mui/material/AccordionSummary'
 import Typography from '@mui/material/Typography'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ToggleButtons from 'components/ToggleButtons/ToggleButtons'
-import { Autocomplete, Box, Button, Grid, TextField } from '@mui/material'
+import {
+  Autocomplete,
+  Box,
+  Button,
+  CircularProgress,
+  Grid,
+  TextField,
+} from '@mui/material'
 import { getLineImgURL, omAssets } from 'variables/data'
 import CachedIcon from '@mui/icons-material/Cached'
 import Radio from '@mui/material/Radio'
@@ -17,7 +24,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { useNavigate } from 'react-router-dom'
 import { page_addRow } from 'actions/localstorage/pagesActions'
 import { connect } from 'react-redux'
-import { getLines, getStations, getWays } from 'actions/fetching/ratp'
+import { getLines, getStations, getTerminus } from 'actions/fetching/ratp'
 
 function AddStation(props) {
   const { iCurrentOnglet, iCurrentPage } = props.mainBranch
@@ -29,9 +36,8 @@ function AddStation(props) {
   const [allstations, setAllstations] = useState([])
   const [station, setStation] = useState()
 
-  const [allDestinations, setAllDestinations] = useState([])
+  const [allTerminus, setAllTerminus] = useState([])
   const [terminus, setTerminus] = useState()
-  const [way, setWay] = useState()
 
   const navigate = useNavigate()
   const [expanded, setExpanded] = useState('panel1')
@@ -84,7 +90,7 @@ function AddStation(props) {
         <AccordionDetails style={{ textAlign: 'center' }}>
           <ToggleButtons
             onSelect={(newMode) => {
-              // mode > line > station > terminus > way
+              // mode > line > station > terminus
               setMode(newMode)
               // initialisation
               setAllLines([])
@@ -93,9 +99,8 @@ function AddStation(props) {
               setAllstations([])
               setStation()
 
-              setAllDestinations([])
+              setAllTerminus([])
               setTerminus()
-              setWay()
 
               if (!newMode) return
               getLines(newMode).then((lines) => setAllLines(lines))
@@ -130,12 +135,17 @@ function AddStation(props) {
         <AccordionDetails>
           <Grid container>
             <Grid item mob={1} className="center">
-              <CachedIcon
-                color="disabled"
-                onClick={() =>
-                  getLines(mode).then((lines) => setAllLines(lines))
-                }
-              />
+              {allLines.length === 0 ? (
+                <CircularProgress size={24} />
+              ) : (
+                <CachedIcon
+                  color="disabled"
+                  onClick={() => {
+                    setAllLines([])
+                    getLines(mode).then((lines) => setAllLines(lines))
+                  }}
+                />
+              )}
             </Grid>
             <Grid item mob={11}>
               <Autocomplete
@@ -170,22 +180,18 @@ function AddStation(props) {
                   />
                 )}
                 onChange={(_, newLine) => {
-                  // mode > line > station > terminus > way
+                  // mode > line > station > terminus
                   setLine(newLine)
                   // initialisation
                   setAllstations([])
                   setStation()
 
-                  setAllDestinations([])
+                  setAllTerminus([])
                   setTerminus()
-                  setWay()
 
                   if (!newLine) return
                   setExpanded('panel3')
                   getStations(mode, newLine).then((res) => setAllstations(res))
-                  getWays(mode, newLine).then((ways) =>
-                    setAllDestinations(ways)
-                  )
                 }}
                 value={line}
               />
@@ -211,12 +217,19 @@ function AddStation(props) {
         <AccordionDetails>
           <Grid container>
             <Grid item mob={1} className="center">
-              <CachedIcon
-                color="disabled"
-                onClick={() =>
-                  getStations(mode, line).then((res) => setAllstations(res))
-                }
-              />
+              {allstations.length === 0 ? (
+                <CircularProgress size={24} />
+              ) : (
+                <CachedIcon
+                  color="disabled"
+                  onClick={() => {
+                    setAllstations([])
+                    getStations(mode, line).then((lines) =>
+                      setAllstations(lines)
+                    )
+                  }}
+                />
+              )}
             </Grid>
             <Grid item mob={11}>
               <Autocomplete
@@ -246,7 +259,11 @@ function AddStation(props) {
                 onChange={(event, newStation) => {
                   setStation(newStation?.slug)
                   if (!newStation) return
+                  setAllTerminus([])
                   setExpanded('panel4')
+                  getTerminus(mode, line, newStation?.slug).then((ways) =>
+                    setAllTerminus(ways)
+                  )
                 }}
               />
             </Grid>
@@ -270,12 +287,19 @@ function AddStation(props) {
         <AccordionDetails>
           <Grid container>
             <Grid item mob={1} className="center">
-              <CachedIcon
-                color="disabled"
-                onClick={() =>
-                  getWays(mode, line).then((ways) => setAllDestinations(ways))
-                }
-              />
+              {allTerminus.length === 0 ? (
+                <CircularProgress size={24} />
+              ) : (
+                <CachedIcon
+                  color="disabled"
+                  onClick={() => {
+                    setAllTerminus([])
+                    getTerminus(mode, line, station).then((lines) =>
+                      setAllTerminus(lines)
+                    )
+                  }}
+                />
+              )}
             </Grid>
             <Grid item mob={11}>
               <FormControl>
@@ -283,19 +307,16 @@ function AddStation(props) {
                   aria-labelledby="demo-radio-buttons-group-label"
                   name="radio-buttons-group"
                   onChange={(_, value) => {
-                    const dest = allDestinations.filter(
-                      (e) => e.name === value
-                    )[0]
-                    setWay(dest.way)
-                    setTerminus(dest.name)
+                    // const dest = allTerminus.find((e) => e === value)
+                    setTerminus(value)
                     setExpanded(null)
                   }}
                 >
-                  {allDestinations.map((dest, i) => (
+                  {allTerminus.map((dest, i) => (
                     <FormControlLabel
-                      value={dest.name}
+                      value={dest}
                       control={<Radio />}
-                      label={dest.name}
+                      label={dest}
                       key={i}
                     />
                   ))}
@@ -315,14 +336,13 @@ function AddStation(props) {
         <Button
           variant="contained"
           color="success"
-          disabled={[mode, line, station, way, terminus].some((e) => e == null)}
+          disabled={[mode, line, station, terminus].some((e) => e == null)}
           fullWidth
           onClick={() => {
             const newStation = {
               mode,
               line,
               station,
-              way,
               terminus,
             }
             page_addRow(iCurrentOnglet, iCurrentPage, newStation)

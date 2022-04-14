@@ -1,20 +1,19 @@
 import { getData, updateData } from './generalActions'
-import { getWays } from 'actions/fetching/ratp'
+import { getTerminus } from 'actions/fetching/ratp'
 
 export async function row_reverseDirection(iOnglet, iPage, iRow) {
   const data = getData()
   const currentRow = data[iOnglet].pages[iPage].lines[iRow]
   let allDirections = []
   try {
-    allDirections = await getWays(currentRow.mode, currentRow.line)
+    allDirections = await getTerminus(currentRow.mode, currentRow.line, currentRow.station)
   } catch (err) {
     return
   }
   const n = allDirections.length
-  for (const [i, { name }] of allDirections.entries()) {
+  for (const [i, name] of allDirections.entries()) {
     if (name === currentRow.terminus) {
-      currentRow.way = allDirections[(i + 1) % n].way
-      currentRow.terminus = allDirections[(i + 1) % n].name
+      currentRow.terminus = allDirections[(i + 1) % n]
       break
     }
   }

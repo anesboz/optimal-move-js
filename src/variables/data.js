@@ -47,16 +47,13 @@ export const omAssets = (mode) => {
   return obj
 }
 
-export function getScheduleURL(mode, line, station, direction = `R`) {
+export function getScheduleURL(mode, line, station) {
   var normalized_station = station
     .trim()
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
   normalized_station = encodeURI(station)
-  return (
-    omApi(mode).scheduleURL_prefix +
-    `${line}/${normalized_station}/${direction}`
-  )
+  return omApi(mode).scheduleURL_prefix + `${line}/${normalized_station}/A%2BR`
 }
 
 export function getLineImgURL(mode, line) {

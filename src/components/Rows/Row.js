@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import loadingIcon from 'assets/icons/loading.gif'
 import { isDayTime } from 'actions/ongletsTools'
 import { getLineImgURL } from 'variables/data'
@@ -21,10 +21,9 @@ const offlineData = [
 function Row(props) {
   const { lastRefresh } = props.mainBranch
   const { iPage, iOnglet, row, iRow } = props
-  const { mode, line, station, way, terminus } = row
+  const { mode, line, station, terminus } = row
   const [data, setData] = useState(initialData)
-  console.log(`🚩 .  iRow data`,iRow, data)
-
+  
   useEffect(() => {
     if (mode == `noctilien` && isDayTime()) return null
     setData(initialData)
@@ -33,25 +32,32 @@ function Row(props) {
         mode,
         line,
         station,
-        way,
         terminus,
       })
     )
-      .then((res) => setData(res))
+      .then((res) => {
+        if (res.length > 0) setData(res)
+      })
       .catch((err) => setData(offlineData))
   }, [lastRefresh])
 
   return (
-    <div style={{ height: ` 100%` }}>
-      <div style={{ fontSize: `55%`, color: `gray`, margin: `5px 0` }}>
+    <Fragment>
+      <div
+        style={{
+          fontSize: `55%`,
+          color: `gray`,
+          marginBottom: `5px`,
+          height: `20%`,
+        }}
+      >
         {capitalizeFirstLetter(station.replaceAll(`+`, ` `))} ➙{' '}
         {data?.[0]?.destination}
       </div>
       <div
         style={{
           display: `block`,
-          height: `100%`,
-          width: `100%`,
+          height: `80%`,
           overflowX: `scroll`,
           whiteSpace: `nowrap`,
         }}
@@ -68,7 +74,7 @@ function Row(props) {
           content={<RowMenu iOnglet={iOnglet} iPage={iPage} iRow={iRow} />}
         />
       </div>
-    </div>
+    </Fragment>
   )
 }
 
