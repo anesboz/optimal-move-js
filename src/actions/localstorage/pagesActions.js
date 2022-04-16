@@ -4,7 +4,7 @@ import { getData, updateData } from './generalActions'
 export function page_addEmptyPage(iOnglet, iPage) {
   const data = getData()
   data[iOnglet].pages.push({
-    description: `New Page`,
+    description: ``,
     lines: [],
   })
   updateData(data)

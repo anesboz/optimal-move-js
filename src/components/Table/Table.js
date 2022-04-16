@@ -19,7 +19,8 @@ export default function Table(props) {
 
   const heightRow = `3.5rem`
 
-  if (iCurrentOnglet == null || onglet?.length == 0) return null
+  if (iCurrentOnglet == null || onglet == null || onglet.length == 0)
+    return null
   return (
     <div style={{ height: `100%` }}>
       <div className="center" style={{ height: `10%`, padding: 5 }}>
@@ -37,6 +38,7 @@ export default function Table(props) {
             page_updateDescription(iCurrentOnglet, iCurrentPage, desc)
           }
           sx={{ input: { color: '#4f504e5e' } }}
+          placeholder='...'
         />
         <div style={{ position: 'absolute', right: 5, zIndex: 10 }}>
           <PageMenu iOnglet={iCurrentOnglet} iPage={iCurrentPage} />
@@ -67,7 +69,7 @@ export default function Table(props) {
         </div>
         <div style={{ height: `20%` }}>
           <Dots
-            pages={onglet.pages}
+            pages={onglet?.pages}
             iCurrentOnglet={iCurrentOnglet}
             iCurrentPage={iCurrentPage}
           />

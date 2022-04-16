@@ -8,11 +8,11 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 import {
   page_delete,
   page_left,
-  page_updateDescription,
   page_right,
 } from 'actions/localstorage/pagesActions'
 import { ArrowLeft, ArrowRight, Delete, Edit } from '@mui/icons-material'
 import { Fragment, useState } from 'react'
+import { onglet_delete } from 'actions/localstorage/ongletsActions'
 
 export default function PageMenu(props) {
   const { iOnglet, iPage } = props
@@ -76,23 +76,11 @@ export default function PageMenu(props) {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem
-          onClick={() => {
-            page_updateDescription(iOnglet, iPage)
-          }}
-        >
-          <ListItemIcon>
-            <Edit fontSize="small" />
-          </ListItemIcon>
-          Modify description
-        </MenuItem>
-        <MenuItem
-          onClick={() => page_delete(iOnglet, iPage)}
-        >
+        <MenuItem onClick={() => page_delete(iOnglet, iPage)}>
           <ListItemIcon>
             <Delete fontSize="small" />
           </ListItemIcon>
-          Delete
+          Delete Page
         </MenuItem>
         <MenuItem
           onClick={() => {
@@ -113,6 +101,12 @@ export default function PageMenu(props) {
             <ArrowRight fontSize="small" />
           </ListItemIcon>
           Move Right
+        </MenuItem>
+        <MenuItem onClick={() => onglet_delete(iOnglet)}>
+          <ListItemIcon>
+            <Delete fontSize="small" color="error" />
+          </ListItemIcon>
+          <span style={{ color: 'red' }}>Delete Onglet</span>
         </MenuItem>
       </Menu>
     </Fragment>

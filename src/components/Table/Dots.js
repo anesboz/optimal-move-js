@@ -4,7 +4,9 @@ import plusDot from 'assets/icons/plusDot.png'
 import { setOngletPage } from 'actions/mainActions'
 import { page_addEmptyPage } from 'actions/localstorage/pagesActions'
 
-export default function Dots({ pages, iCurrentOnglet, iCurrentPage }) {
+export default function Dots(onglet) {
+  if(onglet == null) return 
+  const { pages, iCurrentOnglet, iCurrentPage } = onglet
   return (
     <DotsContainer>
       {pages.map((_, i) => (

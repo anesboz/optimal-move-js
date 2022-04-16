@@ -12,11 +12,12 @@ import { addOnglet } from 'actions/localstorage/ongletsActions'
 import { setOngletPage } from 'actions/mainActions'
 import { connect } from 'react-redux'
 import { getData } from 'actions/localstorage/generalActions'
+import { page_addEmptyPage } from 'actions/localstorage/pagesActions'
 
 function AddOnglet(props) {
   const { iCurrentPage } = props
   const [name, setName] = useState()
-  const [emoji, setEmoji] = useState()
+  const [emoji, setEmoji] = useState() //'😃'
   const [imgURL, setImgURL] = useState()
 
   const navigate = useNavigate()
@@ -51,7 +52,7 @@ function AddOnglet(props) {
             id="panel1bh-header"
           >
             <Typography color={name === null ? 'red' : ''}>
-              Onglet*: {name ?? null}
+              Onglet: {name ?? null}
             </Typography>
           </AccordionSummary>
           <AccordionDetails style={{ textAlign: 'center' }}>
@@ -75,7 +76,7 @@ function AddOnglet(props) {
             aria-controls="panel3bh-content"
             id="panel3bh-header"
           >
-            <Typography>Emoji : {emoji ? '✔️' : null}</Typography>
+            <Typography>Emoji : {emoji ?? null}</Typography>
           </AccordionSummary>
           <AccordionDetails style={{ textAlign: 'center' }}>
             <TextField
@@ -85,6 +86,7 @@ function AddOnglet(props) {
               inputProps={{
                 autoComplete: 'new-password', // disable autocomplete and autofill
               }}
+              // 😃
               onChange={(event) => setEmoji(event.target.value)}
             />
           </AccordionDetails>
@@ -123,7 +125,6 @@ function AddOnglet(props) {
           <Button
             variant="contained"
             color="success"
-            disabled={name == null || name.length === 0}
             fullWidth
             onClick={() => {
               const newOnglet = {
@@ -134,8 +135,9 @@ function AddOnglet(props) {
               }
               const n = getData().length
               addOnglet(newOnglet)
+              page_addEmptyPage(n, 0)
               navigate('/')
-              setOngletPage(n, iCurrentPage)
+              // setOngletPage(n, iCurrentPage)
             }}
           >
             Add Onglet
