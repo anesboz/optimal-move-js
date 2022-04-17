@@ -36,7 +36,7 @@ export default function TestMenu() {
         position: `absolute`,
         right: `50%`,
         transform: `translateX(50%)`,
-        zIndex: 10000
+        zIndex: 10000,
       }}
     >
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
@@ -95,6 +95,19 @@ export default function TestMenu() {
             {e.name}
           </MenuItem>
         ))}
+        <MenuItem>
+          <ListItemIcon>
+            <BugReportIcon fontSize="small" />
+          </ListItemIcon>
+          <a
+            href={`data:text/json;charset=utf-8,${encodeURIComponent(
+              JSON.stringify(getData())
+            )}`}
+            download="om-data.json"
+          >
+            Download Json
+          </a>
+        </MenuItem>
       </Menu>
     </div>
   )

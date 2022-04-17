@@ -6,17 +6,15 @@ import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import {
-  page_delete,
-  page_left,
-  page_right,
-} from 'actions/localstorage/pagesActions'
+  onglet_delete,
+  onglet_left,
+  onglet_right,
+} from 'actions/localstorage/ongletsActions'
 import { ArrowLeft, ArrowRight, Delete, Edit } from '@mui/icons-material'
-import { Fragment, useState } from 'react'
-import { onglet_delete, onglet_left, onglet_right } from 'actions/localstorage/ongletsActions'
-import { Divider } from '@mui/material'
+import { Fragment, useEffect, useState } from 'react'
 
-export default function PageMenu(props) {
-  const { iOnglet, iPage } = props
+export default function OngletMenu(props) {
+  const { iOnglet, display } = props
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
   const handleClick = (event) => {
@@ -25,8 +23,18 @@ export default function PageMenu(props) {
   const handleClose = () => {
     setAnchorEl(null)
   }
+
+  useEffect(() => setAnchorEl(display), [display])
+
+  // if (anchorEl == null) return
   return (
-    <Fragment>
+    <div
+      style={{
+        position: 'absolute',
+        top: '-2.5rem',
+        left: '-1rem',
+      }}
+    >
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
         <Tooltip title="Account settings">
           <IconButton
@@ -77,45 +85,39 @@ export default function PageMenu(props) {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={() => page_delete(iOnglet, iPage)}>
+        <MenuItem onClick={() => onglet_delete(iOnglet, iOnglet)}>
           <ListItemIcon>
             <Delete fontSize="small" />
           </ListItemIcon>
-          Page delete
+          Delete Onglet
         </MenuItem>
-        <MenuItem onClick={() => page_left(iOnglet, iPage)}>
+        <MenuItem
+          onClick={() => {
+            onglet_left(iOnglet, iOnglet)
+          }}
+        >
           <ListItemIcon>
             <ArrowLeft fontSize="small" />
           </ListItemIcon>
-          Page to Left
+          Move Left
         </MenuItem>
-        <MenuItem onClick={() => page_right(iOnglet, iPage)}>
+        <MenuItem
+          onClick={() => {
+            onglet_right(iOnglet, iOnglet)
+          }}
+        >
           <ListItemIcon>
             <ArrowRight fontSize="small" />
           </ListItemIcon>
-          Page to Right
-        </MenuItem>
-        {/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */}
-        <Divider />
-        <MenuItem onClick={() => onglet_left(iOnglet, iPage)}>
-          <ListItemIcon>
-            <ArrowLeft fontSize="small" />
-          </ListItemIcon>
-          Onglet to Left
-        </MenuItem>
-        <MenuItem onClick={() => onglet_right(iOnglet, iPage)}>
-          <ListItemIcon>
-            <ArrowRight fontSize="small" />
-          </ListItemIcon>
-          Onglet to Right
+          Move Right
         </MenuItem>
         <MenuItem onClick={() => onglet_delete(iOnglet)}>
           <ListItemIcon>
             <Delete fontSize="small" color="error" />
           </ListItemIcon>
-          <span style={{ color: 'red' }}>Onglet delete</span>
+          <span style={{ color: 'red' }}>Delete Onglet</span>
         </MenuItem>
       </Menu>
-    </Fragment>
+    </div>
   )
 }
