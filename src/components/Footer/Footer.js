@@ -7,7 +7,7 @@ import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome'
 import OngletMenu from './OngletMenu'
 
 export default function Footer(props) {
-  const { onglets, iCurrentOnglet } = props
+  const { onglets, iCurrentOnglet, iCurrentPage } = props
   const n = onglets.length
   const navigate = useNavigate()
   const [parentHeight, setParentHeight] = useState(0)
@@ -25,7 +25,7 @@ export default function Footer(props) {
     padding: `0.5rem 0 `,
     overflow: `hidden`,
   }
-  const x = 20
+  let x = 20
   return (
     <div
       style={{
@@ -41,10 +41,10 @@ export default function Footer(props) {
       {/* <OngletMenu iOnglet={iCurrentOnglet} /> */}
       {onglets.map(({ name, emoji, imgURL }, i) => {
         let logo = <AutoAwesomeIcon fontSize="4rem" />
-        if (emoji != null || emoji?.length === 0) logo = emoji
-        if (imgURL != null || imgURL?.length === 0)
-          logo = <img style={{ height: '100%' }} src={imgURL} />
-
+        if (emoji != null && emoji?.length > 0) logo = emoji
+        if (imgURL != null && imgURL?.length > 0) logo = null // <img style={{ height: '100%' }} src={imgURL} />
+        let y = x
+        if (name == null || name?.length === 0) y = 0
         const selected = i === iCurrentOnglet
         return (
           <div
@@ -57,11 +57,11 @@ export default function Footer(props) {
               opacity: selected ? 1 : 0.5,
             }}
             key={i}
-            onClick={(event) => setOngletPage(i)}
+            onClick={(event) => setOngletPage(i, iCurrentPage ?? 0)}
           >
             <div
               style={{
-                height: `${100 - x}%`,
+                height: `${100 - y}%`,
                 fontSize: parentHeight * 0.4,
                 width: '100%',
                 backgroundImage: `url(${imgURL})`,
@@ -71,11 +71,11 @@ export default function Footer(props) {
               }}
               className="center"
             >
-              {/* {logo}     */}
+              {logo}
             </div>
             <div
               style={{
-                height: `${x}%`,
+                height: `${y}%`,
                 transform: `translate(0, 2px)`,
                 color: 'gray',
               }}

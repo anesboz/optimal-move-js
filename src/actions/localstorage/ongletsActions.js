@@ -1,11 +1,18 @@
 import { setOngletPage } from 'actions/mainActions'
 import { getData, updateData } from './generalActions'
+import { page_addEmptyPage } from './pagesActions'
 
-export function addOnglet(onglet) {
+export function addOnglet(onglet, position) {
   if (onglet === null) return alert(`addOnglet onglet === null`)
   const data = getData()
-  data.push(onglet)
-  updateData(data)
+  if (position != null) {
+    data.splice(position, 1, onglet)
+    updateData(data)
+  } else {
+    data.push(onglet)
+    updateData(data)
+    page_addEmptyPage(data.length - 1, 0)
+  }
 }
 
 export function onglet_delete(iOnglet) {

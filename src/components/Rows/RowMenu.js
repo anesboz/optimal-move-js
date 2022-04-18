@@ -11,21 +11,22 @@ import {
   row_down,
   row_reverseDirection,
   row_up,
+  row_duplicate,
 } from 'actions/localstorage/rowsActions'
 import { ArrowDownward, Delete } from '@mui/icons-material'
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 import { Fragment, useState } from 'react'
+import ContentCopyIcon from '@mui/icons-material/ContentCopy'
+import { useNavigate } from 'react-router-dom'
+import EditIcon from '@mui/icons-material/Edit'
 
 export default function RowMenu(props) {
   const { iOnglet, iPage, iRow } = props
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget)
-  }
-  const handleClose = () => {
-    setAnchorEl(null)
-  }
+  const handleClick = (event) => setAnchorEl(event.currentTarget)
+  const handleClose = () => setAnchorEl(null)
+  const navigate = useNavigate()
   return (
     <Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
@@ -38,7 +39,6 @@ export default function RowMenu(props) {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            {/* <Avatar sx={{ width: 32, height: 32 }}>M</Avatar> */}
             <MoreVertIcon />
           </IconButton>
         </Tooltip>
@@ -77,45 +77,41 @@ export default function RowMenu(props) {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem
-          onClick={() => {
-            row_reverseDirection(iOnglet, iPage, iRow)
-          }}
-        >
+        <MenuItem onClick={() => row_reverseDirection(iOnglet, iPage, iRow)}>
           <ListItemIcon>
             <CompareArrowsIcon fontSize="small" />
           </ListItemIcon>
           Reverse direction
         </MenuItem>
-        <MenuItem
-          onClick={() => {
-            row_delete(iOnglet, iPage, iRow)
-          }}
-        >
-          <ListItemIcon>
-            <Delete fontSize="small" />
-          </ListItemIcon>
-          Delete
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            row_up(iOnglet, iPage, iRow)
-          }}
-        >
+        <MenuItem onClick={() => row_up(iOnglet, iPage, iRow)}>
           <ListItemIcon>
             <ArrowUpwardIcon fontSize="small" />
           </ListItemIcon>
-          Move up
+          Row to up
         </MenuItem>
-        <MenuItem
-          onClick={() => {
-            row_down(iOnglet, iPage, iRow)
-          }}
-        >
+        <MenuItem onClick={() => row_down(iOnglet, iPage, iRow)}>
           <ListItemIcon>
             <ArrowDownward fontSize="small" />
           </ListItemIcon>
-          Move down
+          Row to down
+        </MenuItem>
+        <MenuItem onClick={() => row_duplicate(iOnglet, iPage, iRow)}>
+          <ListItemIcon>
+            <ContentCopyIcon fontSize="small" />
+          </ListItemIcon>
+          Row duplicate
+        </MenuItem>
+        <MenuItem onClick={() => navigate('/pageAddRow', { state: { iRow } })}>
+          <ListItemIcon>
+            <EditIcon fontSize="small" />
+          </ListItemIcon>
+          Row edit
+        </MenuItem>
+        <MenuItem onClick={() => row_delete(iOnglet, iPage, iRow)}>
+          <ListItemIcon>
+            <Delete fontSize="small" />
+          </ListItemIcon>
+          Row delete
         </MenuItem>
       </Menu>
     </Fragment>

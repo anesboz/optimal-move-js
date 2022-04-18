@@ -12,19 +12,22 @@ import {
 } from 'actions/localstorage/pagesActions'
 import { ArrowLeft, ArrowRight, Delete, Edit } from '@mui/icons-material'
 import { Fragment, useState } from 'react'
-import { onglet_delete, onglet_left, onglet_right } from 'actions/localstorage/ongletsActions'
+import {
+  onglet_delete,
+  onglet_left,
+  onglet_right,
+} from 'actions/localstorage/ongletsActions'
 import { Divider } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
+import EditIcon from '@mui/icons-material/Edit'
 
 export default function PageMenu(props) {
   const { iOnglet, iPage } = props
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget)
-  }
-  const handleClose = () => {
-    setAnchorEl(null)
-  }
+  const handleClick = (event) => setAnchorEl(event.currentTarget)
+  const handleClose = () => setAnchorEl(null)
+  const navigate = useNavigate()
   return (
     <Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
@@ -77,12 +80,6 @@ export default function PageMenu(props) {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={() => page_delete(iOnglet, iPage)}>
-          <ListItemIcon>
-            <Delete fontSize="small" />
-          </ListItemIcon>
-          Page delete
-        </MenuItem>
         <MenuItem onClick={() => page_left(iOnglet, iPage)}>
           <ListItemIcon>
             <ArrowLeft fontSize="small" />
@@ -94,6 +91,12 @@ export default function PageMenu(props) {
             <ArrowRight fontSize="small" />
           </ListItemIcon>
           Page to Right
+        </MenuItem>
+        <MenuItem onClick={() => page_delete(iOnglet, iPage)}>
+          <ListItemIcon>
+            <Delete fontSize="small" />
+          </ListItemIcon>
+          Page delete
         </MenuItem>
         {/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */}
         <Divider />
@@ -108,6 +111,16 @@ export default function PageMenu(props) {
             <ArrowRight fontSize="small" />
           </ListItemIcon>
           Onglet to Right
+        </MenuItem>
+        <MenuItem
+          onClick={() =>
+            navigate('/addOnglet', { state: { iOnglet_toModify: iOnglet } })
+          }
+        >
+          <ListItemIcon>
+            <EditIcon fontSize="small" />
+          </ListItemIcon>
+          Onglet edit
         </MenuItem>
         <MenuItem onClick={() => onglet_delete(iOnglet)}>
           <ListItemIcon>

@@ -7,7 +7,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { Button, TextField } from '@mui/material'
 import Banner from 'components/Banner/Banner'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { addOnglet } from 'actions/localstorage/ongletsActions'
 import { setOngletPage } from 'actions/mainActions'
 import { connect } from 'react-redux'
@@ -15,10 +15,16 @@ import { getData } from 'actions/localstorage/generalActions'
 import { page_addEmptyPage } from 'actions/localstorage/pagesActions'
 
 function AddOnglet(props) {
-  const { iCurrentPage } = props
-  const [name, setName] = useState()
-  const [emoji, setEmoji] = useState() //'😃'
-  const [imgURL, setImgURL] = useState()
+  const { iCurrentOnglet, iCurrentPage } = props
+  const { state } = useLocation()
+  let init_onglet = {}
+  if (state?.iOnglet_toModify != null) {
+    init_onglet = getData()[state?.iOnglet_toModify]
+  }
+
+  const [name, setName] = useState(init_onglet.name)
+  const [emoji, setEmoji] = useState(init_onglet.emoji) //'😃'
+  const [imgURL, setImgURL] = useState(init_onglet.imgURL)
 
   const navigate = useNavigate()
 
@@ -64,6 +70,7 @@ function AddOnglet(props) {
                 autoComplete: 'new-password', // disable autocomplete and autofill
               }}
               onChange={(event) => setName(event.target.value)}
+              value={name}
             />
           </AccordionDetails>
         </Accordion>
@@ -88,6 +95,7 @@ function AddOnglet(props) {
               }}
               // 😃
               onChange={(event) => setEmoji(event.target.value)}
+              value={emoji}
             />
           </AccordionDetails>
         </Accordion>
@@ -112,6 +120,7 @@ function AddOnglet(props) {
                 autoComplete: 'new-password', // disable autocomplete and autofill
               }}
               onChange={(event) => setImgURL(event.target.value)}
+              value={imgURL}
             />
           </AccordionDetails>
         </Accordion>
@@ -131,13 +140,14 @@ function AddOnglet(props) {
                 name,
                 emoji,
                 imgURL,
-                pages: [],
+                pages: init_onglet.pages ?? [],
               }
+              console.log(`🚩 . newOnglet`, newOnglet)
               const n = getData().length
-              addOnglet(newOnglet)
-              page_addEmptyPage(n, 0)
+              addOnglet(newOnglet, state?.iOnglet_toModify)
+              // page_addEmptyPage(n, 0)
               navigate('/')
-              // setOngletPage(n, iCurrentPage)
+              setOngletPage(state?.iOnglet_toModify ?? n, iCurrentPage)
             }}
           >
             Add Onglet

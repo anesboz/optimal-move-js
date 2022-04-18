@@ -27,7 +27,11 @@ function Main(props) {
           width: '100%',
         }}
       >
-        <Footer onglets={getData()} iCurrentOnglet={iCurrentOnglet} />
+        <Footer
+          onglets={getData()}
+          iCurrentOnglet={iCurrentOnglet}
+          iCurrentPage={iCurrentPage}
+        />
       </div>
     </div>
   )

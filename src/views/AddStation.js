@@ -21,23 +21,30 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
 import Banner from 'components/Banner/Banner'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { page_addRow } from 'actions/localstorage/pagesActions'
 import { connect } from 'react-redux'
 import { getLines, getStations, getTerminus } from 'actions/fetching/ratp'
+import { getData } from 'actions/localstorage/generalActions'
 
 function AddStation(props) {
   const { iCurrentOnglet, iCurrentPage } = props.mainBranch
-  const [mode, setMode] = useState()
+  const { state } = useLocation()
+  let init_row = {}
+  if (state?.iRow != null) {
+    init_row = getData()[iCurrentOnglet].pages[iCurrentPage].lines[state?.iRow]
+  }
+
+  const [mode, setMode] = useState(init_row.mode)
 
   const [allLines, setAllLines] = useState([])
-  const [line, setLine] = useState()
+  const [line, setLine] = useState(init_row.line)
 
   const [allstations, setAllstations] = useState([])
-  const [station, setStation] = useState()
+  const [station, setStation] = useState(init_row.station)
 
   const [allTerminus, setAllTerminus] = useState([])
-  const [terminus, setTerminus] = useState()
+  const [terminus, setTerminus] = useState(init_row.terminus)
 
   const navigate = useNavigate()
   const [expanded, setExpanded] = useState('panel1')
@@ -89,18 +96,19 @@ function AddStation(props) {
         </AccordionSummary>
         <AccordionDetails style={{ textAlign: 'center' }}>
           <ToggleButtons
+            value={mode}
             onSelect={(newMode) => {
               // mode > line > station > terminus
               setMode(newMode)
               // initialisation
               setAllLines([])
-              setLine()
+              setLine(init_row.line)
 
               setAllstations([])
-              setStation()
+              setStation(init_row.station)
 
               setAllTerminus([])
-              setTerminus()
+              setTerminus(init_row.terminus)
 
               if (!newMode) return
               getLines(newMode).then((lines) => setAllLines(lines))
@@ -184,10 +192,10 @@ function AddStation(props) {
                   setLine(newLine)
                   // initialisation
                   setAllstations([])
-                  setStation()
+                  setStation(init_row.station)
 
                   setAllTerminus([])
-                  setTerminus()
+                  setTerminus(init_row.terminus)
 
                   if (!newLine) return
                   setExpanded('panel3')
@@ -345,8 +353,8 @@ function AddStation(props) {
               station,
               terminus,
             }
-            page_addRow(iCurrentOnglet, iCurrentPage, newStation)
-            navigate(-1)
+            page_addRow(iCurrentOnglet, iCurrentPage, newStation, state?.iRow)
+            navigate('/')
           }}
         >
           Add Station

@@ -6,7 +6,11 @@ export async function row_reverseDirection(iOnglet, iPage, iRow) {
   const currentRow = data[iOnglet].pages[iPage].lines[iRow]
   let allDirections = []
   try {
-    allDirections = await getTerminus(currentRow.mode, currentRow.line, currentRow.station)
+    allDirections = await getTerminus(
+      currentRow.mode,
+      currentRow.line,
+      currentRow.station
+    )
   } catch (err) {
     return
   }
@@ -24,6 +28,13 @@ export async function row_reverseDirection(iOnglet, iPage, iRow) {
 export function row_delete(iOnglet, iPage, iRow) {
   const data = getData()
   data[iOnglet].pages[iPage].lines.splice(iRow, 1)
+  updateData(data)
+}
+
+export function row_duplicate(iOnglet, iPage, iRow) {
+  const data = getData()
+  const row = data[iOnglet].pages[iPage].lines[iRow]
+  data[iOnglet].pages[iPage].lines.splice(iRow, 0, row)
   updateData(data)
 }
 
