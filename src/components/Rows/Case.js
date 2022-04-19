@@ -1,12 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
-import styled from 'styled-components'
-import loading from 'assets/icons/loading.gif'
-import { getStationSchedule } from 'actions/mainActions'
-import { isDayTime } from 'actions/ongletsTools'
-import { getLineImgURL } from 'variables/data'
-import { capitalizeFirstLetter } from 'actions/tools'
-import MyMenu from 'components/Rows/RowMenu'
-import { connect } from 'react-redux'
+import React from 'react'
 
 const isHere = [
   "Train a l'approche",
@@ -26,13 +18,9 @@ const problems = [
 ]
 
 export default function Case(porps) {
-  const { content } = porps
+  const { content, velib } = porps
   return (
-    <div
-      style={style(content)}
-      // className="centerMe"
-      // className={isHere.includes(content) ? 'blink' : '' + `center`}
-    >
+    <div style={style(content, velib)}>
       <div className="center" style={{ height: `100%`, width: `100%` }}>
         {content}
       </div>
@@ -40,18 +28,14 @@ export default function Case(porps) {
   )
 }
 
-const style = (content) => ({
+const style = (content, velib) => ({
   display: `inline-block`,
   position: `relative`,
   height: `90%`,
-  width: `32%`,
+  width: velib ? '24%' : `32%`,
   border: `1px solid #dddddd`,
   margin: `0 0.1rem`,
   padding: `0 0.5rem`,
   color: [...isHere, ...isComing].includes(content) ? 'orange' : 'inital',
-  // whiteSpace: `nowrap`,
   overflow: `hidden`,
-  // textAlign: `center`,
-  // verticalAlig: `center`,
-  // lineHeight: `100%`,
 })

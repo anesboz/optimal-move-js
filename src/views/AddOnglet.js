@@ -34,7 +34,10 @@ function AddOnglet(props) {
 
   return (
     <div style={{ height: `100vh` }}>
-      <div style={{ position: `relative`, height: `30%` }}>
+      <div
+        style={{ position: `relative`, height: `30%` }}
+        onClick={() => navigate('/')}
+      >
         <ArrowBackIcon
           color="disabled"
           style={{
@@ -43,7 +46,6 @@ function AddOnglet(props) {
             left: 0,
             zIndex: 10,
           }}
-          onClick={() => navigate(-1)}
         />
         <Banner />
       </div>

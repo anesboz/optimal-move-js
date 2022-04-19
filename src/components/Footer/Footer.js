@@ -8,12 +8,27 @@ import OngletMenu from './OngletMenu'
 
 export default function Footer(props) {
   const { onglets, iCurrentOnglet, iCurrentPage } = props
-  const n = onglets.length
+  console.log(`🚩 . onglets`, onglets)
   const navigate = useNavigate()
   const [parentHeight, setParentHeight] = useState(0)
   const ref = useRef(null)
 
-  useEffect(() => setParentHeight(ref.current.clientHeight))
+  useEffect(() => {
+    setParentHeight(ref.current.clientHeight)
+    // console.log(`🚩 . useEffect`)
+    // onglets.push({
+    //   name: 'new',
+    //   emoji: (
+    //     <AddCircleOutlineIcon
+    //       fontSize="4rem"
+    //       onClick={() => {
+    //         alert('hey')
+    //         navigate(`/addOnglet`)
+    //       }}
+    //     />
+    //   ),
+    // })
+  }, [])
 
   const style = {
     display: `inline-block`,
@@ -26,6 +41,7 @@ export default function Footer(props) {
     overflow: `hidden`,
   }
   let x = 20
+
   return (
     <div
       style={{
@@ -39,12 +55,26 @@ export default function Footer(props) {
       ref={ref}
     >
       {/* <OngletMenu iOnglet={iCurrentOnglet} /> */}
-      {onglets.map(({ name, emoji, imgURL }, i) => {
+      {[
+        ...onglets,
+        {
+          name: 'new',
+          emoji: (
+            <AddCircleOutlineIcon
+              fontSize="4rem"
+              onClick={() => {
+                navigate(`/addOnglet`)
+              }}
+            />
+          ),
+        },
+      ].map(({ name, emoji, imgURL }, i) => {
         let logo = <AutoAwesomeIcon fontSize="4rem" />
-        if (emoji != null && emoji?.length > 0) logo = emoji
+        if (emoji != null) logo = emoji
         if (imgURL != null && imgURL?.length > 0) logo = null // <img style={{ height: '100%' }} src={imgURL} />
         let y = x
-        if (name == null || name?.length === 0) y = 0
+        const noName = name == null || name?.length === 0
+        if (noName === true) y = 0
         const selected = i === iCurrentOnglet
         return (
           <div
@@ -62,7 +92,7 @@ export default function Footer(props) {
             <div
               style={{
                 height: `${100 - y}%`,
-                fontSize: parentHeight * 0.4,
+                fontSize: parentHeight * (noName ? 0.55 : 0.4),
                 width: '100%',
                 backgroundImage: `url(${imgURL})`,
                 backgroundPosition: 'center',
@@ -86,7 +116,7 @@ export default function Footer(props) {
           </div>
         )
       })}
-      <div style={style} onClick={() => navigate(`/addOnglet`)}>
+      {/* <div style={style} onClick={() => navigate(`/addOnglet`)}>
         <div
           style={{
             height: `${100 - x}%`,
@@ -102,13 +132,13 @@ export default function Footer(props) {
           style={{
             height: `${x}%`,
             transform: `translate(0, 2px)`,
-            color: 'gray',
+            color: '#808080ad',
           }}
           className="center"
         >
           new
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }

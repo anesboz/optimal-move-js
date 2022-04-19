@@ -21,7 +21,7 @@ import { useNavigate } from 'react-router-dom'
 import EditIcon from '@mui/icons-material/Edit'
 
 export default function RowMenu(props) {
-  const { iOnglet, iPage, iRow } = props
+  const { iOnglet, iPage, iRow, velib } = props
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
   const handleClick = (event) => setAnchorEl(event.currentTarget)
@@ -77,12 +77,14 @@ export default function RowMenu(props) {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={() => row_reverseDirection(iOnglet, iPage, iRow)}>
-          <ListItemIcon>
-            <CompareArrowsIcon fontSize="small" />
-          </ListItemIcon>
-          Reverse direction
-        </MenuItem>
+        {velib ? null : (
+          <MenuItem onClick={() => row_reverseDirection(iOnglet, iPage, iRow)}>
+            <ListItemIcon>
+              <CompareArrowsIcon fontSize="small" />
+            </ListItemIcon>
+            Reverse direction
+          </MenuItem>
+        )}
         <MenuItem onClick={() => row_up(iOnglet, iPage, iRow)}>
           <ListItemIcon>
             <ArrowUpwardIcon fontSize="small" />

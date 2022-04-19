@@ -2,6 +2,7 @@ import { insistWhenErrors } from 'actions/tools'
 import axios from 'axios'
 import { proxy } from 'variables/constants'
 import { getScheduleURL, omApi, properType } from 'variables/data'
+import { linesStored } from 'variables/lines'
 
 export const getSchedule = async (StationObject) => {
   const { mode, line, station, terminus } = StationObject
@@ -24,12 +25,16 @@ export async function getTerminus(mode, line, station) {
   return res
 }
 
-export async function getLines(mode) {
+export async function getLines(mode, stored = true) {
+  if (stored === true) {
+    return linesStored.find((e) => e.name === properType('api', mode)).lines
+  }
   const query = proxy + omApi(mode).linesURL
   const res = await insistWhenErrors(() => axios.get(query))
   let tmp = res.data.result[properType('api', mode)]
   tmp = tmp.map((e) => e.code)
   const lines = [...new Set(tmp)] // uniq
+  console.log(`🚩 . lines`, lines)
   return lines
 }
 

@@ -1,5 +1,5 @@
 import { apiURL, assetsURL } from './constants'
-
+import velibLogo from 'assets/icons/velibLogo.png'
 export const properType = (assetsORapi, mode) => {
   const types = {
     assets: {
@@ -8,6 +8,7 @@ export const properType = (assetsORapi, mode) => {
       tram: `tram`,
       rer: `rer`,
       noctilien: `noctilien`,
+      velib: `velib`,
     },
     api: {
       metro: `metros`,
@@ -15,6 +16,7 @@ export const properType = (assetsORapi, mode) => {
       tram: `tramways`,
       rer: `rers`,
       noctilien: `noctiliens`,
+      velib: `velib`,
     },
   }
   return types[assetsORapi][mode]
@@ -31,6 +33,7 @@ export const omApi = (mode) => {
 }
 
 export const omAssets = (mode) => {
+  if (mode === `velib`) return { logoURL: velibLogo }
   let t = ``
   if (mode === `tram`) t = 't'
   if (mode === `noctilien`) t = 'n'
@@ -57,6 +60,7 @@ export function getScheduleURL(mode, line, station) {
 }
 
 export function getLineImgURL(mode, line) {
+  if (mode === 'velib') return velibLogo
   const url = omAssets(mode).lineImgURL_prefix + `${line}.svg`
   return url
 }

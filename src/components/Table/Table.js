@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Row from '../Rows/Row'
 import Dots from './Dots'
 import PageMenu from 'components/Table/PageMenu'
@@ -6,16 +6,22 @@ import { TextField } from '@mui/material'
 import plusLogo from 'assets/icons/plus.png'
 import { useNavigate } from 'react-router-dom'
 import { page_updateDescription } from 'actions/localstorage/pagesActions'
+import { getVelibData } from 'actions/fetching/velib'
 
 export default function Table(props) {
   const { onglet, iCurrentOnglet, iCurrentPage } = props
   const page = onglet?.pages?.[iCurrentPage]
   const [velibData, setVelibData] = useState(null)
+  // console.log(`🚩 . velibData`, velibData)
   const navigate = useNavigate()
   const [desc, setDesc] = useState(page?.description)
-  // useEffect(() => {
-  //   getVelibData().then((res) => setVelibData(res))
-  // }, [])
+  useEffect(() => {
+    getVelibData().then((res) => setVelibData(res))
+    console.log(`🚩 . getVelibData`)
+  }, [])
+  useEffect(() => {
+    setDesc(page?.description)
+  }, [page])
 
   const heightRow = `3.5rem`
 
@@ -34,11 +40,11 @@ export default function Table(props) {
           }}
           value={desc}
           onChange={(event) => setDesc(event.target.value)}
-          onBlur={() =>
+          onBlur={(event) =>
             page_updateDescription(iCurrentOnglet, iCurrentPage, desc)
           }
           sx={{ input: { color: '#4f504e5e' } }}
-          placeholder='...'
+          placeholder="..."
         />
         <div style={{ position: 'absolute', right: 5, zIndex: 10 }}>
           <PageMenu iOnglet={iCurrentOnglet} iPage={iCurrentPage} />
@@ -54,6 +60,7 @@ export default function Table(props) {
                 iOnglet={iCurrentOnglet}
                 iPage={iCurrentPage}
                 iRow={i}
+                velibData={velibData}
               />
             </div>
           ))}
