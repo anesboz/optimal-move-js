@@ -1,39 +1,21 @@
 import { useNavigate } from 'react-router-dom'
 import { setOngletPage } from 'actions/mainActions'
-import LocationOnIcon from '@mui/icons-material/LocationOn'
 import React, { useState, useEffect, useRef } from 'react'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome'
-import OngletMenu from './OngletMenu'
 
 export default function Footer(props) {
   const { onglets, iCurrentOnglet, iCurrentPage } = props
-  console.log(`🚩 . onglets`, onglets)
   const navigate = useNavigate()
   const [parentHeight, setParentHeight] = useState(0)
   const ref = useRef(null)
 
-  useEffect(() => {
-    setParentHeight(ref.current.clientHeight)
-    // console.log(`🚩 . useEffect`)
-    // onglets.push({
-    //   name: 'new',
-    //   emoji: (
-    //     <AddCircleOutlineIcon
-    //       fontSize="4rem"
-    //       onClick={() => {
-    //         alert('hey')
-    //         navigate(`/addOnglet`)
-    //       }}
-    //     />
-    //   ),
-    // })
-  }, [])
+  useEffect(() => setParentHeight(ref.current.clientHeight), [])
 
   const style = {
     display: `inline-block`,
     position: `relative`,
-    height: `100%`,
+    height: `95%`,
     width: parentHeight,
     border: `1px solid #dddddd`,
     margin: `0 0.1rem`,
@@ -47,8 +29,9 @@ export default function Footer(props) {
       style={{
         display: `block`,
         height: `100%`,
-        // overflowX: `scroll`,
-        overflow: `visible`,
+        overflowX: `scroll`,
+        // overflowY: `hidden`,
+        // overflow: `visible`,
         whiteSpace: `nowrap`,
         position: 'relative',
       }}
@@ -87,7 +70,9 @@ export default function Footer(props) {
               opacity: selected ? 1 : 0.5,
             }}
             key={i}
-            onClick={(event) => setOngletPage(i, iCurrentPage ?? 0)}
+            onClick={(event) =>
+              setOngletPage(i, i === iCurrentOnglet ? iCurrentPage : 0)
+            }
           >
             <div
               style={{

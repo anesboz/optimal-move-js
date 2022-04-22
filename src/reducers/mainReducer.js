@@ -1,9 +1,10 @@
-import { SET_ONGLET_PAGE, REFRESH } from '../actions/types'
+import { SET_ONGLET_PAGE, REFRESH, REFRESH_VELIB } from '../actions/types'
 
 const initalState = {
   iCurrentOnglet: null,
   iCurrentPage: null,
   lastRefresh: null,
+  lastRefreshVelib: null,
 }
 
 export default (state = initalState, action) => {
@@ -21,6 +22,11 @@ export default (state = initalState, action) => {
       return {
         ...state,
         lastRefresh: new Date().getTime(),
+      }
+    case REFRESH_VELIB:
+      return {
+        ...state,
+        lastRefreshVelib: new Date().getTime(),
       }
 
     default:

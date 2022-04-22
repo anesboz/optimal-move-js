@@ -6,17 +6,16 @@ import { getData } from 'actions/localstorage/generalActions'
 import { connect } from 'react-redux'
 
 function Main(props) {
-  const { iCurrentOnglet, iCurrentPage } = props.mainBranch
+  const { iCurrentOnglet, iCurrentPage, lastRefreshVelib } = props.mainBranch
   return (
     <div style={{ height: `100vh`, position: 'relative' }}>
-      <div style={{ height: `30%` }}>
-        <Banner />
-      </div>
+      <Banner />
       <div style={{ height: `60%` }}>
         <Table
           onglet={getData(iCurrentOnglet)}
           iCurrentOnglet={iCurrentOnglet}
           iCurrentPage={iCurrentPage}
+          lastRefreshVelib={lastRefreshVelib}
         />
       </div>
       <div

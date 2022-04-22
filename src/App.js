@@ -6,6 +6,7 @@ import React from 'react'
 import { Grid, ThemeProvider } from '@mui/material'
 import { myTheme } from 'variables/constants'
 import TestMenu from 'components/TestMenu'
+import Setting from 'views/Setting'
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
               <Route path="/" element={<Main />} />
               <Route path="/pageAddRow" element={<AddStation />} />
               <Route path="/addOnglet" element={<AddOnglet />} />
+              <Route path="/setting" element={<Setting />} />
             </Routes>
           </Grid>
         </Grid>

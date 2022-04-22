@@ -6,21 +6,21 @@ import { TextField } from '@mui/material'
 import plusLogo from 'assets/icons/plus.png'
 import { useNavigate } from 'react-router-dom'
 import { page_updateDescription } from 'actions/localstorage/pagesActions'
-import { getVelibData } from 'actions/fetching/velib'
+import { velib_getData } from 'actions/fetching/velib'
 
 export default function Table(props) {
-  const { onglet, iCurrentOnglet, iCurrentPage } = props
+  const { onglet, iCurrentOnglet, iCurrentPage, lastRefreshVelib } = props
   const page = onglet?.pages?.[iCurrentPage]
   const [velibData, setVelibData] = useState(null)
-  // console.log(`🚩 . velibData`, velibData)
   const navigate = useNavigate()
-  const [desc, setDesc] = useState(page?.description)
+  const [desc, setDesc] = useState('')
   useEffect(() => {
-    getVelibData().then((res) => setVelibData(res))
-    console.log(`🚩 . getVelibData`)
-  }, [])
+    setVelibData(null)
+    velib_getData().then((res) => setVelibData(res))
+  }, [lastRefreshVelib])
+
   useEffect(() => {
-    setDesc(page?.description)
+    setDesc(page?.description ?? '')
   }, [page])
 
   const heightRow = `3.5rem`
@@ -85,19 +85,3 @@ export default function Table(props) {
     </div>
   )
 }
-
-/* {row.mode === `velib` ? (
-                <RowVelib
-                  data={velibDataToOneStation(velibData, row.line)}
-                  logoOnclick={() =>
-                    getVelibData().then((res) => setVelibData(res))
-                  }
-                  row={row}
-                  key={i}
-                  iCurrentOnglet={iCurrentOnglet}
-                  iCurrentPage={iCurrentPage}
-                  id={i}
-                />
-              ) : (
-                
-              )} */

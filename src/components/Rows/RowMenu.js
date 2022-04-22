@@ -21,7 +21,7 @@ import { useNavigate } from 'react-router-dom'
 import EditIcon from '@mui/icons-material/Edit'
 
 export default function RowMenu(props) {
-  const { iOnglet, iPage, iRow, velib } = props
+  const { iOnglet, iPage, iRow, velib, velibData } = props
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
   const handleClick = (event) => setAnchorEl(event.currentTarget)
@@ -103,7 +103,11 @@ export default function RowMenu(props) {
           </ListItemIcon>
           Row duplicate
         </MenuItem>
-        <MenuItem onClick={() => navigate('/pageAddRow', { state: { iRow } })}>
+        <MenuItem
+          onClick={() =>
+            navigate('/pageAddRow', { state: { iRow } })
+          }
+        >
           <ListItemIcon>
             <EditIcon fontSize="small" />
           </ListItemIcon>

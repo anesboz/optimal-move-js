@@ -16,6 +16,7 @@ import { page_addEmptyPage } from 'actions/localstorage/pagesActions'
 
 function AddOnglet(props) {
   const { iCurrentOnglet, iCurrentPage } = props
+  
   const { state } = useLocation()
   let init_onglet = {}
   if (state?.iOnglet_toModify != null) {

@@ -10,15 +10,6 @@ export function page_addEmptyPage(iOnglet, iPage) {
   updateData(data)
   setOngletPage(iOnglet, iPage)
 }
-// export function page_addEmptyPage(iOnglet, iPage) {
-//   const data = getData()
-//   data[iOnglet].pages[iPage].lines.push({
-//     description: ``,
-//     lines: [],
-//   })
-//   updateData(data)
-//   setOngletPage(iOnglet, iPage)
-// }
 
 export function page_delete(iOnglet, iPage) {
   const data = getData()

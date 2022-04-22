@@ -1,90 +1,31 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import loadingIcon from 'assets/icons/loading.gif'
 import { isDayTime } from 'actions/ongletsTools'
 import { getLineImgURL } from 'variables/data'
-import { capitalizeFirstLetter, insistWhenErrors } from 'actions/tools'
+import { capitalizeFirstLetter } from 'actions/tools'
 import RowMenu from 'components/Rows/RowMenu'
 import { connect } from 'react-redux'
 import Case from './Case'
-import WifiOffIcon from '@mui/icons-material/WifiOff'
 import * as ratp from 'actions/fetching/ratp'
-
-import velibEIcon from 'assets/icons/velibE.png'
-import velibPIcon from 'assets/icons/velibP.png'
-import velibMIcon from 'assets/icons/velibM.png'
-
-const initialData = [
-  { message: <img style={{ height: `70%` }} src={loadingIcon} /> },
-  { message: <img style={{ height: `70%` }} src={loadingIcon} /> },
-]
-const offlineData = [
-  { message: <WifiOffIcon style={{ height: `70%` }} /> },
-  { message: <WifiOffIcon style={{ height: `70%` }} /> },
-]
+import { velib_getStation } from 'actions/fetching/velib'
+import { refreshVelib } from 'actions/mainActions'
+import { initialData, offlineData } from 'variables/constants'
 
 function Row(props) {
   const { lastRefresh } = props.mainBranch
   const { iPage, iOnglet, row, iRow, velibData } = props
-  const { mode, line, station, terminus } = row
+  const { mode, line, station } = row
   const [data, setData] = useState(initialData)
 
-  function velib_getStation(velibData, stationCode) {
-    if (velibData == null) return initialData
-    const velibStation = velibData.find((e) => e.stationCode == stationCode)
-    return [
-      {
-        message: (
-          <div style={{ height: `100%` }} className="center-y">
-            <img style={{ height: `70%` }} src={velibEIcon} />
-            <span>
-              &nbsp;
-              {
-                velibStation.num_bikes_available_types.find((e) =>
-                  Object.keys(e).includes('ebike')
-                ).ebike
-              }
-            </span>
-          </div>
-        ),
-      },
-      {
-        message: (
-          <div style={{ height: `100%` }} className="center-y">
-            <img style={{ height: `70%` }} src={velibPIcon} />
-            <span> &nbsp;{velibStation.num_docks_available}</span>
-          </div>
-        ),
-      },
-      {
-        message: (
-          <div style={{ height: `100%` }} className="center-y">
-            <img style={{ height: `70%` }} src={velibMIcon} />
-            <span>
-              &nbsp;
-              {
-                velibStation.num_bikes_available_types.find((e) =>
-                  Object.keys(e).includes('mechanical')
-                ).mechanical
-              }
-            </span>
-          </div>
-        ),
-      },
-    ]
-  }
   useEffect(() => {
     if (mode == `noctilien` && isDayTime()) return
     setData(initialData)
-    if (mode == `velib`) return setData(velib_getStation(velibData, line))
+    if (mode == `velib`)
+      return setData(velib_getStation(velibData, line) ?? initialData)
     ratp
-      .getSchedule({
-        mode,
-        line,
-        station,
-        terminus,
-      })
+      .getSchedule(row)
       .then((res) => {
         if (res.length > 0) setData(res)
+        else setData(offlineData)
       })
       .catch((err) => setData(offlineData))
   }, [lastRefresh, velibData])
@@ -119,7 +60,11 @@ function Row(props) {
         <Case
           velib={mode === 'velib'}
           content={
-            <img style={{ height: `70%` }} src={getLineImgURL(mode, line)} />
+            <img
+              style={{ height: `70%` }}
+              src={getLineImgURL(mode, line)}
+              onClick={refreshVelib}
+            />
           }
         />
         {data?.map(({ message }, j) => (
@@ -132,6 +77,7 @@ function Row(props) {
               iPage={iPage}
               iRow={iRow}
               velib={mode === 'velib'}
+              velibData={mode === 'velib' ? velibData : null}
             />
           }
           velib={mode === 'velib'}
