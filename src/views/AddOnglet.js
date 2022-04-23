@@ -16,7 +16,7 @@ import { page_addEmptyPage } from 'actions/localstorage/pagesActions'
 
 function AddOnglet(props) {
   const { iCurrentOnglet, iCurrentPage } = props
-  
+
   const { state } = useLocation()
   let init_onglet = {}
   if (state?.iOnglet_toModify != null) {
@@ -35,22 +35,8 @@ function AddOnglet(props) {
 
   return (
     <div style={{ height: `100vh` }}>
-      <div
-        style={{ position: `relative`, height: `30%` }}
-        onClick={() => navigate('/')}
-      >
-        <ArrowBackIcon
-          color="disabled"
-          style={{
-            position: 'absolute',
-            margin: 10,
-            left: 0,
-            zIndex: 10,
-          }}
-        />
-        <Banner />
-      </div>
-      <div style={{ width: '100%' }}>
+      <Banner />
+      <div>
         <Accordion
           expanded={expanded === 'panel1'}
           onChange={handleChange('panel1')}
@@ -72,8 +58,12 @@ function AddOnglet(props) {
               inputProps={{
                 autoComplete: 'new-password', // disable autocomplete and autofill
               }}
-              onChange={(event) => setName(event.target.value)}
-              value={name}
+              onChange={(event) =>
+                setName(
+                  event.target.value.length === 0 ? null : event.target.value
+                )
+              }
+              value={name ?? ''}
             />
           </AccordionDetails>
         </Accordion>
@@ -97,8 +87,12 @@ function AddOnglet(props) {
                 autoComplete: 'new-password', // disable autocomplete and autofill
               }}
               // 😃
-              onChange={(event) => setEmoji(event.target.value)}
-              value={emoji}
+              onChange={(event) =>
+                setEmoji(
+                  event.target.value.length === 0 ? null : event.target.value
+                )
+              }
+              value={emoji ?? ''}
             />
           </AccordionDetails>
         </Accordion>
@@ -122,8 +116,12 @@ function AddOnglet(props) {
               inputProps={{
                 autoComplete: 'new-password', // disable autocomplete and autofill
               }}
-              onChange={(event) => setImgURL(event.target.value)}
-              value={imgURL}
+              onChange={(event) =>
+                setImgURL(
+                  event.target.value.length === 0 ? null : event.target.value
+                )
+              }
+              value={imgURL ?? ''}
             />
           </AccordionDetails>
         </Accordion>

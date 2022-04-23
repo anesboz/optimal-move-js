@@ -42,37 +42,31 @@ export default function Footer(props) {
         ...onglets,
         {
           name: 'new',
-          emoji: (
-            <AddCircleOutlineIcon
-              fontSize="4rem"
-              onClick={() => {
-                navigate(`/addOnglet`)
-              }}
-            />
-          ),
+          emoji: <AddCircleOutlineIcon fontSize="4rem" />,
         },
       ].map(({ name, emoji, imgURL }, i) => {
         let logo = <AutoAwesomeIcon fontSize="4rem" />
         if (emoji != null) logo = emoji
-        if (imgURL != null && imgURL?.length > 0) logo = null // <img style={{ height: '100%' }} src={imgURL} />
+        if (imgURL != null && imgURL?.length > 0) logo = null
         let y = x
         const noName = name == null || name?.length === 0
-        if (noName === true) y = 0
+        if (noName) y = 0
         const selected = i === iCurrentOnglet
         return (
           <div
             style={{
               ...style,
-              // border: selected ? '3px solid #1975d263' : '1px solid #dddddd',
-              // boxShadow: selected ? `#1975d2 0px 0px 15px inset` : '',
-              // transform: `translate(0, ${selected ? '-5px' : 0})`,
               backgroundColor: selected ? '#1975d263' : '',
               opacity: selected ? 1 : 0.5,
             }}
             key={i}
-            onClick={(event) =>
-              setOngletPage(i, i === iCurrentOnglet ? iCurrentPage : 0)
-            }
+            onClick={(event) => {
+              if (i === onglets.length) {
+                navigate(`/addOnglet`)
+              } else {
+                setOngletPage(i, i === iCurrentOnglet ? iCurrentPage : 0)
+              }
+            }}
           >
             <div
               style={{

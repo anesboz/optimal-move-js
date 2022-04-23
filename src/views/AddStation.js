@@ -27,7 +27,7 @@ import { page_addRow } from 'actions/localstorage/pagesActions'
 import { connect } from 'react-redux'
 import { getLines, getStations, getWays } from 'actions/fetching/ratp'
 import { getData } from 'actions/localstorage/generalActions'
-import { velib_getData } from 'actions/fetching/velib'
+import { velib_getData, velib_getStationsNames } from 'actions/fetching/velib'
 
 function AddStation(props) {
   const { iCurrentOnglet, iCurrentPage } = props.mainBranch
@@ -72,7 +72,7 @@ function AddStation(props) {
   useEffect(() => {
     if (isVelibRow) {
       setAllVelib([])
-      velib_getData().then((res) => setAllVelib(res.map((e) => e.stationCode)))
+      velib_getStationsNames().then((res) => setAllVelib(res))
     } else {
       setAllLines([])
       getLines(row.mode).then((lines) => setAllLines(lines))

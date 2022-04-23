@@ -27,6 +27,7 @@ export default function RowMenu(props) {
   const handleClick = (event) => setAnchorEl(event.currentTarget)
   const handleClose = () => setAnchorEl(null)
   const navigate = useNavigate()
+
   return (
     <Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
@@ -103,11 +104,7 @@ export default function RowMenu(props) {
           </ListItemIcon>
           Row duplicate
         </MenuItem>
-        <MenuItem
-          onClick={() =>
-            navigate('/pageAddRow', { state: { iRow } })
-          }
-        >
+        <MenuItem onClick={() => navigate('/pageAddRow', { state: { iRow } })}>
           <ListItemIcon>
             <EditIcon fontSize="small" />
           </ListItemIcon>

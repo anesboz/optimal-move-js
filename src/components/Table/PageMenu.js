@@ -20,6 +20,12 @@ import {
 import { Divider } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import EditIcon from '@mui/icons-material/Edit'
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import DialogTitle from '@mui/material/DialogTitle'
 
 export default function PageMenu(props) {
   const { iOnglet, iPage } = props
@@ -28,6 +34,9 @@ export default function PageMenu(props) {
   const handleClick = (event) => setAnchorEl(event.currentTarget)
   const handleClose = () => setAnchorEl(null)
   const navigate = useNavigate()
+
+  const [openDialog, setOpenDialog] = useState(false)
+
   return (
     <Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
@@ -122,13 +131,42 @@ export default function PageMenu(props) {
           </ListItemIcon>
           Onglet edit
         </MenuItem>
-        <MenuItem onClick={() => onglet_delete(iOnglet)}>
+        <MenuItem onClick={() => setOpenDialog(true)}>
           <ListItemIcon>
             <Delete fontSize="small" color="error" />
           </ListItemIcon>
           <span style={{ color: 'red' }}>Onglet delete</span>
         </MenuItem>
       </Menu>
+      <Dialog
+        open={openDialog}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Supprimer l'onglet en entier?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {`Vous etes sur le point de supprimer l'onglet en entier avec toutes ses pages.`}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => {
+              onglet_delete(iOnglet)
+              setOpenDialog(false)
+            }}
+            color="error"
+          >
+            Delete
+          </Button>
+          <Button onClick={() => setOpenDialog(false)} autoFocus>
+            Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Fragment>
   )
 }
