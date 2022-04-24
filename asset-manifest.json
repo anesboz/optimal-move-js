@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/optimal-move/static/css/main.985d79f6.css",
-    "main.js": "/optimal-move/static/js/main.c0a8b76c.js",
+    "main.js": "/optimal-move/static/js/main.0bafa7a9.js",
     "static/media/plusDot.png": "/optimal-move/static/media/plusDot.d1c2a8853601fc8825d3.png",
     "static/media/loading.gif": "/optimal-move/static/media/loading.4271eea891d4b79c6eba.gif",
     "static/media/velibLogo.png": "/optimal-move/static/media/velibLogo.9970d08de0f4110b34c2.png",
@@ -13,10 +13,10 @@
     "static/media/velibE.png": "/optimal-move/static/media/velibE.69bc8de089c73d806d8f.png",
     "index.html": "/optimal-move/index.html",
     "main.985d79f6.css.map": "/optimal-move/static/css/main.985d79f6.css.map",
-    "main.c0a8b76c.js.map": "/optimal-move/static/js/main.c0a8b76c.js.map"
+    "main.0bafa7a9.js.map": "/optimal-move/static/js/main.0bafa7a9.js.map"
   },
   "entrypoints": [
     "static/css/main.985d79f6.css",
-    "static/js/main.c0a8b76c.js"
+    "static/js/main.0bafa7a9.js"
   ]
 }
