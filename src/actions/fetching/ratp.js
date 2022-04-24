@@ -4,14 +4,14 @@ import {
 } from 'actions/localstorage/generalActions'
 import { insistWhenErrors } from 'actions/tools'
 import axios from 'axios'
-import { proxy } from 'variables/constants'
+import { PROXY } from 'variables/constants'
 import { getScheduleURL, omApi, properType } from 'variables/data'
 
 export const getSchedule = async (StationObject) => {
+  console.log(`🚩 . getSchedule`)
   const { mode, line, station, terminus } = StationObject
   const way = StationObject.way ?? 'A%2BR'
   const query = getScheduleURL(mode, line, station, way)
-  console.log(`🚩 . query`, query)
   const res = await insistWhenErrors(() => axios.get(query))
   if (res?.status != 200) throw 'status != 200'
   let tmp = res.data.result.schedules
@@ -23,8 +23,7 @@ export async function getLines(mode, forceFetch = false) {
   if (mode == null) return []
   const ret = ls_getIfRecent('lines_' + mode)
   if (ret != null && !forceFetch) return ret
-  console.log(`🚩 . fetch from API`)
-  const query = proxy + omApi(mode).linesURL
+  const query = PROXY + omApi(mode).linesURL
   const res = await insistWhenErrors(() => axios.get(query))
   let tmp = res.data.result[properType('api', mode)]
   tmp = tmp.map((e) => e.code)
@@ -41,7 +40,6 @@ export async function getStations(mode, line, forceFetch = false) {
   const query = omApi(mode).stationsURL + line
   const res = await insistWhenErrors(() => axios.get(query))
   const tmp = res.data.result.stations
-  console.log(`🚩 . tmp`, tmp)
   const stations = [...new Set(tmp)]
   ls_saveDatedData('stations_' + mode + '_' + line, stations)
   return stations

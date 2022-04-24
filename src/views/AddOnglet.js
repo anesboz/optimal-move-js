@@ -6,16 +6,16 @@ import Typography from '@mui/material/Typography'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { Button, Grid, TextField } from '@mui/material'
 import Banner from 'components/Banner/Banner'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { addOnglet } from 'actions/localstorage/ongletsActions'
 import { setOngletPage } from 'actions/mainActions'
 import { connect } from 'react-redux'
 import { getData } from 'actions/localstorage/generalActions'
-import { page_addEmptyPage } from 'actions/localstorage/pagesActions'
+import { getRandomEmoji } from 'actions/tools'
+
 
 function AddOnglet(props) {
-  const { iCurrentOnglet, iCurrentPage } = props
+  const { iCurrentPage } = props
 
   const { state } = useLocation()
   let init_onglet = {}
@@ -24,7 +24,7 @@ function AddOnglet(props) {
   }
 
   const [name, setName] = useState(init_onglet.name)
-  const [emoji, setEmoji] = useState(init_onglet.emoji) //'😃'
+  const [emoji, setEmoji] = useState(init_onglet.emoji ?? getRandomEmoji()) //'😃'
   const [imgURL, setImgURL] = useState(init_onglet.imgURL)
 
   const navigate = useNavigate()
@@ -51,8 +51,8 @@ function AddOnglet(props) {
             </Typography>
           </AccordionSummary>
           <AccordionDetails style={{ textAlign: 'center' }}>
-            <Grid container spacing={6}>
-              <Grid item xs={6}>
+            <Grid container spacing={2}>
+              <Grid item mob={6}>
                 <TextField
                   id="field3"
                   label="Emoji (facultatif)"
@@ -69,9 +69,10 @@ function AddOnglet(props) {
                     )
                   }
                   value={emoji ?? ''}
+                  // placeholder="🚀"
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item mob={6}>
                 <TextField
                   id="field1"
                   label="Nom (facultatif)"
@@ -87,6 +88,7 @@ function AddOnglet(props) {
                     )
                   }
                   value={name ?? ''}
+                  fullWidth
                 />
               </Grid>
             </Grid>
@@ -139,7 +141,6 @@ function AddOnglet(props) {
                 imgURL,
                 pages: init_onglet.pages ?? [],
               }
-              console.log(`🚩 . newOnglet`, newOnglet)
               const n = getData().length
               addOnglet(newOnglet, state?.iOnglet_toModify)
               // page_addEmptyPage(n, 0)

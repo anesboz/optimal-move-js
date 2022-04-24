@@ -20,16 +20,17 @@ function Main(props) {
       </div>
       <div
         style={{
-          height: `10%`,
           position: 'absolute',
           bottom: 0,
           width: '100%',
+          backgroundColor: '#00a88f80',
         }}
       >
         <Footer
           onglets={getData()}
           iCurrentOnglet={iCurrentOnglet}
           iCurrentPage={iCurrentPage}
+          height={5}
         />
       </div>
     </div>

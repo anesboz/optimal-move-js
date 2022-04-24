@@ -87,7 +87,6 @@ function AddStation(props) {
     setAllWays([])
     getWays(row.mode, row.line).then((ways) => setAllWays(ways))
   }, [row.mode, row.line])
-
   return (
     <div style={{ height: `100vh` }}>
       <Banner />
@@ -166,7 +165,6 @@ function AddStation(props) {
             onClick={() => {
               page_addRow(iCurrentOnglet, iCurrentPage, row, state?.iRow)
               navigate('/')
-              // console.log(`🚩 . row`, row)
             }}
           >
             Add Station
@@ -175,7 +173,6 @@ function AddStation(props) {
       </div>
     </div>
   )
-
   function velib() {
     return (
       <Fragment>
@@ -190,10 +187,10 @@ function AddStation(props) {
             id="panel2bh-header"
           >
             <Typography color={row.line === null ? 'red' : ''}>
-              velib station code
+              Station code
             </Typography>
             {row.line != null && row.mode != null ? (
-              <b>&nbsp;{row.line}</b>
+              <b>&nbsp;{row.line + ' ' + row.station}</b>
             ) : null}
           </AccordionSummary>
           <AccordionDetails>
@@ -213,42 +210,40 @@ function AddStation(props) {
               <Grid item mob={11}>
                 <Autocomplete
                   options={allVelib}
-                  value={row.line}
+                  value={allVelib.find((e) => e.stationCode === row.line) ?? ''}
                   autoHighlight
-                  getOptionLabel={(newLine) => newLine}
+                  getOptionLabel={(newLine) => {
+                    return newLine
+                      ? newLine.stationCode + ' ' + newLine.name
+                      : ''
+                  }}
                   renderOption={(props, newLine) => (
                     <Box
                       component="li"
                       sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
                       {...props}
                     >
-                      {newLine}
+                      {newLine.stationCode + ' ' + newLine.name}
                     </Box>
                   )}
                   renderInput={(params) => (
                     <TextField
                       id="field1"
                       {...params}
-                      label="set a velib station code"
+                      label="Velib station code"
                       placeholder="42703"
                     />
                   )}
                   onChange={(event, newLine) => {
-                    setRow({ ...row, line: newLine })
+                    setRow({
+                      ...row,
+                      line: newLine?.stationCode,
+                      station: newLine?.name,
+                    })
                   }}
                 />
               </Grid>
             </Grid>
-
-            {/* <TextField
-              fullWidth
-              label="set a velib station code"
-              onChange={(event) => {
-                setLine(event.target.value)
-              }}
-              placeholder="42703"
-              value={row.line}
-            /> */}
           </AccordionDetails>
         </Accordion>
         {/* TAB3 */}
@@ -274,7 +269,7 @@ function AddStation(props) {
               onChange={(event) => {
                 setRow({ ...row, station: event.target.value })
               }}
-              value={row.station}
+              value={row.station ?? ''}
             />
           </AccordionDetails>
         </Accordion>

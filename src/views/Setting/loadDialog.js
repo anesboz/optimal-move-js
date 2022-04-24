@@ -40,13 +40,10 @@ export default function LoadDialog(props) {
   }, [open])
 
   const [selected, setSelected] = useState([])
-  console.log(`🚩 . selected`, selected)
 
   const all = Object.entries({ ...localStorage })
     .map(([key, value]) => ({ key, data: JSON.parse(value) }))
     .filter(({ key }) => key.includes('saved_data_'))
-  // const all = [...new Array(40)].map((e) => 'hello')
-  console.log(`🚩 . all`, all)
   return (
     <Dialog
       open={open}

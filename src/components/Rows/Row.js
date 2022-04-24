@@ -16,10 +16,12 @@ function Row(props) {
   const { mode, line, station } = row
   const [data, setData] = useState(initialData)
 
+  const isVelib = mode === 'velib'
+
   useEffect(() => {
     if (mode == `noctilien` && isDayTime()) return
     setData(initialData)
-    if (mode == `velib`)
+    if (isVelib)
       return setData(velib_getStation(velibData, line) ?? initialData)
     ratp
       .getSchedule(row)
@@ -58,17 +60,17 @@ function Row(props) {
         }}
       >
         <Case
-          velib={mode === 'velib'}
+          velib={isVelib}
           content={
             <img
               style={{ height: `70%` }}
               src={getLineImgURL(mode, line)}
-              onClick={refreshVelib}
+              onClick={() => isVelib && refreshVelib()}
             />
           }
         />
         {data?.map(({ message }, j) => (
-          <Case content={message} key={j} velib={mode === 'velib'} />
+          <Case content={message} key={j} velib={isVelib} />
         ))}
         <Case
           content={
@@ -76,11 +78,11 @@ function Row(props) {
               iOnglet={iOnglet}
               iPage={iPage}
               iRow={iRow}
-              velib={mode === 'velib'}
-              velibData={mode === 'velib' ? velibData : null}
+              velib={isVelib}
+              velibData={isVelib ? velibData : null}
             />
           }
-          velib={mode === 'velib'}
+          velib={isVelib}
         />
       </div>
     </Fragment>

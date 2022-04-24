@@ -21,10 +21,7 @@ const problems = [
 export default function Case(porps) {
   const { content, velib } = porps
   return (
-    <div
-      style={style(content, velib)}
-      
-    >
+    <div style={style(content, velib)}>
       <div className="center" style={{ height: `100%`, width: `100%` }}>
         {content}
       </div>

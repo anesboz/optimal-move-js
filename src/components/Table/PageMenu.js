@@ -28,6 +28,7 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import { getData } from 'actions/localstorage/generalActions'
+import DeleteDialog from './DeleteDialog'
 
 export default function PageMenu(props) {
   const { iOnglet, iPage } = props
@@ -37,7 +38,7 @@ export default function PageMenu(props) {
   const handleClose = () => setAnchorEl(null)
   const navigate = useNavigate()
 
-  const [openDialog, setOpenDialog] = useState(false)
+  const [openDialog, setOpenDialog] = useState()
 
   return (
     <Fragment>
@@ -51,7 +52,6 @@ export default function PageMenu(props) {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            {/* <Avatar sx={{ width: 32, height: 32 }}>M</Avatar> */}
             <MoreVertIcon />
           </IconButton>
         </Tooltip>
@@ -103,7 +103,7 @@ export default function PageMenu(props) {
           </ListItemIcon>
           Page to Right
         </MenuItem>
-        <MenuItem onClick={() => page_delete(iOnglet, iPage)}>
+        <MenuItem onClick={() => setOpenDialog('page')}>
           <ListItemIcon>
             <Delete fontSize="small" />
           </ListItemIcon>
@@ -145,42 +145,14 @@ export default function PageMenu(props) {
           </ListItemIcon>
           Onglet edit
         </MenuItem>
-        <MenuItem onClick={() => setOpenDialog(true)}>
+        <MenuItem onClick={() => setOpenDialog('onglet')}>
           <ListItemIcon>
             <Delete fontSize="small" color="error" />
           </ListItemIcon>
           <span style={{ color: 'red' }}>Onglet delete</span>
         </MenuItem>
       </Menu>
-      <Dialog
-        open={openDialog}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Supprimer l'onglet en entier?"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            {`Vous etes sur le point de supprimer l'onglet en entier avec toutes ses pages.`}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={() => {
-              onglet_delete(iOnglet)
-              setOpenDialog(false)
-            }}
-            color="error"
-          >
-            Delete
-          </Button>
-          <Button onClick={() => setOpenDialog(false)} autoFocus>
-            Cancel
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <DeleteDialog open={openDialog} iOnglet={iOnglet} iPage={iPage} />
     </Fragment>
   )
 }

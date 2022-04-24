@@ -6,22 +6,8 @@ import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome'
 
 export default function Footer(props) {
   const { onglets, iCurrentOnglet, iCurrentPage } = props
+  const ratio = props.height
   const navigate = useNavigate()
-  const [parentHeight, setParentHeight] = useState(0)
-  const ref = useRef(null)
-
-  useEffect(() => setParentHeight(ref.current.clientHeight), [])
-
-  const style = {
-    display: `inline-block`,
-    position: `relative`,
-    height: `95%`,
-    width: parentHeight,
-    border: `1px solid #dddddd`,
-    margin: `0 0.1rem`,
-    padding: `0.5rem 0 `,
-    overflow: `hidden`,
-  }
   let x = 20
 
   return (
@@ -33,7 +19,6 @@ export default function Footer(props) {
         whiteSpace: `nowrap`,
         position: 'relative',
       }}
-      ref={ref}
     >
       {[
         ...onglets,
@@ -52,9 +37,18 @@ export default function Footer(props) {
         return (
           <div
             style={{
-              ...style,
-              backgroundColor: selected ? '#1975d263' : '',
+              display: `inline-block`,
+              height: `${ratio}rem`,
+              width: `${ratio}rem`,
+              border: `1px solid #dddddd`,
+              borderLeft: `1px solid transparent`,
+              // margin: `0 0.1rem`,
+              padding: `0.5rem 0 `,
+              overflow: `hidden`,
+              // backgroundColor: selected ? '#1975d263' : `#f9d119`,
+              backgroundColor: selected ? '#00AA91' : 'inherit',
               opacity: selected ? 1 : 0.5,
+              // backgroundColor: `#00AA91`,
             }}
             key={i}
             onClick={(event) => {
@@ -68,7 +62,9 @@ export default function Footer(props) {
             <div
               style={{
                 height: `${100 - y}%`,
-                fontSize: parentHeight * (noName ? 0.55 : 0.4),
+                fontSize: `${
+                  ratio * (noName ? 0.4 : 0.34) * (selected ? 1.15 : 0.9)
+                }rem`,
                 width: '100%',
                 backgroundImage: `url(${imgURL})`,
                 backgroundPosition: 'center',
@@ -83,7 +79,8 @@ export default function Footer(props) {
               style={{
                 height: `${y}%`,
                 transform: `translate(0, 2px)`,
-                color: 'gray',
+                fontSize: `80%`,
+                color: 'white',
               }}
               className="center"
             >
@@ -92,29 +89,6 @@ export default function Footer(props) {
           </div>
         )
       })}
-      {/* <div style={style} onClick={() => navigate(`/addOnglet`)}>
-        <div
-          style={{
-            height: `${100 - x}%`,
-            fontSize: parentHeight * 0.4,
-            width: '100%',
-            transform: `translate(0, 4px)`,
-          }}
-          className="center"
-        >
-          <AddCircleOutlineIcon fontSize="4rem" />
-        </div>
-        <div
-          style={{
-            height: `${x}%`,
-            transform: `translate(0, 2px)`,
-            color: '#808080ad',
-          }}
-          className="center"
-        >
-          new
-        </div>
-      </div> */}
     </div>
   )
 }

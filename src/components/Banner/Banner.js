@@ -44,7 +44,7 @@ export default function Banner() {
         )}
       </div>
       <div
-        onClick={() => navigate('/')}
+        onClick={() => location.pathname === '/' && navigate(0) || navigate('/')}
         style={{
           height: `2.7rem`,
           // border: `1px solid green`,

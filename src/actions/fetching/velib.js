@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { velibURL } from 'variables/constants'
+import { PROXY, velibURL } from 'variables/constants'
 import velibEIcon from 'assets/icons/velibE.png'
 import velibPIcon from 'assets/icons/velibP.png'
 import velibMIcon from 'assets/icons/velibM.png'
@@ -8,10 +8,19 @@ import {
   ls_saveDatedData,
 } from 'actions/localstorage/generalActions'
 
+const VELIB_STATIONS_URL =
+  PROXY +
+  `https://velib-metropole-opendata.smoove.pro/opendata/Velib_Metropole/station_information.json`
+
+const VELIB_INVENTAIRE_URL =
+  PROXY +
+  'https://velib-metropole-opendata.smoove.pro/opendata/Velib_Metropole/station_status.json'
+
 export function velib_getData() {
+  console.log(`🚩 . velib_getData`)
   return new Promise((resolve, reject) => {
     axios
-      .get(velibURL)
+      .get(VELIB_INVENTAIRE_URL)
       .then((res) => {
         if (!res) reject('cannot fetch velib api')
         resolve(res.data.data.stations)
@@ -23,8 +32,12 @@ export function velib_getData() {
 export async function velib_getStationsNames(forceFetch = false) {
   const ret = ls_getIfRecent('velib_stations')
   if (ret != null && !forceFetch) return ret
-  const res = velib_getData()
-  const stationsNames = res.map((e) => e.stationCode)
+  const res = await axios.get(VELIB_STATIONS_URL)
+  console.log(`🚩 . res`, res)
+  const stationsNames = res.data.data.stations.map(({ name, stationCode }) => ({
+    name,
+    stationCode,
+  }))
   ls_saveDatedData('velib_stations', stationsNames)
   return stationsNames
 }
