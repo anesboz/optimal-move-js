@@ -7,6 +7,7 @@ import { Grid, ThemeProvider } from '@mui/material'
 import { myTheme } from 'variables/constants'
 import TestMenu from 'components/TestMenu'
 import Setting from 'views/Setting/Setting'
+import { HashRouter } from 'react-router-dom'
 
 function App() {
   return (
