@@ -30,14 +30,11 @@ export default function Footer(props) {
         display: `block`,
         height: `100%`,
         overflowX: `scroll`,
-        // overflowY: `hidden`,
-        // overflow: `visible`,
         whiteSpace: `nowrap`,
         position: 'relative',
       }}
       ref={ref}
     >
-      {/* <OngletMenu iOnglet={iCurrentOnglet} /> */}
       {[
         ...onglets,
         {

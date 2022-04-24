@@ -6,7 +6,7 @@ import React from 'react'
 import { Grid, ThemeProvider } from '@mui/material'
 import { myTheme } from 'variables/constants'
 import TestMenu from 'components/TestMenu'
-import Setting from 'views/Setting'
+import Setting from 'views/Setting/Setting'
 
 function App() {
   return (
@@ -24,7 +24,7 @@ function App() {
               backgroundColor: `white`,
             }}
           >
-            <TestMenu />
+            {/* <TestMenu /> */}
             <Routes>
               <Route path="/" element={<Main />} />
               <Route path="/pageAddRow" element={<AddStation />} />

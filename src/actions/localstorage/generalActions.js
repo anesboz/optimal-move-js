@@ -1,4 +1,5 @@
 import { refresh } from 'actions/mainActions'
+import dateformat from 'dateformat'
 
 /**
  * getting data from localstorage
@@ -35,7 +36,7 @@ export function ls_getIfRecent(key, delai = ONE_MONTH_MS) {
 
 export function ls_saveDatedData(key, value) {
   const obj = {
-    date: new Date().toDateString(),
+    date: dateformat(new Date(), 'yyyy-mm-dd'),
     value: value,
   }
   localStorage.setItem(key, JSON.stringify(obj))

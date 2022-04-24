@@ -2,6 +2,7 @@ import Box from '@mui/material/Box'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import ListItemIcon from '@mui/material/ListItemIcon'
+import SaveIcon from '@mui/icons-material/Save'
 import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
@@ -26,6 +27,7 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
+import { getData } from 'actions/localstorage/generalActions'
 
 export default function PageMenu(props) {
   const { iOnglet, iPage } = props
@@ -109,6 +111,18 @@ export default function PageMenu(props) {
         </MenuItem>
         {/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */}
         <Divider />
+        <MenuItem
+          onClick={() =>
+            navigate('/setting', {
+              state: { mode: 'save', onglet: getData(iOnglet) },
+            })
+          }
+        >
+          <ListItemIcon>
+            <SaveIcon fontSize="small" />
+          </ListItemIcon>
+          Onglet Save
+        </MenuItem>
         <MenuItem onClick={() => onglet_left(iOnglet, iPage)}>
           <ListItemIcon>
             <ArrowLeft fontSize="small" />
