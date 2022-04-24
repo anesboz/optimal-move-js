@@ -40,11 +40,13 @@ export default function LoadDialog(props) {
   }, [open])
 
   const [selected, setSelected] = useState([])
+  console.log(`🚩 . selected`, selected)
 
   const all = Object.entries({ ...localStorage })
-    .map(([key, value]) => ({ key, value: JSON.parse(value) }))
+    .map(([key, value]) => ({ key, data: JSON.parse(value) }))
     .filter(({ key }) => key.includes('saved_data_'))
   // const all = [...new Array(40)].map((e) => 'hello')
+  console.log(`🚩 . all`, all)
   return (
     <Dialog
       open={open}
@@ -79,19 +81,17 @@ export default function LoadDialog(props) {
                     value={saved.key}
                     control={<Checkbox />}
                     label={
-                      <Fragment>
+                      <p>
                         <b>{saved.key?.split('saved_data_')[1]}</b> &nbsp;
-                        {saved.value?.date}
-                      </Fragment>
+                        {saved.data?.date}
+                      </p>
                     }
                     key={i}
                     onChange={(event) => {
                       if (event.target.checked) {
-                        setSelected([...selected, event.target.value])
+                        setSelected([...selected, saved.key])
                       } else {
-                        setSelected(
-                          selected.filter((e) => e != event.target.value)
-                        )
+                        setSelected(selected.filter((e) => e != saved.key))
                       }
                     }}
                   />
@@ -106,17 +106,16 @@ export default function LoadDialog(props) {
           disabled={all.length === 0}
           onClick={() => {
             setLoaded(true)
-            // setTimeout(() => setOpen(false), 300)
+            // setOpen(false)
+            setTimeout(() => navigate('/'), 300)
             const onglets = all
               .filter((e) => selected.includes(e.key))
-              .map((e) => JSON.parse(e.value.value))
-            console.log(`🚩 . onglets`, onglets)
+              .map((e) => e.data.value)
 
             localStorage.setItem(
               'data',
               JSON.stringify([...getData(), ...onglets.flat()])
             )
-            navigate('/')
           }}
           color={'success'}
           variant={loaded ? 'contained' : 'outlined'}

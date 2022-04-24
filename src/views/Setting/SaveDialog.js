@@ -12,8 +12,10 @@ import SaveIcon from '@mui/icons-material/Save'
 import UploadIcon from '@mui/icons-material/Upload'
 import { TextField } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export default function SaveDialog(props) {
+  const navigate = useNavigate()
   const { onglet } = props
   const [open, setOpen] = useState(false)
   const [scroll, setScroll] = useState('paper')
@@ -39,7 +41,7 @@ export default function SaveDialog(props) {
     }
   }, [open])
 
-  const data = onglet ? [onglet] : JSON.stringify(getData())
+  const data = onglet != null ? [onglet] : getData()
   return (
     <Dialog
       open={open}
@@ -94,6 +96,7 @@ export default function SaveDialog(props) {
             ls_saveDatedData(`saved_data_${dataName}`, data)
             setTimeout(() => {
               setOpen(false)
+              if (onglet != null) navigate('/')
             }, 300)
           }}
           color={'success'}

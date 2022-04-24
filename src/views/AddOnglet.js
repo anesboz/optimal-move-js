@@ -4,7 +4,7 @@ import AccordionDetails from '@mui/material/AccordionDetails'
 import AccordionSummary from '@mui/material/AccordionSummary'
 import Typography from '@mui/material/Typography'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import { Button, TextField } from '@mui/material'
+import { Button, Grid, TextField } from '@mui/material'
 import Banner from 'components/Banner/Banner'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -47,53 +47,49 @@ function AddOnglet(props) {
             id="panel1bh-header"
           >
             <Typography color={name === null ? 'red' : ''}>
-              Onglet: {name ?? null}
+              Onglet emoji et nom {name ?? null}
             </Typography>
           </AccordionSummary>
           <AccordionDetails style={{ textAlign: 'center' }}>
-            <TextField
-              id="field1"
-              label="Nom de l'onglet"
-              autoComplete="off"
-              inputProps={{
-                autoComplete: 'new-password', // disable autocomplete and autofill
-              }}
-              onChange={(event) =>
-                setName(
-                  event.target.value.length === 0 ? null : event.target.value
-                )
-              }
-              value={name ?? ''}
-            />
-          </AccordionDetails>
-        </Accordion>
-        <Accordion
-          expanded={expanded === 'panel3'}
-          onChange={handleChange('panel3')}
-        >
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel3bh-content"
-            id="panel3bh-header"
-          >
-            <Typography>Emoji : {emoji ?? null}</Typography>
-          </AccordionSummary>
-          <AccordionDetails style={{ textAlign: 'center' }}>
-            <TextField
-              id="field3"
-              label="Emoji (facultatif)"
-              autoComplete="off"
-              inputProps={{
-                autoComplete: 'new-password', // disable autocomplete and autofill
-              }}
-              // 😃
-              onChange={(event) =>
-                setEmoji(
-                  event.target.value.length === 0 ? null : event.target.value
-                )
-              }
-              value={emoji ?? ''}
-            />
+            <Grid container spacing={6}>
+              <Grid item xs={6}>
+                <TextField
+                  id="field3"
+                  label="Emoji (facultatif)"
+                  autoComplete="off"
+                  inputProps={{
+                    autoComplete: 'new-password', // disable autocomplete and autofill
+                  }}
+                  // 😃
+                  onChange={(event) =>
+                    setEmoji(
+                      event.target.value.length === 0
+                        ? null
+                        : event.target.value
+                    )
+                  }
+                  value={emoji ?? ''}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  id="field1"
+                  label="Nom (facultatif)"
+                  autoComplete="off"
+                  inputProps={{
+                    autoComplete: 'new-password', // disable autocomplete and autofill
+                  }}
+                  onChange={(event) =>
+                    setName(
+                      event.target.value.length === 0
+                        ? null
+                        : event.target.value
+                    )
+                  }
+                  value={name ?? ''}
+                />
+              </Grid>
+            </Grid>
           </AccordionDetails>
         </Accordion>
         <Accordion
@@ -105,7 +101,7 @@ function AddOnglet(props) {
             aria-controls="panel2bh-content"
             id="panel2bh-header"
           >
-            <Typography>Image : {imgURL ? '✔️' : null}</Typography>
+            <Typography>Image (facultatif) : {imgURL ? '✔️' : null}</Typography>
           </AccordionSummary>
           <AccordionDetails style={{ textAlign: 'center' }}>
             <TextField

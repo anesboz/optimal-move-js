@@ -15,7 +15,7 @@ export default function ResetDialog(props) {
   useEffect(() => {
     setOpenDialog(props.open)
   }, [props])
-
+  const navigate = useNavigate()
   return (
     <div>
       <Dialog
@@ -41,7 +41,8 @@ export default function ResetDialog(props) {
             onClick={() => {
               if (props.mode === 'factory') deleteData()
               else localStorage.removeItem('data')
-              setOpenDialog(false)
+              // setOpenDialog(false)
+              navigate('/')
             }}
             color="error"
           >
