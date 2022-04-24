@@ -44,7 +44,7 @@ export default function Banner() {
         )}
       </div>
       <div
-        onClick={() => window.location.reload()}
+        onClick={() => navigate(0)}
         style={{
           height: `2.7rem`,
           // border: `1px solid green`,
