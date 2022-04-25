@@ -23,7 +23,10 @@ export default function Banner() {
           style={{ height: `13rem` }}
           src={bannerImg}
           alt="bannerImg"
-          onClick={() => setOngletPage(null, null)}
+          onClick={() => {
+            setOngletPage(null, null)
+            navigate('/')
+          }}
         />
         {isHomePage ? (
           <SettingsIcon
@@ -62,9 +65,10 @@ export default function Banner() {
           style={{ height: `87%`, padding: 5 }}
           src={omLogoImg}
           alt="omLogoImg"
-          onClick={() =>
-            (location.pathname === '/' && navigate(0)) || navigate('/')
-          }
+          onClick={() => {
+            if (location.pathname === '/') return navigate(0)
+            navigate('/')
+          }}
         />
         <div
           style={{ height: `100%`, padding: 5, margin: 'auto 10px auto auto' }}
