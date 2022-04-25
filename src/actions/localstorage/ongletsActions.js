@@ -23,6 +23,11 @@ export function onglet_delete(iOnglet) {
   if (iOnglet > 0) setOngletPage(null, null)
 }
 
+export function onglet_isEmpty(iOnglet) {
+  const pages = getData(iOnglet)?.pages
+  return pages == null || pages?.length === 0
+}
+
 export function onglet_left(iOnglet) {
   if (iOnglet === 0) return
   const data = getData()

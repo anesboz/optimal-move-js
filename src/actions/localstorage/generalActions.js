@@ -22,8 +22,8 @@ export function deleteData() {
   refresh()
 }
 
-const ONE_MONTH_MS = 30 * 3600 * 24
-export function ls_getIfRecent(key, delai = ONE_MONTH_MS) {
+const ONE_MONTH_S = 30 * 3600 * 24
+export function ls_getIfRecent(key, delai = ONE_MONTH_S) {
   let stored = JSON.parse(localStorage.getItem(key))
   if (stored == null) return null
   if (stored?.date == null) return null

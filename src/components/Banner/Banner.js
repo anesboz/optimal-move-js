@@ -1,5 +1,6 @@
 import bannerImg from 'assets/images/banner.png'
 import omLogoImg from 'assets/images/omLogo.png'
+import meteoImg from 'assets/images/meteo.png'
 import { setOngletPage } from 'actions/mainActions'
 import SettingsIcon from '@mui/icons-material/Settings'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -27,7 +28,13 @@ export default function Banner() {
         {isHomePage ? (
           <SettingsIcon
             color="disabled"
-            style={{ position: 'absolute', margin: 10, right: 0, zIndex: 10 }}
+            style={{
+              position: 'absolute',
+              padding: 10,
+              fontSize: '2.7rem',
+              zIndex: 10,
+              right: 0,
+            }}
             onClick={() => navigate('/setting')}
           />
         ) : (
@@ -35,19 +42,18 @@ export default function Banner() {
             color="disabled"
             style={{
               position: 'absolute',
-              margin: 10,
-              left: 0,
+              padding: 10,
+              fontSize: '2.7rem',
               zIndex: 10,
+              left: 0,
             }}
             onClick={() => navigate('/')}
           />
         )}
       </div>
       <div
-        onClick={() => location.pathname === '/' && navigate(0) || navigate('/')}
         style={{
           height: `2.7rem`,
-          // border: `1px solid green`,
           borderBottom: `1px solid #80808040`,
         }}
         className="center-y"
@@ -56,7 +62,39 @@ export default function Banner() {
           style={{ height: `87%`, padding: 5 }}
           src={omLogoImg}
           alt="omLogoImg"
+          onClick={() =>
+            (location.pathname === '/' && navigate(0)) || navigate('/')
+          }
         />
+        <div
+          style={{ height: `100%`, padding: 5, margin: 'auto 10px auto auto' }}
+        >
+          <img
+            style={{ height: `87%` }}
+            src={meteoImg}
+            alt="meteoImg"
+            onClick={() =>
+              (window.location.href =
+                'https://weather.com/fr-FR/temps/aujour/l/1a8af5b9d8971c46dd5a52547f9221e22cd895d8d8639267a87df614d0912830')
+            }
+          />
+        </div>
+
+        {/* <div
+          style={{
+            transform: 'translate(-70px)',
+            border: '1px solid red',
+            zIndex: 1,
+          }}
+        >
+          <iframe
+            src="https://www.meteorama.fr/widget/get/ba42f8160eb05fed980cee83c2aae00e?v=11001"
+            frameBorder="0"
+            width="330"
+            scrolling="no"
+            style={{ pointerEvents: 'none' }}
+          ></iframe>
+        </div> */}
       </div>
       {isHomePage ? null : (
         <Breadcrumbs

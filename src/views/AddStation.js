@@ -39,7 +39,6 @@ function AddStation(props) {
 
   let initalRow = {}
   if (state?.iRow != null) {
-    // edit row.mode
     const storedRow =
       getData()[iCurrentOnglet]?.pages?.[iCurrentPage]?.lines?.[state.iRow]
     initalRow = storedRow ?? initalRow
@@ -69,20 +68,26 @@ function AddStation(props) {
     })
   )
 
+  const [fetchProblem, setFetchProblem] = useState()
+
   useEffect(() => {
     if (isVelibRow) {
       setAllVelib([])
       velib_getStationsNames().then((res) => setAllVelib(res))
     } else {
       setAllLines([])
-      getLines(row.mode).then((lines) => setAllLines(lines))
+      getLines(row.mode)
+        .then((lines) => setAllLines(lines))
+        .catch((err) => setFetchProblem('line'))
     }
   }, [row.mode])
 
   useEffect(() => {
     if (isVelibRow) return
     setAllstations([])
-    getStations(row.mode, row.line).then((stations) => setAllstations(stations))
+    getStations(row.mode, row.line)
+      .then((stations) => setAllstations(stations))
+      .catch((err) => setFetchProblem('station'))
 
     setAllWays([])
     getWays(row.mode, row.line).then((ways) => setAllWays(ways))
@@ -117,7 +122,7 @@ function AddStation(props) {
               exclusive
               value={row.mode}
               onChange={(_, newMode) => {
-                setRow({ mode: newMode })
+                setRow({ mode: newMode?.trim() })
                 if (!newMode) return
                 setExpanded('panel2')
               }}
@@ -202,7 +207,7 @@ function AddStation(props) {
                   <CachedIcon
                     color="disabled"
                     onClick={() => {
-                      setRow({ ...row, mode: row.mode })
+                      setRow({ ...row, mode: row.mode?.trim() })
                     }}
                   />
                 )}
@@ -211,7 +216,7 @@ function AddStation(props) {
                 <Autocomplete
                   options={allVelib}
                   value={allVelib.find((e) => e.stationCode === row.line) ?? ''}
-                  autoHighlight
+                  openOnFocus
                   getOptionLabel={(newLine) => {
                     return newLine
                       ? newLine.stationCode + ' ' + newLine.name
@@ -231,15 +236,19 @@ function AddStation(props) {
                       id="field1"
                       {...params}
                       label="Velib station code"
-                      placeholder="42703"
+                      placeholder="Velib station code"
+                      inputRef={(input) =>
+                        expanded === 'panel2' && input?.focus()
+                      }
                     />
                   )}
                   onChange={(event, newLine) => {
                     setRow({
                       ...row,
-                      line: newLine?.stationCode,
-                      station: newLine?.name,
+                      line: newLine?.stationCode?.trim(),
+                      station: newLine?.name?.trim(),
                     })
+                    setExpanded('panel3')
                   }}
                 />
               </Grid>
@@ -267,9 +276,12 @@ function AddStation(props) {
               fullWidth
               label="Choose a station name"
               onChange={(event) => {
-                setRow({ ...row, station: event.target.value })
+                setRow({ ...row, station: event.target.value?.trim() })
               }}
               value={row.station ?? ''}
+              inputRef={(input) => expanded === 'panel3' && input?.focus()}
+              placeholder="station name"
+              onFocus={(event) => event.target.select()}
             />
           </AccordionDetails>
         </Accordion>
@@ -317,7 +329,6 @@ function AddStation(props) {
               <Grid item mob={11}>
                 <Autocomplete
                   options={allLines}
-                  autoHighlight
                   getOptionLabel={(newLine) => newLine}
                   renderOption={(props, newLine) => (
                     <Box
@@ -334,6 +345,7 @@ function AddStation(props) {
                       {newLine}
                     </Box>
                   )}
+                  openOnFocus
                   renderInput={(params) => (
                     <TextField
                       id="field1"
@@ -344,14 +356,19 @@ function AddStation(props) {
                         ...params.inputProps,
                         autoComplete: 'new-password', // disable autocomplete and autofill
                       }}
+                      inputRef={(input) =>
+                        expanded === 'panel2' && input?.focus()
+                      }
+                      placeholder="Line"
                     />
                   )}
                   onChange={(_, newLine) => {
-                    setRow({ ...row, line: newLine })
+                    setRow({ ...row, line: newLine?.trim() })
                     if (!newLine) return
                     setExpanded('panel3')
                   }}
                   value={row.line ?? ''}
+                  freeSolo={fetchProblem === 'line'}
                 />
               </Grid>
             </Grid>
@@ -381,7 +398,11 @@ function AddStation(props) {
                   <CachedIcon
                     color="disabled"
                     onClick={() => {
-                      setRow({ ...row, mode: row.mode, line: row.line })
+                      setRow({
+                        ...row,
+                        mode: row.mode?.trim(),
+                        line: row.line?.trim(),
+                      })
                     }}
                   />
                 )}
@@ -405,22 +426,28 @@ function AddStation(props) {
                       {newStation.name}
                     </Box>
                   )}
+                  openOnFocus
                   renderInput={(params) => (
                     <TextField
                       {...params}
-                      label="Choose a line"
+                      label="Choose a station"
                       autoComplete="off"
                       inputProps={{
                         ...params.inputProps,
                         autoComplete: 'new-password', // disable autocomplete and autofill
                       }}
+                      inputRef={(input) =>
+                        expanded === 'panel3' && input?.focus()
+                      }
+                      placeholder="Station"
                     />
                   )}
                   onChange={(event, newStation) => {
-                    setRow({ ...row, station: newStation?.slug })
+                    setRow({ ...row, station: newStation?.slug?.trim() })
                     if (!newStation) return
                     setExpanded('panel4')
                   }}
+                  freeSolo={fetchProblem === 'station'}
                 />
               </Grid>
             </Grid>
@@ -452,8 +479,12 @@ function AddStation(props) {
                 aria-labelledby="demo-radio-buttons-group-label"
                 name="radio-buttons-group"
                 onChange={(_, value) => {
-                  setRow({ ...row, way: value })
+                  setRow({ ...row, way: value?.trim() })
                   // const dest = allTerminus.find((e) => e === value)
+                  const terminus = allWays.find((e) => e.way === value)?.terminus
+                  if (terminus?.length > 1) {
+                    return setExpanded('panel5')
+                  }
                   setExpanded(null)
                 }}
                 value={row.way ?? ''}
@@ -501,7 +532,7 @@ function AddStation(props) {
                   onChange={(_, value) => {
                     setRow({
                       ...row,
-                      terminus: value != 'whatever' ? value : null,
+                      terminus: value != 'whatever' ? value?.trim() : null,
                     })
                     setExpanded(null)
                   }}

@@ -31,9 +31,9 @@ function Row(props) {
       })
       .catch((err) => setData(offlineData))
   }, [lastRefresh, velibData])
-
+  if (mode == `noctilien` && isDayTime()) return
   return (
-    <Fragment>
+    <div style={{ height: `3.5rem`, margin: `0.6rem 0` }}>
       <div
         style={{
           fontSize: `55%`,
@@ -44,7 +44,6 @@ function Row(props) {
       >
         {capitalizeFirstLetter(station.replaceAll(`+`, ` `))}
         {mode != `velib` ? (
-          // <Fragment>&nbsp;➙&nbsp;{data?.[0]?.destination}</Fragment>
           <Fragment>
             &nbsp;➙&nbsp;
             {[...new Set(data?.map((e) => e.destination))].join(' / ')}
@@ -85,7 +84,7 @@ function Row(props) {
           velib={isVelib}
         />
       </div>
-    </Fragment>
+    </div>
   )
 }
 

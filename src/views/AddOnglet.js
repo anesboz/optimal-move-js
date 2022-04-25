@@ -65,7 +65,7 @@ function AddOnglet(props) {
                     setEmoji(
                       event.target.value.length === 0
                         ? null
-                        : event.target.value
+                        : event.target.value?.trim()
                     )
                   }
                   value={emoji ?? ''}
@@ -84,7 +84,7 @@ function AddOnglet(props) {
                     setName(
                       event.target.value.length === 0
                         ? null
-                        : event.target.value
+                        : event.target.value?.trim()
                     )
                   }
                   value={name ?? ''}
@@ -116,7 +116,9 @@ function AddOnglet(props) {
               }}
               onChange={(event) =>
                 setImgURL(
-                  event.target.value.length === 0 ? null : event.target.value
+                  event.target.value.length === 0
+                    ? null
+                    : event.target.value?.trim()
                 )
               }
               value={imgURL ?? ''}

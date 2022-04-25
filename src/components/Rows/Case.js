@@ -1,5 +1,5 @@
-import { refreshVelib } from 'actions/mainActions'
-import React from 'react'
+import React, { Fragment } from 'react'
+import BusAlertIcon from '@mui/icons-material/BusAlert'
 
 const isHere = [
   "Train a l'approche",
@@ -20,10 +20,23 @@ const problems = [
 
 export default function Case(porps) {
   const { content, velib } = porps
+  let unvailable = false
+  try {
+    unvailable = /.*unavai.*/.test(content) || /.*INDISP.*/.test(content)
+  } catch (error) {
+    //pass
+  }
   return (
     <div style={style(content, velib)}>
       <div className="center" style={{ height: `100%`, width: `100%` }}>
-        {content}
+        {unvailable ? (
+          <div style={{ color: '#f25c5a91' }}>
+            <BusAlertIcon />
+            <span style={{ fontSize: '60%' }}>no data</span>
+          </div>
+        ) : (
+          content
+        )}
       </div>
     </div>
   )
@@ -37,6 +50,6 @@ const style = (content, velib) => ({
   border: `1px solid #dddddd`,
   margin: `0 0.1rem`,
   padding: `0 0.5rem`,
-  color: [...isHere, ...isComing].includes(content) ? 'orange' : 'inital',
+  color: [...isHere, ...isComing].includes(content) ? 'orange' : 'black',
   overflow: `hidden`,
 })

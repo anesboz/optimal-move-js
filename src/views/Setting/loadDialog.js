@@ -13,7 +13,14 @@ import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
 import FormLabel from '@mui/material/FormLabel'
-import { Checkbox, FormGroup } from '@mui/material'
+import {
+  Checkbox,
+  FormGroup,
+  Stack,
+  Switch,
+  TextField,
+  Typography,
+} from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
 export default function LoadDialog(props) {
@@ -28,6 +35,8 @@ export default function LoadDialog(props) {
   const handleClose = () => setOpen(false)
 
   const [loaded, setLoaded] = useState(false)
+  const [enablePaste, setEnablePaste] = useState(false)
+  const [paste, setPaste] = useState(null)
 
   const descriptionElementRef = useRef(null)
   useEffect(() => {
@@ -44,6 +53,8 @@ export default function LoadDialog(props) {
   const all = Object.entries({ ...localStorage })
     .map(([key, value]) => ({ key, data: JSON.parse(value) }))
     .filter(({ key }) => key.includes('saved_data_'))
+
+  const [isCopyMode, setIsCopyMode] = useState(false)
   return (
     <Dialog
       open={open}
@@ -56,55 +67,75 @@ export default function LoadDialog(props) {
         Charger une disposition
       </DialogTitle>
       <DialogContent dividers={scroll === 'paper'}>
-        <DialogContentText
-          id="scroll-dialog-description"
-          ref={descriptionElementRef}
-          tabIndex={-1}
-        >
-          <FormControl>
-            <FormLabel id="demo-radio-buttons-group-label">
-              {all.length === 0
-                ? `Pas de dispositions enregistrées`
-                : `Dispositions disponibles :`}
-            </FormLabel>
-            <FormGroup
-              aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue="female"
-              name="radio-buttons-group"
-            >
-              {all.map((saved, i) => {
-                return (
-                  <FormControlLabel
-                    value={saved.key}
-                    control={<Checkbox />}
-                    label={
-                      <p>
-                        <b>{saved.key?.split('saved_data_')[1]}</b> &nbsp;
-                        {saved.data?.date}
-                      </p>
-                    }
-                    key={i}
-                    onChange={(event) => {
-                      if (event.target.checked) {
-                        setSelected([...selected, saved.key])
-                      } else {
-                        setSelected(selected.filter((e) => e != saved.key))
+        <Stack direction="row" spacing={1} alignItems="center">
+          <Typography>Memoire</Typography>
+          <Switch
+            checked={isCopyMode}
+            inputProps={{ 'aria-label': 'ant design' }}
+            onChange={(event, cheked) => setIsCopyMode(cheked)}
+            color="default"
+          />
+          <Typography>Coller</Typography>
+        </Stack>
+        <FormControl style={{ display: 'block' }}>
+          {isCopyMode ? (
+            <TextField
+              id="field1"
+              label="Paste here"
+              placeholder="[{}]"
+              onChange={(event) => setPaste(event.target.value)}
+              fullWidth
+            />
+          ) : (
+            <Fragment>
+              <FormLabel id="demo-radio-buttons-group-label">
+                {all.length === 0 ? `Pas de dispositions enregistrées` : null}
+              </FormLabel>
+              <FormGroup
+                aria-labelledby="demo-radio-buttons-group-label"
+                defaultValue="female"
+                name="radio-buttons-group"
+              >
+                {all.map((saved, i) => {
+                  return (
+                    <FormControlLabel
+                      value={saved.key}
+                      control={<Checkbox />}
+                      label={
+                        <p>
+                          <b>{saved.key?.split('saved_data_')[1]}</b> &nbsp;
+                          {saved.data?.date}
+                        </p>
                       }
-                    }}
-                  />
-                )
-              })}
-            </FormGroup>
-          </FormControl>
-        </DialogContentText>
+                      key={i}
+                      onChange={(event) => {
+                        if (event.target.checked) {
+                          setSelected([...selected, saved.key])
+                        } else {
+                          setSelected(selected.filter((e) => e != saved.key))
+                        }
+                      }}
+                    />
+                  )
+                })}
+              </FormGroup>
+            </Fragment>
+          )}
+        </FormControl>
       </DialogContent>
       <DialogActions>
         <Button
-          disabled={all.length === 0}
+          disabled={all.length === 0 && !isCopyMode}
           onClick={() => {
             setLoaded(true)
-            // setOpen(false)
             setTimeout(() => navigate('/'), 300)
+            if (isCopyMode) {
+              localStorage.setItem(
+                'data',
+                JSON.stringify([...getData(), ...JSON.parse(paste)])
+              )
+              return
+            }
             const onglets = all
               .filter((e) => selected.includes(e.key))
               .map((e) => e.data.value)

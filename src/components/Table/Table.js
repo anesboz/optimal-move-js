@@ -23,8 +23,6 @@ export default function Table(props) {
     setDesc(page?.description ?? '')
   }, [page])
 
-  const heightRow = `3.5rem`
-
   if (iCurrentOnglet == null || onglet == null || onglet.length == 0)
     return null
   return (
@@ -53,18 +51,16 @@ export default function Table(props) {
       <div style={{ height: `90%` }}>
         <div style={{ height: `80%`, margin: `0 10%`, overflowY: `scroll` }}>
           {page?.lines.map((row, i) => (
-            <div key={i} style={{ height: heightRow, margin: `0.6rem 0` }}>
-              <Row
-                row={row}
-                key={i}
-                iOnglet={iCurrentOnglet}
-                iPage={iCurrentPage}
-                iRow={i}
-                velibData={velibData}
-              />
-            </div>
+            <Row
+              row={row}
+              key={i}
+              iOnglet={iCurrentOnglet}
+              iPage={iCurrentPage}
+              iRow={i}
+              velibData={velibData}
+            />
           ))}
-          <div style={{ height: heightRow, margin: 20 }} className="center">
+          <div style={{ height: `3.5rem`, margin: 20 }} className="center">
             {page != null ? (
               <img
                 style={{ height: ` 70%` }}

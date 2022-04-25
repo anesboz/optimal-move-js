@@ -8,7 +8,6 @@ import { PROXY } from 'variables/constants'
 import { getScheduleURL, omApi, properType } from 'variables/data'
 
 export const getSchedule = async (StationObject) => {
-  console.log(`🚩 . getSchedule`)
   const { mode, line, station, terminus } = StationObject
   const way = StationObject.way ?? 'A%2BR'
   const query = getScheduleURL(mode, line, station, way)
@@ -79,6 +78,7 @@ export async function getWays(mode, line, forceFetch = false) {
       terminus: r,
     },
   ]
+  console.log(`🚩 . ways`, ways)
   ls_saveDatedData('ways_' + mode + '_' + line, ways)
   return ways
 }

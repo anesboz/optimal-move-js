@@ -8,25 +8,21 @@ import Tooltip from '@mui/material/Tooltip'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import {
   page_delete,
+  page_isEmpty,
   page_left,
   page_right,
 } from 'actions/localstorage/pagesActions'
-import { ArrowLeft, ArrowRight, Delete, Edit } from '@mui/icons-material'
+import { ArrowLeft, ArrowRight, Delete } from '@mui/icons-material'
 import { Fragment, useState } from 'react'
 import {
   onglet_delete,
+  onglet_isEmpty,
   onglet_left,
   onglet_right,
 } from 'actions/localstorage/ongletsActions'
 import { Divider } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import EditIcon from '@mui/icons-material/Edit'
-import Button from '@mui/material/Button'
-import Dialog from '@mui/material/Dialog'
-import DialogActions from '@mui/material/DialogActions'
-import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
-import DialogTitle from '@mui/material/DialogTitle'
 import { getData } from 'actions/localstorage/generalActions'
 import DeleteDialog from './DeleteDialog'
 
@@ -103,7 +99,12 @@ export default function PageMenu(props) {
           </ListItemIcon>
           Page to Right
         </MenuItem>
-        <MenuItem onClick={() => setOpenDialog('page')}>
+        <MenuItem
+          onClick={() => {
+            if (page_isEmpty(iOnglet, iPage)) return page_delete(iOnglet, iPage)
+            setOpenDialog('page')
+          }}
+        >
           <ListItemIcon>
             <Delete fontSize="small" />
           </ListItemIcon>
@@ -145,7 +146,12 @@ export default function PageMenu(props) {
           </ListItemIcon>
           Onglet edit
         </MenuItem>
-        <MenuItem onClick={() => setOpenDialog('onglet')}>
+        <MenuItem
+          onClick={() => {
+            if (onglet_isEmpty(iOnglet)) return onglet_delete(iOnglet, iPage)
+            setOpenDialog('onglet')
+          }}
+        >
           <ListItemIcon>
             <Delete fontSize="small" color="error" />
           </ListItemIcon>

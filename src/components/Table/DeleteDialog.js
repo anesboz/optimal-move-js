@@ -45,6 +45,7 @@ export default function DeleteDialog(props) {
             onClick={() => {
               if (isPage) page_delete(iOnglet, iPage)
               else onglet_delete(iOnglet)
+              setOpenDialog(false)
             }}
             color="error"
           >

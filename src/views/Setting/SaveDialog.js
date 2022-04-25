@@ -10,8 +10,8 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import CheckIcon from '@mui/icons-material/Check'
 import SaveIcon from '@mui/icons-material/Save'
 import UploadIcon from '@mui/icons-material/Upload'
-import { TextField } from '@mui/material'
-import { useEffect, useRef, useState } from 'react'
+import { Stack, Switch, TextField, Typography } from '@mui/material'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 export default function SaveDialog(props) {
@@ -19,6 +19,7 @@ export default function SaveDialog(props) {
   const { onglet } = props
   const [open, setOpen] = useState(false)
   const [scroll, setScroll] = useState('paper')
+  const [isCopyMode, setIsCopyMode] = useState(false)
 
   useEffect(() => {
     setOpen(props.open)
@@ -54,44 +55,43 @@ export default function SaveDialog(props) {
         {onglet ? `Enregistrer l'onglet` : `Enregistrer la disposition`}
       </DialogTitle>
       <DialogContent dividers={scroll === 'paper'}>
+        <Stack direction="row" spacing={1} alignItems="center">
+          <Typography>Memoire</Typography>
+          <Switch
+            color="default"
+            checked={isCopyMode}
+            inputProps={{ 'aria-label': 'ant design' }}
+            onChange={(event, cheked) => setIsCopyMode(cheked)}
+          />
+          <Typography>Copier</Typography>
+        </Stack>
         <DialogContentText
           id="scroll-dialog-description"
           ref={descriptionElementRef}
           tabIndex={-1}
-        >
-          {/* {data} */}
-        </DialogContentText>
+        ></DialogContentText>
         <TextField
           autoFocus
           margin="dense"
           id="name"
-          label="Save as"
+          label={isCopyMode ? 'Copier' : 'Save as'}
           type="email"
           fullWidth
           variant="standard"
           onChange={(event) => setDataName(event.target.value)}
-          value={dataName}
+          value={isCopyMode ? JSON.stringify(data) : dataName}
+          placeholder={isCopyMode ? '' : 'name'}
         />
       </DialogContent>
       <DialogActions>
         <Button
           onClick={() => {
-            setCopied(true)
-            setTimeout(() => setCopied(false), 2 * 1000)
-            navigator.clipboard.writeText(data)
-          }}
-          color={'success'}
-          variant={copied ? 'contained' : 'outlined'}
-        >
-          {copied ? (
-            <CheckIcon size="small" />
-          ) : (
-            <ContentCopyIcon size="small" />
-          )}
-          &nbsp; Copy{copied ? 'ed' : ''}
-        </Button>
-        <Button
-          onClick={() => {
+            if (isCopyMode) {
+              setCopied(true)
+              setTimeout(() => setCopied(false), 2 * 1000)
+              navigator.clipboard.writeText(JSON.stringify(data))
+              return
+            }
             setSaved(true)
             ls_saveDatedData(`saved_data_${dataName}`, data)
             setTimeout(() => {
@@ -101,10 +101,22 @@ export default function SaveDialog(props) {
           }}
           color={'success'}
           variant="contained"
-          // disabled={copied.length > 0}
         >
-          {saved ? <CheckIcon size="small" /> : <SaveIcon size="small" />}
-          &nbsp; Save{saved ? 'd' : ''}
+          {isCopyMode ? (
+            <Fragment>
+              {copied ? (
+                <CheckIcon size="small" />
+              ) : (
+                <ContentCopyIcon size="small" />
+              )}
+              &nbsp; Copy{copied ? 'ed' : ''}
+            </Fragment>
+          ) : (
+            <Fragment>
+              {saved ? <CheckIcon size="small" /> : <SaveIcon size="small" />}
+              &nbsp; Save{saved ? 'd' : ''}
+            </Fragment>
+          )}
         </Button>
       </DialogActions>
     </Dialog>

@@ -19,6 +19,12 @@ export function page_delete(iOnglet, iPage) {
   if (iPage > 0) setOngletPage(iOnglet, iPage - 1)
 }
 
+export function page_isEmpty(iOnglet, iPage) {
+  const data = getData()
+  const lines = data[iOnglet]?.pages[iPage]?.lines
+  return lines == null || lines?.length === 0
+}
+
 export function page_left(iOnglet, iPage) {
   if (iPage == 0) return
   const data = getData()
