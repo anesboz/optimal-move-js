@@ -63,7 +63,7 @@ export default function Footer(props) {
               style={{
                 height: `${100 - y}%`,
                 fontSize: `${
-                  ratio * (noName ? 0.5 : 0.44) * (selected ? 1.15 : 0.9)
+                  ratio * (noName ? 0.6 : 0.44) * (selected ? 1.15 : 0.9)
                 }rem`,
                 width: '100%',
                 backgroundImage: `url(${imgURL})`,
