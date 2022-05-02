@@ -38,20 +38,24 @@ export default function Case(porps) {
   try {
     if (/.*termi.*/.test(content.toLowerCase())) {
       elem = (
-        <Grid
+        <div
           container
-          style={{ color: '#75198acc' }}
-          justifyContent="center"
-          columnSpacing={2}
+          style={{ color: '#75198acc', width: '100%' }}
+          className="center-x"
         >
-          <Grid item xs={6}>
+          <div style={{ display: 'inline-block' }}>
             <HotelIcon />
-          </Grid>
-          <Grid item xs={6} style={{ fontSize: '60%' }} >
-            <div>&nbsp;service</div>
-            <div>&nbsp;terminé</div>
-          </Grid>
-        </Grid>
+            &nbsp;&nbsp;
+          </div>
+          <div
+            item
+            style={{ display: 'inline-block', fontSize: '60%' }}
+            className="center-y"
+          >
+            <div>service</div>
+            <div>terminé</div>
+          </div>
+        </div>
       )
     }
   } catch (error) {

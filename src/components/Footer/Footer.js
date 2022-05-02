@@ -47,7 +47,7 @@ export default function Footer(props) {
               overflow: `hidden`,
               // backgroundColor: selected ? '#1975d263' : `#f9d119`,
               backgroundColor: selected ? '#00AA91' : 'inherit',
-              opacity: selected ? 1 : 0.5,
+              opacity: selected ? 1 : 0.6,
               // backgroundColor: `#00AA91`,
             }}
             key={i}
@@ -63,13 +63,14 @@ export default function Footer(props) {
               style={{
                 height: `${100 - y}%`,
                 fontSize: `${
-                  ratio * (noName ? 0.4 : 0.34) * (selected ? 1.15 : 0.9)
+                  ratio * (noName ? 0.5 : 0.44) * (selected ? 1.15 : 0.9)
                 }rem`,
                 width: '100%',
                 backgroundImage: `url(${imgURL})`,
                 backgroundPosition: 'center',
                 backgroundSize: 'cover',
                 backgroundRepeat: 'no-repeat',
+                transform: `translate(0px, -3px)`,
               }}
               className="center"
             >
