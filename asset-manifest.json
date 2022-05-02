@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/optimal-move/static/css/main.985d79f6.css",
-    "main.js": "/optimal-move/static/js/main.5926669b.js",
+    "main.js": "/optimal-move/static/js/main.f33c15fb.js",
     "static/media/meteo.png": "/optimal-move/static/media/meteo.b387e9b720edf380f631.png",
     "static/media/plusDot.png": "/optimal-move/static/media/plusDot.d1c2a8853601fc8825d3.png",
     "static/media/loading.gif": "/optimal-move/static/media/loading.4271eea891d4b79c6eba.gif",
@@ -14,10 +14,10 @@
     "static/media/velibE.png": "/optimal-move/static/media/velibE.69bc8de089c73d806d8f.png",
     "index.html": "/optimal-move/index.html",
     "main.985d79f6.css.map": "/optimal-move/static/css/main.985d79f6.css.map",
-    "main.5926669b.js.map": "/optimal-move/static/js/main.5926669b.js.map"
+    "main.f33c15fb.js.map": "/optimal-move/static/js/main.f33c15fb.js.map"
   },
   "entrypoints": [
     "static/css/main.985d79f6.css",
-    "static/js/main.5926669b.js"
+    "static/js/main.f33c15fb.js"
   ]
 }
