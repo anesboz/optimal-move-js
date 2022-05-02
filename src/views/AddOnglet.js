@@ -65,7 +65,7 @@ function AddOnglet(props) {
                     setEmoji(
                       event.target.value.length === 0
                         ? null
-                        : event.target.value?.trim()
+                        : event.target.value
                     )
                   }
                   value={emoji ?? ''}
@@ -84,7 +84,7 @@ function AddOnglet(props) {
                     setName(
                       event.target.value.length === 0
                         ? null
-                        : event.target.value?.trim()
+                        : event.target.value
                     )
                   }
                   value={name ?? ''}
@@ -118,7 +118,7 @@ function AddOnglet(props) {
                 setImgURL(
                   event.target.value.length === 0
                     ? null
-                    : event.target.value?.trim()
+                    : event.target.value
                 )
               }
               value={imgURL ?? ''}
@@ -138,9 +138,9 @@ function AddOnglet(props) {
             fullWidth
             onClick={() => {
               const newOnglet = {
-                name,
-                emoji,
-                imgURL,
+                name: name?.trim(),
+                emoji: emoji?.trim(),
+                imgURL: imgURL?.trim(),
                 pages: init_onglet.pages ?? [],
               }
               const n = getData().length

@@ -8,7 +8,7 @@ import Case from './Case'
 import * as ratp from 'actions/fetching/ratp'
 import { velib_getStation } from 'actions/fetching/velib'
 import { refreshVelib } from 'actions/mainActions'
-import { initialData, offlineData } from 'variables/constants'
+import { initialData, emptyData, problemData } from 'variables/constants'
 
 function Row(props) {
   const { lastRefresh } = props.mainBranch
@@ -27,9 +27,9 @@ function Row(props) {
       .getSchedule(row)
       .then((res) => {
         if (res.length > 0) setData(res)
-        else setData(offlineData)
+        else setData(emptyData)
       })
-      .catch((err) => setData(offlineData))
+      .catch((err) => setData(problemData))
   }, [lastRefresh, velibData])
   if (mode == `noctilien` && isDayTime()) return
   return (
@@ -57,6 +57,7 @@ function Row(props) {
           overflowX: `scroll`,
           whiteSpace: `nowrap`,
         }}
+        className="row"
       >
         <Case
           velib={isVelib}

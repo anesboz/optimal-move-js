@@ -7,6 +7,8 @@ import plusLogo from 'assets/icons/plus.png'
 import { useNavigate } from 'react-router-dom'
 import { page_updateDescription } from 'actions/localstorage/pagesActions'
 import { velib_getData } from 'actions/fetching/velib'
+import { useSwipeable } from 'react-swipeable'
+import { setOngletPage } from 'actions/mainActions'
 
 export default function Table(props) {
   const { onglet, iCurrentOnglet, iCurrentPage, lastRefreshVelib } = props
@@ -23,10 +25,25 @@ export default function Table(props) {
     setDesc(page?.description ?? '')
   }, [page])
 
+  const handlers = useSwipeable({
+    onSwiped: (eventData) => {
+      const isRow = eventData.event.path.map((e) => e.className).includes('row')
+      if(isRow) return
+      const { deltaX } = eventData
+      if (deltaX >= 0) {
+        console.log('left')
+        setOngletPage(iCurrentOnglet, iCurrentPage - 1)
+      } else {
+        console.log('right')
+        setOngletPage(iCurrentOnglet, iCurrentPage + 1)
+      }
+    },
+  })
+
   if (iCurrentOnglet == null || onglet == null || onglet.length == 0)
     return null
   return (
-    <div style={{ height: `100%` }}>
+    <div style={{ height: `100%` }} {...handlers} className="table">
       <div className="center" style={{ height: `10%`, padding: 5 }}>
         <TextField
           variant="standard"

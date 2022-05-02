@@ -1,7 +1,7 @@
 import { createTheme } from '@mui/material'
 import loadingIcon from 'assets/icons/loading.gif'
-import WifiOffIcon from '@mui/icons-material/WifiOff'
-
+import BusAlertIcon from '@mui/icons-material/BusAlert'
+import BugReportIcon from '@mui/icons-material/BugReport'
 export const DEFAULT_INDEXES_STATE = 1
 export const PROXY = 'https://anes-cors-everywhere.herokuapp.com/'
 
@@ -19,11 +19,24 @@ export const myTheme = createTheme({
   },
 })
 
-export const initialData = [
-  { message: <img style={{ height: `70%` }} src={loadingIcon} /> },
-  { message: <img style={{ height: `70%` }} src={loadingIcon} /> },
-]
-export const offlineData = [
-  { message: <WifiOffIcon style={{ height: `70%` }} /> },
-  { message: <WifiOffIcon style={{ height: `70%` }} /> },
-]
+export const initialData = [...new Array(2)].map((e, i) => ({
+  message: <img style={{ height: `70%` }} src={loadingIcon} key={i} />,
+}))
+
+export const emptyData = [...new Array(2)].map((e, i) => ({
+  message: (
+    <div style={{ color: '#00000059' }} key={i}>
+      <BusAlertIcon />
+      <span style={{ fontSize: '60%' }}>&nbsp;no data</span>
+    </div>
+  ),
+}))
+
+export const problemData = [...new Array(2)].map((e, i) => ({
+  message: (
+    <div style={{ color: '#f25c5a91' }} key={i}>
+      <BugReportIcon />
+      <span style={{ fontSize: '60%' }}>&nbsp;bug 505</span>
+    </div>
+  ),
+}))

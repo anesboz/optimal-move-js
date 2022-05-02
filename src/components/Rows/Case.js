@@ -1,5 +1,9 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import BusAlertIcon from '@mui/icons-material/BusAlert'
+import DepartureBoardIcon from '@mui/icons-material/DepartureBoard'
+import HotelIcon from '@mui/icons-material/Hotel'
+import { emptyData } from 'variables/constants'
+import { Grid } from '@mui/material'
 
 const isHere = [
   "Train a l'approche",
@@ -11,8 +15,8 @@ const isComing = ['0 mn', '1 mn', '2 mn']
 
 const problems = [
   'SERVICE TERMINE',
-  'Schedules unavailable',
   'Service termine',
+  'Schedules unavailable',
   'INFO INDISPO ....',
   'Train retarde',
   'SERVICE NON COMMENCE',
@@ -20,23 +24,55 @@ const problems = [
 
 export default function Case(porps) {
   const { content, velib } = porps
-  let unvailable = false
+  let elem = content
   try {
-    unvailable = /.*unavai.*/.test(content) || /.*INDISP.*/.test(content)
+    if (
+      /.*unavai.*/.test(content.toLowerCase()) ||
+      /.*indisp.*/.test(content.toLowerCase())
+    ) {
+      elem = emptyData[0].message
+    }
+  } catch (error) {
+    //pass
+  }
+  try {
+    if (/.*termi.*/.test(content.toLowerCase())) {
+      elem = (
+        <Grid
+          container
+          style={{ color: '#75198acc' }}
+          justifyContent="center"
+          columnSpacing={2}
+        >
+          <Grid item xs={6}>
+            <HotelIcon />
+          </Grid>
+          <Grid item xs={6} style={{ fontSize: '60%' }} >
+            <div>&nbsp;service</div>
+            <div>&nbsp;terminé</div>
+          </Grid>
+        </Grid>
+      )
+    }
+  } catch (error) {
+    //pass
+  }
+  try {
+    if (/.*retar.*/.test(content.toLowerCase())) {
+      elem = (
+        <div style={{ color: '#f6501e' }}>
+          <DepartureBoardIcon />
+          <span style={{ fontSize: '60%' }}>&nbsp;retardé</span>
+        </div>
+      )
+    }
   } catch (error) {
     //pass
   }
   return (
     <div style={style(content, velib)}>
       <div className="center" style={{ height: `100%`, width: `100%` }}>
-        {unvailable ? (
-          <div style={{ color: '#f25c5a91' }}>
-            <BusAlertIcon />
-            <span style={{ fontSize: '60%' }}>no data</span>
-          </div>
-        ) : (
-          content
-        )}
+        {elem}
       </div>
     </div>
   )

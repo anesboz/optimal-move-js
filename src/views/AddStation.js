@@ -122,7 +122,7 @@ function AddStation(props) {
               exclusive
               value={row.mode}
               onChange={(_, newMode) => {
-                setRow({ mode: newMode?.trim() })
+                setRow({ mode: newMode })
                 if (!newMode) return
                 setExpanded('panel2')
               }}
@@ -168,7 +168,11 @@ function AddStation(props) {
             }
             fullWidth
             onClick={() => {
-              page_addRow(iCurrentOnglet, iCurrentPage, row, state?.iRow)
+              const newRow = {}
+              for (const [key, value] of Object.entries(row)) {
+                newRow[key] = value?.trim()
+              }
+              page_addRow(iCurrentOnglet, iCurrentPage, newRow, state?.iRow)
               navigate('/')
             }}
           >
@@ -207,7 +211,7 @@ function AddStation(props) {
                   <CachedIcon
                     color="disabled"
                     onClick={() => {
-                      setRow({ ...row, mode: row.mode?.trim() })
+                      setRow({ ...row, mode: row.mode })
                     }}
                   />
                 )}
@@ -245,8 +249,8 @@ function AddStation(props) {
                   onChange={(event, newLine) => {
                     setRow({
                       ...row,
-                      line: newLine?.stationCode?.trim(),
-                      station: newLine?.name?.trim(),
+                      line: newLine?.stationCode,
+                      station: newLine?.name,
                     })
                     setExpanded('panel3')
                   }}
@@ -276,7 +280,7 @@ function AddStation(props) {
               fullWidth
               label="Choose a station name"
               onChange={(event) => {
-                setRow({ ...row, station: event.target.value?.trim() })
+                setRow({ ...row, station: event.target.value })
               }}
               value={row.station ?? ''}
               inputRef={(input) => expanded === 'panel3' && input?.focus()}
@@ -363,7 +367,7 @@ function AddStation(props) {
                     />
                   )}
                   onChange={(_, newLine) => {
-                    setRow({ ...row, line: newLine?.trim() })
+                    setRow({ ...row, line: newLine })
                     if (!newLine) return
                     setExpanded('panel3')
                   }}
@@ -400,8 +404,8 @@ function AddStation(props) {
                     onClick={() => {
                       setRow({
                         ...row,
-                        mode: row.mode?.trim(),
-                        line: row.line?.trim(),
+                        mode: row.mode,
+                        line: row.line,
                       })
                     }}
                   />
@@ -443,7 +447,7 @@ function AddStation(props) {
                     />
                   )}
                   onChange={(event, newStation) => {
-                    setRow({ ...row, station: newStation?.slug?.trim() })
+                    setRow({ ...row, station: newStation?.slug })
                     if (!newStation) return
                     setExpanded('panel4')
                   }}
@@ -479,9 +483,11 @@ function AddStation(props) {
                 aria-labelledby="demo-radio-buttons-group-label"
                 name="radio-buttons-group"
                 onChange={(_, value) => {
-                  setRow({ ...row, way: value?.trim() })
+                  setRow({ ...row, way: value })
                   // const dest = allTerminus.find((e) => e === value)
-                  const terminus = allWays.find((e) => e.way === value)?.terminus
+                  const terminus = allWays.find(
+                    (e) => e.way === value
+                  )?.terminus
                   if (terminus?.length > 1) {
                     return setExpanded('panel5')
                   }
@@ -532,7 +538,7 @@ function AddStation(props) {
                   onChange={(_, value) => {
                     setRow({
                       ...row,
-                      terminus: value != 'whatever' ? value?.trim() : null,
+                      terminus: value != 'whatever' ? value : null,
                     })
                     setExpanded(null)
                   }}

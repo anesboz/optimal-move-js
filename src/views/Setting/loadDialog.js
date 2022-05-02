@@ -2,14 +2,11 @@ import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import { getData } from 'actions/localstorage/generalActions'
 import CheckIcon from '@mui/icons-material/Check'
 import { Fragment, useEffect, useRef, useState } from 'react'
 import UploadIcon from '@mui/icons-material/Upload'
-import Radio from '@mui/material/Radio'
-import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
 import FormLabel from '@mui/material/FormLabel'
@@ -22,6 +19,7 @@ import {
   Typography,
 } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 
 export default function LoadDialog(props) {
   const navigate = useNavigate()
@@ -35,8 +33,7 @@ export default function LoadDialog(props) {
   const handleClose = () => setOpen(false)
 
   const [loaded, setLoaded] = useState(false)
-  const [enablePaste, setEnablePaste] = useState(false)
-  const [paste, setPaste] = useState(null)
+  const [paste, setPaste] = useState('')
 
   const descriptionElementRef = useRef(null)
   useEffect(() => {
@@ -85,6 +82,7 @@ export default function LoadDialog(props) {
               placeholder="[{}]"
               onChange={(event) => setPaste(event.target.value)}
               fullWidth
+              value={paste}
             />
           ) : (
             <Fragment>
@@ -125,7 +123,24 @@ export default function LoadDialog(props) {
       </DialogContent>
       <DialogActions>
         <Button
-          disabled={all.length === 0 && !isCopyMode}
+          disabled={selected.length === 0 && !isCopyMode}
+          style={{ display: isCopyMode ? 'none' : undefined }}
+          onClick={() => {
+            selected.map((e) => localStorage.removeItem(e))
+            setOpen(false)
+          }}
+          color={'error'}
+          variant={'outlined'}
+        >
+          <DeleteForeverIcon size="small" />
+          &nbsp; Delete
+        </Button>
+
+        <Button
+          disabled={
+            (!isCopyMode && selected.length === 0) ||
+            (isCopyMode && paste?.length === 0)
+          }
           onClick={() => {
             setLoaded(true)
             setTimeout(() => navigate('/'), 300)
