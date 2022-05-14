@@ -70,7 +70,7 @@ export default function Footer(props) {
                 backgroundPosition: 'center',
                 backgroundSize: 'cover',
                 backgroundRepeat: 'no-repeat',
-                transform: `translate(0px, -3px)`,
+                transform: `translate(0px, ${noName ? 0 : -3}px)`,
               }}
               className="center"
             >

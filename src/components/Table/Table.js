@@ -30,7 +30,7 @@ export default function Table(props) {
       const isRow = eventData.event.path.map((e) => e.className).includes('row')
       if(isRow) return
       const { deltaX } = eventData
-      const delta = 120
+      const delta = 60
       if (deltaX >= +delta) {
         console.log('left')
         setOngletPage(iCurrentOnglet, iCurrentPage - 1)
