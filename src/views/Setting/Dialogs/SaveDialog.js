@@ -73,14 +73,13 @@ export default function SaveDialog(props) {
         <TextField
           autoFocus
           margin="dense"
-          id="name"
-          label={isCopyMode ? 'Copier' : 'Save as'}
+          label={isCopyMode ? 'Copier' : 'Save as '}
           type="email"
           fullWidth
           variant="standard"
           onChange={(event) => setDataName(event.target.value)}
           value={isCopyMode ? JSON.stringify(data) : dataName}
-          placeholder={isCopyMode ? '' : 'name'}
+          placeholder={isCopyMode ? '' : 'Proposer un nom'}
         />
       </DialogContent>
       <DialogActions>

@@ -4,12 +4,13 @@ import SaveIcon from '@mui/icons-material/Save'
 import UploadIcon from '@mui/icons-material/Upload'
 import ResetIcon from '@mui/icons-material/DeleteForever'
 import { useState } from 'react'
-import SaveDialog from './SaveDialog'
-import LoadDialog from './loadDialog'
-import { deleteData } from 'actions/localstorage/generalActions'
+import SaveDialog from './Dialogs/SaveDialog'
+import LoadDialog from './Dialogs/loadDialog'
+import ResetDialog from './Dialogs/ResetDialog'
 import { Grid } from '@mui/material'
 import { useLocation } from 'react-router-dom'
-import ResetDialog from './ResetDialog'
+import PhoneAndroidTwoToneIcon from '@mui/icons-material/PhoneAndroidTwoTone'
+import axios from 'axios'
 
 export default function Setting() {
   const { state } = useLocation()
@@ -32,7 +33,7 @@ export default function Setting() {
           <UploadIcon size="small" /> &nbsp; Load data
         </Button>
         <Button onClick={handleClickOpen('reset')} style={{ paddingTop: 20 }}>
-          <ResetIcon size="small" /> &nbsp; Delete all current onglets
+          <ResetIcon size="small" /> &nbsp; Supprimer les onglets actuels
         </Button>
         <Button
           onClick={handleClickOpen('factory')}
@@ -40,6 +41,17 @@ export default function Setting() {
           style={{ paddingTop: 20 }}
         >
           <ResetIcon size="small" /> &nbsp; {`Valeurs d'usine`}
+        </Button>
+        <Button
+          onClick={() => {
+            window.location = `https://github.com/anesboz/optimal-move-android-app/raw/master/APP_HERE/optimal-move.apk`
+          }}
+          color="info"
+          style={{ paddingTop: 20 }}
+        >
+          <PhoneAndroidTwoToneIcon size="small" />
+          &nbsp;
+          {` Télécharger l'application`}
         </Button>
       </Grid>
 
