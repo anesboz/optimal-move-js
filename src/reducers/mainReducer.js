@@ -1,8 +1,8 @@
 import { SET_ONGLET_PAGE, REFRESH, REFRESH_VELIB } from '../actions/types'
 
 const initalState = {
-  iCurrentOnglet: null,
-  iCurrentPage: null,
+  iOnglet: null,
+  iPage: null,
   lastRefresh: null,
   lastRefreshVelib: null,
 }
@@ -13,8 +13,8 @@ export default (state = initalState, action) => {
       var { iOnglet, iPage } = action.payload
       return {
         ...state,
-        iCurrentOnglet: iOnglet,
-        iCurrentPage: iPage,
+        iOnglet: iOnglet,
+        iPage: iPage,
         lastRefresh: new Date().getTime(),
       }
 

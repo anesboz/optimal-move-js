@@ -5,7 +5,7 @@ import ebikeLogo from "assets/icons/velibE.png"
 import docksLogo from "assets/icons/velibP.png"
 import mechanicalLogo from "assets/icons/velibM.png"
 import logo_velib from "assets/icons/logo_velib.png"
-import MyMenu from "components/Rows/RowMenu"
+import MyMenu from "views/Main/components/Rows/RowMenu"
 
 export default function Row({
   data,

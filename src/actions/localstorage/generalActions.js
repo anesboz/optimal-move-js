@@ -5,10 +5,10 @@ import dateformat from 'dateformat'
  * getting data from localstorage
  * @returns Object
  */
-export function getData(iCurrentOnglet) {
+export function getData(iOnglet) {
   const data = JSON.parse(localStorage.getItem(`data`))
   if (!data) return []
-  if (iCurrentOnglet != null) return data[iCurrentOnglet]
+  if (iOnglet != null) return data[iOnglet]
   return data
 }
 

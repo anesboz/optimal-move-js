@@ -15,21 +15,23 @@ function App() {
       <SnackbarProvider>
         <ThemeProvider theme={myTheme}>
           <BrowserRouter basename="/optimal-move">
-            <Grid
-              container
-              marginX={`auto`}
-              {...gridStyle}
-              sx={{ bgcolor: `white`, position: `relative` }}
-            >
-              <Banner />
-              <MBreadcrumbs />
-              <Routes>
-                {routes.map((e, i) => {
-                  const Element = e.element
-                  return <Route key={i} path={e.path} element={<Element />} />
-                })}
-                <Route path={'*'} element={<Navigate to={'/'} />} />
-              </Routes>
+            <Grid container>
+              <Grid
+                item
+                marginX={`auto`}
+                {...gridStyle}
+                sx={{ bgcolor: `white`, position: `relative` }}
+              >
+                <Banner />
+                <MBreadcrumbs />
+                <Routes>
+                  {routes.map((e, i) => {
+                    const Element = e.element
+                    return <Route key={i} path={e.path} element={<Element />} />
+                  })}
+                  <Route path={'*'} element={<Navigate to={'/'} />} />
+                </Routes>
+              </Grid>
             </Grid>
           </BrowserRouter>
         </ThemeProvider>

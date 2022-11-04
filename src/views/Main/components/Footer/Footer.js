@@ -7,8 +7,8 @@ import { gridStyle } from 'variables/styles'
 import { getData } from 'actions/localstorage/generalActions'
 
 export default function Footer(props) {
-  const { iCurrentOnglet, iCurrentPage } = props
-  const onglets = getData(iCurrentOnglet)
+  const { iOnglet, iPage } = props
+  const onglets = getData()
   const ratio = props.height
   const navigate = useNavigate()
   let x = 20
@@ -60,11 +60,12 @@ export default function Footer(props) {
             let y = x
             const noName = name == null || name?.length === 0
             if (noName) y = 0
-            const selected = i === iCurrentOnglet
+            const selected = i === iOnglet
             return (
               <div
                 style={{
                   display: `inline-block`,
+                  cursor: `pointer`,
                   height: `100%`,
                   width: arret,
                   border: `1px solid #dddddd`,
@@ -75,12 +76,11 @@ export default function Footer(props) {
                   opacity: selected ? 1 : 0.6,
                 }}
                 key={i}
-                onClick={(event) => {
+                onClick={() => {
                   if (i === onglets.length) {
-                    navigate(`/addOnglet`)
-                  } else {
-                    setOngletPage(i, i === iCurrentOnglet ? iCurrentPage : 0)
+                    return navigate(`/addOnglet`)
                   }
+                  setOngletPage(i, i === iOnglet ? iPage : 0)
                 }}
               >
                 <div

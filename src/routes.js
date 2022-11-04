@@ -1,8 +1,8 @@
 import DirectionsTransitIcon from '@mui/icons-material/DirectionsTransit'
-import Main from 'views/Main'
+import Main from 'views/Main/Main'
 import GpsFixedIcon from '@mui/icons-material/GpsFixed'
 import AddStation from 'views/AddStation/AddStation'
-import AddOnglet from 'views/AddOnglet'
+import AddOnglet from 'views/addOnglet/AddOnglet'
 import TurnedInIcon from '@mui/icons-material/TurnedIn'
 import Setting from 'views/Setting/Setting'
 

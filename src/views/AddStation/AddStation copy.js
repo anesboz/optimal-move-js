@@ -31,8 +31,8 @@ import { velib_getData, velib_getStationsNames } from 'actions/fetching/velib'
 import ModeSetting from './components/ModeSetting'
 
 function AddStation(props) {
-  const { iCurrentOnglet, iCurrentPage } = props.mainBranch
-  if (iCurrentOnglet == null || iCurrentPage == null) {
+  const { iOnglet, iPage } = props.mainBranch
+  if (iOnglet == null || iPage == null) {
     return <Navigate to="/" replace />
   }
 
@@ -42,7 +42,7 @@ function AddStation(props) {
   let initalRow = {}
   if (state?.iRow != null) {
     const storedRow =
-      getData()[iCurrentOnglet]?.pages?.[iCurrentPage]?.lines?.[state.iRow]
+      getData()[iOnglet]?.pages?.[iPage]?.lines?.[state.iRow]
     initalRow = storedRow ?? initalRow
   }
 
@@ -175,7 +175,7 @@ function AddStation(props) {
               for (const [key, value] of Object.entries(row)) {
                 newRow[key] = value?.trim()
               }
-              page_addRow(iCurrentOnglet, iCurrentPage, newRow, state?.iRow)
+              page_addRow(iOnglet, iPage, newRow, state?.iRow)
               navigate('/')
             }}
           >

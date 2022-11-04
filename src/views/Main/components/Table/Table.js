@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Row from '../Rows/Row'
 import Dots from './Dots'
-import PageMenu from 'components/Table/PageMenu'
+import PageMenu from 'views/Main/components/Table/PageMenu'
 import { TextField } from '@mui/material'
 import plusLogo from 'assets/icons/plus.png'
 import { useNavigate } from 'react-router-dom'
@@ -11,8 +11,8 @@ import { useSwipeable } from 'react-swipeable'
 import { setOngletPage } from 'actions/mainActions'
 
 export default function Table(props) {
-  const { onglet, iCurrentOnglet, iCurrentPage, lastRefreshVelib } = props
-  const page = onglet?.pages?.[iCurrentPage]
+  const { onglet, iOnglet, iPage, lastRefreshVelib } = props
+  const page = onglet?.pages?.[iPage]
   const [velibData, setVelibData] = useState(null)
   const navigate = useNavigate()
   const [desc, setDesc] = useState('')
@@ -33,15 +33,15 @@ export default function Table(props) {
       const delta = 60
       if (deltaX >= +delta) {
         console.log('left')
-        setOngletPage(iCurrentOnglet, iCurrentPage - 1)
+        setOngletPage(iOnglet, iPage - 1)
       } else if (deltaX < -delta) {
         console.log('right')
-        setOngletPage(iCurrentOnglet, iCurrentPage + 1)
+        setOngletPage(iOnglet, iPage + 1)
       }
     },
   })
 
-  if (iCurrentOnglet == null || onglet == null || onglet.length == 0)
+  if (iOnglet == null || onglet == null || onglet.length == 0)
     return null
   return (
     <div style={{ height: `100%` }} {...handlers} className="table">
@@ -57,13 +57,13 @@ export default function Table(props) {
           value={desc}
           onChange={(event) => setDesc(event.target.value)}
           onBlur={(event) =>
-            page_updateDescription(iCurrentOnglet, iCurrentPage, desc)
+            page_updateDescription(iOnglet, iPage, desc)
           }
           sx={{ input: { color: '#4f504e5e' } }}
           placeholder="..."
         />
         <div style={{ position: 'absolute', right: 5, zIndex: 10 }}>
-          <PageMenu iOnglet={iCurrentOnglet} iPage={iCurrentPage} />
+          <PageMenu iOnglet={iOnglet} iPage={iPage} />
         </div>
       </div>
       <div style={{ height: `90%` }}>
@@ -72,8 +72,8 @@ export default function Table(props) {
             <Row
               row={row}
               key={i}
-              iOnglet={iCurrentOnglet}
-              iPage={iCurrentPage}
+              iOnglet={iOnglet}
+              iPage={iPage}
               iRow={i}
               velibData={velibData}
             />
@@ -91,8 +91,8 @@ export default function Table(props) {
         <div style={{ height: `20%` }}>
           <Dots
             pages={onglet?.pages}
-            iCurrentOnglet={iCurrentOnglet}
-            iCurrentPage={iCurrentPage}
+            iOnglet={iOnglet}
+            iPage={iPage}
           />
         </div>
       </div>

@@ -6,19 +6,19 @@ import { page_addEmptyPage } from 'actions/localstorage/pagesActions'
 
 export default function Dots(onglet) {
   if(onglet == null) return 
-  const { pages, iCurrentOnglet, iCurrentPage } = onglet
+  const { pages, iOnglet, iPage } = onglet
   return (
     <DotsContainer>
       {pages.map((_, i) => (
         <Dot
           key={i}
-          selected={iCurrentPage === i}
-          onClick={() => setOngletPage(iCurrentOnglet, i)}
+          selected={iPage === i}
+          onClick={() => setOngletPage(iOnglet, i)}
         />
       ))}
       <Dot
         onClick={() => {
-          page_addEmptyPage(iCurrentOnglet, pages.length)
+          page_addEmptyPage(iOnglet, pages.length)
         }}
       >
         <img src={plusDot} />

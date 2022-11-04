@@ -17,8 +17,8 @@ import { renderDEVcomment } from './components/communs'
 
 export default function AddStation(props) {
   // navigation
-  // const { iCurrentOnglet, iCurrentPage } = props.mainBranch
-  // if (iCurrentOnglet == null || iCurrentPage == null) {
+  // const { iOnglet, iPage } = props.mainBranch
+  // if (iOnglet == null || iPage == null) {
   //   return <Navigate to="/" replace />
   // }
   const navigate = useNavigate()
@@ -26,18 +26,21 @@ export default function AddStation(props) {
 
   const { enqueueSnackbar } = useSnackbar()
 
-  // useEffect(() => {
-  //   const { iOnglet, iPage } = state ?? {}
-  //   if (iOnglet == null || iPage == null) {
-  //     enqueueSnackbar(`Sélectionner un onglet d'abord`, {
-  //       variant: 'error',
-  //     })
-  //     navigate('/')
-  //   }
-  // }, [state])
+  useEffect(() => {
+    return
+    const { iOnglet, iPage } = state ?? {}
+    if (iOnglet == null || iPage == null) {
+      enqueueSnackbar(`Sélectionner un onglet d'abord`, {
+        variant: 'error',
+      })
+      navigate('/')
+    }
+  }, [state])
 
   const [devMode, setDevMode] = useState(false)
+
   const [expanded, setExpanded] = useState(0)
+
   const [mode, setMode] = useState({})
   const [line, setLine] = useState({})
   const [stop, setStop] = useState({})
@@ -118,8 +121,6 @@ export default function AddStation(props) {
           color="success"
           onClick={() => {
             console.log(`🚩 . success`)
-            // const old =
-            // lsSave({data:})}
           }}
         >
           Ajouter
