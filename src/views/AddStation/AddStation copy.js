@@ -28,11 +28,13 @@ import { connect } from 'react-redux'
 import { getLines, getStations, getWays } from 'actions/fetching/ratp'
 import { getData } from 'actions/localstorage/generalActions'
 import { velib_getData, velib_getStationsNames } from 'actions/fetching/velib'
+import ModeSetting from './components/ModeSetting'
 
 function AddStation(props) {
   const { iCurrentOnglet, iCurrentPage } = props.mainBranch
-  if (iCurrentOnglet == null || iCurrentPage == null)
+  if (iCurrentOnglet == null || iCurrentPage == null) {
     return <Navigate to="/" replace />
+  }
 
   const navigate = useNavigate()
   const { state } = useLocation()
@@ -44,6 +46,7 @@ function AddStation(props) {
     initalRow = storedRow ?? initalRow
   }
 
+  // principal state
   const [row, setRow] = useState(initalRow)
 
   const isVelibRow = row.mode === 'velib'
@@ -56,17 +59,10 @@ function AddStation(props) {
 
   const [allWays, setAllWays] = useState([])
 
-  const [expanded, setExpanded] = useState('panel1')
-  const handleChange = (panel) => (event, isExpanded) => {
-    setExpanded(isExpanded ? panel : false)
-  }
-
-  const modesButtons = ['metro', 'bus', 'tram', 'noctilien', 'velib'].map(
-    (e) => ({
-      value: e,
-      imgSrc: omAssets(e).logoURL,
-    })
-  )
+  // const [expanded, setExpanded] = useState('panel1')
+  // const handleChange = (panel) => (event, isExpanded) => {
+  //   setExpanded(isExpanded ? panel : false)
+  // }
 
   const [fetchProblem, setFetchProblem] = useState()
 
@@ -92,12 +88,15 @@ function AddStation(props) {
     setAllWays([])
     getWays(row.mode, row.line).then((ways) => setAllWays(ways))
   }, [row.mode, row.line])
+
+  const [mode, setMode] = useState({})
+  const [expanded, setExpanded] = useState(0)
   return (
     <div style={{ height: `100vh` }}>
       <Banner />
       <div style={{ marginTop: 20 }}>
         {/* TAB1 */}
-        <Accordion
+        {/* <Accordion
           expanded={expanded === 'panel1'}
           onChange={handleChange('panel1')}
         >
@@ -128,25 +127,29 @@ function AddStation(props) {
               }}
               aria-label="text alignment"
             >
-              {modesButtons.map((e, i) => {
-                if (!e.value) return null
+              {modesButtons.map(({ name, icon }, i) => {
+                const selected = row.mode == name
                 return (
                   <ToggleButton
-                    value={e.value}
+                    value={name}
                     aria-label="left aligned"
                     key={i}
-                    disabled={e.value == `rer`}
+                    // disabled={name == `rer`}
                     style={{
-                      backgroundColor: row.mode == e.value ? '#02819257' : '',
+                      backgroundColor: selected ? '#02819257' : undefined,
                     }}
                   >
-                    <img style={{ height: `2em` }} src={e.imgSrc} />
+                    <img style={{ height: `2em` }} src={icon} />
                   </ToggleButton>
                 )
               })}
             </ToggleButtonGroup>
           </AccordionDetails>
-        </Accordion>
+        </Accordion> */}
+        <ModeSetting
+          modeHook={[mode, setMode]}
+          expandedHook={[expanded, setExpanded]}
+        />
         {/* c'est ici que ca se passe */}
         {isVelibRow ? velib() : transports()}
         <div

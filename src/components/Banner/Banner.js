@@ -1,122 +1,70 @@
 import bannerImg from 'assets/images/banner.png'
 import omLogoImg from 'assets/images/omLogo.png'
-import meteoImg from 'assets/images/meteo.png'
 import { setOngletPage } from 'actions/mainActions'
 import SettingsIcon from '@mui/icons-material/Settings'
 import { useLocation, useNavigate } from 'react-router-dom'
-import Typography from '@mui/material/Typography'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import { capitalizeFirstLetter } from 'actions/tools'
+import { Grid, Link } from '@mui/material'
+import { ratpYellow } from 'variables/styles'
+import { routes } from 'routes'
 
 export default function Banner() {
   const navigate = useNavigate()
   const location = useLocation()
   const isHomePage = location.pathname === '/'
+
+  const per = 80
   return (
-    <div>
-      <div
-        style={{ height: `75%`, backgroundColor: `#f9d119` }}
+    <Grid container sx={{ height: 200, position: `relative` }}>
+      <Grid
+        item
+        xs={12}
+        sx={{ height: `${per}%`, bgcolor: ratpYellow }}
         className="center-x"
       >
         <img
-          style={{ height: `13rem` }}
+          style={{ height: `100%` }}
           src={bannerImg}
-          alt="bannerImg"
           onClick={() => {
             setOngletPage(null, null)
             navigate('/')
           }}
         />
-        {isHomePage ? (
-          <SettingsIcon
-            color="disabled"
-            style={{
-              position: 'absolute',
-              padding: 10,
-              fontSize: '2.7rem',
-              zIndex: 10,
-              right: 0,
-            }}
-            onClick={() => navigate('/setting')}
-          />
-        ) : (
-          <ArrowBackIcon
-            color="disabled"
-            style={{
-              position: 'absolute',
-              padding: 10,
-              fontSize: '2.7rem',
-              zIndex: 10,
-              left: 0,
-            }}
-            onClick={() => navigate('/')}
-          />
-        )}
-      </div>
-      <div
-        style={{
-          height: `2.7rem`,
-          borderBottom: `1px solid #80808040`,
+      </Grid>
+      <Grid
+        item
+        xs={1}
+        sx={{
+          position: `absolute`,
+          // fontSize: '2.7rem',
+          left: 0,
+          top: 0,
+          zIndex: 10,
+          padding: 1,
         }}
+        className={`center `}
+      >
+        {isHomePage ? (
+          <SettingsIcon color="disabled" onClick={() => navigate('/setting')} />
+        ) : (
+          <ArrowBackIcon color="disabled" onClick={() => navigate('/')} />
+        )}
+      </Grid>
+      <Grid
+        container
+        sx={{ height: `${100 - per}%`, borderBottom: `1px solid #80808040` }}
         className="center-y"
       >
-        <img
-          style={{ height: `87%`, padding: 5 }}
-          src={omLogoImg}
-          alt="omLogoImg"
-          onClick={() => {
-            if (location.pathname === '/') return navigate(0)
-            navigate('/')
-          }}
-        />
-        <div
-          style={{ height: `100%`, padding: 5, margin: 'auto 10px auto auto' }}
+        <Grid
+          item
+          xs={12}
+          onClick={() => navigate(0)}
+          style={{ height: `100%` }}
         >
-          <img
-            style={{ height: `87%` }}
-            src={meteoImg}
-            alt="meteoImg"
-            onClick={() =>
-              (window.location.href =
-                'https://weather.com/fr-FR/temps/aujour/l/1a8af5b9d8971c46dd5a52547f9221e22cd895d8d8639267a87df614d0912830')
-            }
-          />
-        </div>
-
-        {/* <div
-          style={{
-            transform: 'translate(-70px)',
-            border: '1px solid red',
-            zIndex: 1,
-          }}
-        >
-          <iframe
-            src="https://www.meteorama.fr/widget/get/ba42f8160eb05fed980cee83c2aae00e?v=11001"
-            frameBorder="0"
-            width="330"
-            scrolling="no"
-            style={{ pointerEvents: 'none' }}
-          ></iframe>
-        </div> */}
-      </div>
-      {isHomePage ? null : (
-        <Breadcrumbs
-          aria-label="breadcrumb"
-          style={{
-            marginLeft: 14,
-            marginTop: 8,
-            opacity: 0.4,
-          }}
-        >
-          <Typography fontSize="small" color="inheritinherit">
-            Optimal Move
-          </Typography>
-          <Typography fontSize="small" color="text.primary">
-            {capitalizeFirstLetter(location.pathname.replace('/', ''))}
-          </Typography>
-        </Breadcrumbs>
-      )}
-    </div>
+          <img style={{ height: `100%`, padding: 5 }} src={omLogoImg} />
+        </Grid>
+      </Grid>
+    </Grid>
   )
 }

@@ -1,39 +1,40 @@
-import Main from 'views/Main'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import AddStation from 'views/AddStation'
-import AddOnglet from 'views/AddOnglet'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import React from 'react'
 import { Grid, ThemeProvider } from '@mui/material'
-import { myTheme } from 'variables/constants'
-import Setting from 'views/Setting/Setting'
+import { gridStyle, myTheme } from 'variables/styles'
+import store from 'store'
+import { Provider } from 'react-redux'
+import Banner from 'components/Banner/Banner'
+import { routes } from 'routes'
+import MBreadcrumbs from 'components/MBreadcrumbs'
+import { SnackbarProvider } from 'notistack'
 
 function App() {
   return (
-    <ThemeProvider theme={myTheme}>
-      <BrowserRouter basename="/optimal-move">
-        <Grid container className="center">
-          <Grid
-            mob={12}
-            tab={9}
-            lap={4}
-            style={{
-              position: `relative`,
-              overflow: `hidden`,
-              height: `100vh`,
-              backgroundColor: `white`,
-            }}
-          >
-            {/* <TestMenu /> */}
-            <Routes>
-              <Route path="/" element={<Main />} />
-              <Route path="/pageAddRow" element={<AddStation />} />
-              <Route path="/addOnglet" element={<AddOnglet />} />
-              <Route path="/setting" element={<Setting />} />
-            </Routes>
-          </Grid>
-        </Grid>
-      </BrowserRouter>
-    </ThemeProvider>
+    <Provider store={store}>
+      <SnackbarProvider>
+        <ThemeProvider theme={myTheme}>
+          <BrowserRouter basename="/optimal-move">
+            <Grid
+              container
+              marginX={`auto`}
+              {...gridStyle}
+              sx={{ bgcolor: `white`, position: `relative` }}
+            >
+              <Banner />
+              <MBreadcrumbs />
+              <Routes>
+                {routes.map((e, i) => {
+                  const Element = e.element
+                  return <Route key={i} path={e.path} element={<Element />} />
+                })}
+                <Route path={'*'} element={<Navigate to={'/'} />} />
+              </Routes>
+            </Grid>
+          </BrowserRouter>
+        </ThemeProvider>
+      </SnackbarProvider>
+    </Provider>
   )
 }
 

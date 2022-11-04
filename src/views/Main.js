@@ -1,44 +1,27 @@
-import React, { Fragment } from 'react'
+import React, { useState } from 'react'
 import Banner from 'components/Banner/Banner'
 import Footer from 'components/Footer/Footer'
 import Table from 'components/Table/Table'
 import { getData } from 'actions/localstorage/generalActions'
-import { connect } from 'react-redux'
+import { Grid } from '@mui/material'
+import { gridStyle } from 'variables/styles'
 
-function Main(props) {
-  const { iCurrentOnglet, iCurrentPage, lastRefreshVelib } = props.mainBranch
+export default function Main(props) {
+  const [iPage, setIPage] = useState(null)
+  const [iOnglet, setIOnglet] = useState(null)
+  const [last, setLast] = useState(new Date())
+
   return (
-    <div style={{ height: `100vh`, position: 'relative' }}>
-      <Banner />
-      <div style={{ height: `60%` }}>
-        <Table
-          onglet={getData(iCurrentOnglet)}
-          iCurrentOnglet={iCurrentOnglet}
-          iCurrentPage={iCurrentPage}
-          lastRefreshVelib={lastRefreshVelib}
-        />
-      </div>
-      <div
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          width: '100%',
-          backgroundColor: '#00a88f80',
-        }}
-      >
-        <Footer
-          onglets={getData()}
-          iCurrentOnglet={iCurrentOnglet}
-          iCurrentPage={iCurrentPage}
-          height={5}
-        />
-      </div>
-    </div>
+    <Grid container className="green">
+      {/* <Table
+        onglet={getData(iCurrentOnglet)}
+        iCurrentOnglet={iCurrentOnglet}
+        iCurrentPage={iCurrentPage}
+        lastRefreshVelib={lastRefreshVelib}
+      /> */}
+      <Footer />
+    </Grid>
   )
+
+  function refresh(params) {}
 }
-
-const mapStateToProps = (state) => ({
-  mainBranch: state.mainBranch,
-})
-
-export default connect(mapStateToProps)(Main)

@@ -9,14 +9,10 @@ import Banner from 'components/Banner/Banner'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { addOnglet } from 'actions/localstorage/ongletsActions'
 import { setOngletPage } from 'actions/mainActions'
-import { connect } from 'react-redux'
 import { getData } from 'actions/localstorage/generalActions'
 import { getRandomEmoji } from 'actions/tools'
 
-
-function AddOnglet(props) {
-  const { iCurrentPage } = props
-
+export default function AddOnglet(props) {
   const { state } = useLocation()
   let init_onglet = {}
   if (state?.iOnglet_toModify != null) {
@@ -116,9 +112,7 @@ function AddOnglet(props) {
               }}
               onChange={(event) =>
                 setImgURL(
-                  event.target.value.length === 0
-                    ? null
-                    : event.target.value
+                  event.target.value.length === 0 ? null : event.target.value
                 )
               }
               value={imgURL ?? ''}
@@ -147,7 +141,7 @@ function AddOnglet(props) {
               addOnglet(newOnglet, state?.iOnglet_toModify)
               // page_addEmptyPage(n, 0)
               navigate('/')
-              setOngletPage(state?.iOnglet_toModify ?? n, iCurrentPage)
+              // setOngletPage(state?.iOnglet_toModify ?? n, iCurrentPage)
             }}
           >
             Add Onglet
@@ -157,9 +151,3 @@ function AddOnglet(props) {
     </div>
   )
 }
-
-const mapStateToProps = (state) => ({
-  mainBranch: state.mainBranch,
-})
-
-export default connect(mapStateToProps)(AddOnglet)

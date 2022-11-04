@@ -1,4 +1,3 @@
-import { createTheme } from '@mui/material'
 import loadingIcon from 'assets/icons/loading.gif'
 import BusAlertIcon from '@mui/icons-material/BusAlert'
 import BugReportIcon from '@mui/icons-material/BugReport'
@@ -8,16 +7,6 @@ export const PROXY = 'https://anes-cors-everywhere.herokuapp.com/'
 export const apiURL = `https://api-ratp.pierre-grimaud.fr/v4/`
 export const assetsURL = `https://www.ratp.fr/sites/default/files/lines-assets/picto/`
 
-export const myTheme = createTheme({
-  breakpoints: {
-    values: {
-      mob: 0,
-      tab: 500,
-      lap: 1024,
-      desk: 1200,
-    },
-  },
-})
 
 export const initialData = [...new Array(2)].map((e, i) => ({
   message: <img style={{ height: `70%` }} src={loadingIcon} key={i} />,

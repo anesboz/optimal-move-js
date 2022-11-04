@@ -78,6 +78,7 @@ export async function getWays(mode, line, forceFetch = false) {
       terminus: r,
     },
   ]
+  console.log(`🚩 . ways`, ways)
   ls_saveDatedData('ways_' + mode + '_' + line, ways)
   return ways
 }
